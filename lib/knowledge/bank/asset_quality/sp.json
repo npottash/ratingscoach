@@ -1,0 +1,18 @@
+{
+  "real_questions": [
+    "Can you give color on what are the higher loss rate portions of your portfolio and why do they have higher losses?",
+    "Is there any specific pieces of fraud within any channels?",
+    "As you grow out your book, what are the chances you'll need to go down the credit spectrum?"
+  ],
+  "common_pitfalls": [
+    "Issuers underestimate S&P's attention to off-take partner risk in whole-loan-sale and loans-to-partner programs. If the partner loses interest, the bank is stuck with the credit exposure."
+  ],
+  "strong_answer_markers": [],
+  "agency_intel": [
+    "The credit cycle is a particular S&P interest. Expect drill-down on how the cycle reshapes the loss curve by portfolio.",
+    "S&P probes off-take partner concentration extensively. Be prepared to speak to partner stickiness, alternative buyers, and the contingency plan if a buyer exits.",
+    "NBFI / private-credit lending is a 2026+ cross-agency theme. S&P frames it as not systemic but operationally intensive — probes underwriting quality, counterparty risk assessment, surveillance, collateral understanding, and safeguards against double-pledged collateral.",
+    "Where NBFI lending is in the low double digits or mid-teens as a share of total lending, expect S&P to drill into concentration, the partner roster, and collateral controls.",
+    "Recent NBFI defaults (per S&P) could portend greater-than-expected losses. Be ready to address the issuer's specific NBFI exposure trajectory and any recent signal events."
+  ]
+}

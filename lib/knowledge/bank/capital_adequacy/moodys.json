@@ -1,0 +1,11 @@
+{
+  "real_questions": [],
+  "common_pitfalls": [
+    "Issuers respond to reduced regulatory burden (Basel 3 Finalization easing, less severe CCAR stress testing for >$100B banks) by planning to lower capital levels. Moody's views this as credit negative."
+  ],
+  "strong_answer_markers": [],
+  "agency_intel": [
+    "Moody's is more concerned than S&P about capital rule uncertainty and the prospect of lower capital requirements. Expect stricter questions on how the issuer plans to keep capital levels higher in the face of reduced regulatory burden.",
+    "For CCAR banks (>$100B assets), Moody's specifically watches the gap between the now-lower regulatory minimum and the operating capital level. A bank that lets the buffer compress simply because rules allow it will be flagged."
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "real_questions": [
+    "What additional capabilities are you looking to add?",
+    "What products are you looking to add, or is there already a complete set?",
+    "Who is your typical customer base?",
+    "Is there cross-selling between deposit products and other products?",
+    "Who are your main competitors?",
+    "Who are you competing with for personal loans — traditional banks or other banks?",
+    "Do your customers become too big and then move on to other institutions?",
+    "Which channel is primarily driving customer acquisitions?",
+    "Is crypto part of your business?",
+    "Do you service your own loans?",
+    "Is it different for personal, student, auto, or other types of loans?"
+  ],
+  "common_pitfalls": [
+    "Fintech and retail-focused banks consistently fail to address customer-graduation risk — successful customers outgrow the platform and move to traditional institutions.",
+    "Issuers premise 2026 plans on the current regulatory framework even though changes may come. S&P pushes on contingency if requirements tighten or loosen unexpectedly under the Trump administration."
+  ],
+  "strong_answer_markers": [],
+  "agency_intel": [
+    "For retail and fintech-style banks, S&P drills into product roadmap, acquisition channel concentration, and competitive positioning relative to both traditional banks and fintech peers.",
+    "AI-stock concentration is a 2026 S&P watch item. Exposure to companies riding elevated AI valuations is flagged for correction risk; affects fee, trading, and asset-quality channels.",
+    "Trump administration regulatory and supervisory easing introduces 2026 uncertainty. S&P notes it is unclear how the balance between efficiency / effectiveness and less stringent oversight will play out.",
+    "Asset price volatility is on S&P's 2026 risk list. Elevated asset prices have boosted fees and trading; a correction would weigh on revenue and add to counterparty risk.",
+    "Below-trend US economic growth is a 2026 base-case concern. Threatens asset quality and weighs on business activity."
+  ]
+}
