@@ -2,8 +2,11 @@ import { NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@/lib/supabase/server'
 import { PERSONAS } from '@/lib/personas'
-import { getKnowledge } from '@/lib/knowledge'
-import { getLeadAnalyst } from '@/lib/knowledge/analysts'
+import {
+  getKnowledge,
+  filterItemsForSubType,
+  loadPlaybook,
+} from '@/lib/knowledge'
 import type { Agency } from '@/lib/types'
 
 const MODEL = 'claude-sonnet-4-6'
@@ -129,9 +132,6 @@ export async function POST(request: Request) {
 
   const persona = PERSONAS[body.session_context.agency]
   const ctx = body.session_context
-  const realAnalyst = getLeadAnalyst(ctx.sector, ctx.agency)
-  const analystName = realAnalyst?.name ?? persona.name
-  const analystRole = realAnalyst?.role ?? `Lead ${ctx.sector} analyst`
 
   const transcript = body.results
     .map((r) => {
@@ -141,7 +141,7 @@ export async function POST(request: Request) {
       const turnsBlock = r.turns
         .map(
           (t) =>
-            `${t.role === 'assistant' ? `${analystName} (analyst)` : 'Issuer'}: ${t.content}`
+            `${t.role === 'assistant' ? `${persona.name} (analyst)` : 'Issuer'}: ${t.content}`
         )
         .join('\n')
       return `=== ${r.factor} ===\n${flagsLine}\n${turnsBlock}`
@@ -152,20 +152,23 @@ export async function POST(request: Request) {
     .map((r) => {
       const k = getKnowledge(ctx.agency, ctx.sector, r.factor)
       if (!k) return null
+      const pitfalls = filterItemsForSubType(k.common_pitfalls, ctx.sub_type)
+      const markers = filterItemsForSubType(k.strong_answer_markers, ctx.sub_type)
+      const intel = filterItemsForSubType(k.agency_intel, ctx.sub_type)
       const lines: string[] = []
-      if (k.common_pitfalls.length > 0) {
+      if (pitfalls.length > 0) {
         lines.push(
-          `Common pitfalls on this factor:\n${k.common_pitfalls.map((p) => `- ${p}`).join('\n')}`
+          `Common pitfalls on this factor:\n${pitfalls.map((p) => `- ${p}`).join('\n')}`
         )
       }
-      if (k.strong_answer_markers.length > 0) {
+      if (markers.length > 0) {
         lines.push(
-          `Markers of a strong answer on this factor:\n${k.strong_answer_markers.map((m) => `- ${m}`).join('\n')}`
+          `Markers of a strong answer on this factor:\n${markers.map((m) => `- ${m}`).join('\n')}`
         )
       }
-      if (k.agency_intel.length > 0) {
+      if (intel.length > 0) {
         lines.push(
-          `${ctx.agency} intel for this factor:\n${k.agency_intel.map((i) => `- ${i}`).join('\n')}`
+          `${ctx.agency} intel for this factor:\n${intel.map((i) => `- ${i}`).join('\n')}`
         )
       }
       if (lines.length === 0) return null
@@ -179,7 +182,7 @@ export async function POST(request: Request) {
     ? `${ctx.issuer_name} (${ctx.sector} — ${industryLine}, currently ${ctx.current_rating} ${ctx.outlook})`
     : `${ctx.issuer_name} (${ctx.sector}, currently ${ctx.current_rating} ${ctx.outlook})`
 
-  const systemPrompt = `You are ${analystName}, ${analystRole} at ${ctx.agency}. You just finished a rating prep simulation with ${issuerLine}.
+  const systemPrompt = `You are ${persona.name}, ${persona.role} at ${ctx.agency}. You are a fictional persona created for issuer prep — never claim to be a real person. You just finished a rating prep simulation with ${issuerLine}.
 
 You will now produce a structured scorecard that the issuer's CFO / IR team will read to prepare for the real meeting.
 
@@ -192,6 +195,13 @@ GUIDELINES
 - Priority actions: exactly three, ordered. Concrete. The most important first.
 - Stay in ${ctx.agency} voice and methodology.
 - Respond ONLY by calling the 'scorecard' tool.`
+
+  const playbook = loadPlaybook(ctx.outlook)
+  const playbookAppendix = playbook
+    ? `\n\n---\nADVISORY PLAYBOOK FOR CURRENT OUTLOOK (${ctx.outlook})\nThe advisor recommends these issuer behaviors in this outlook situation. Bias the priority_actions output toward these unless the transcript clearly demonstrates they are already in place. You may add other priority actions, but at least 2 of the 3 should reflect this playbook when applicable.\n\n${playbook.recommended_actions
+        .map((a) => `- ${a}`)
+        .join('\n')}`
+    : ''
 
   try {
     const client = new Anthropic()
@@ -214,7 +224,7 @@ GUIDELINES
             knowledgeAppendix
               ? `\n\n---\nPROPRIETARY REFERENCE NOTES BY FACTOR (use to sharpen "flagged" callouts and "recommended_action" specificity):\n\n${knowledgeAppendix}`
               : ''
-          }`,
+          }${playbookAppendix}`,
         },
       ],
     })

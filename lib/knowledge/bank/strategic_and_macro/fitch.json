@@ -1,6 +1,32 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "Who do you consider your competitors?",
+    {
+      "text": "You're taking share from big banks — what about other online platforms?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "How are you differentiated from those platforms?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    "How do you see the deregulation opportunity from the new administration's looser environment?",
+    "Is this a long-term opportunity or a near-term one?",
+    {
+      "text": "What is the real advantage of blockchain for real-time payments?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "Are you handling crypto custody?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    "What are your emerging risks?"
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "For online / fintech / high-growth banks, Fitch probes the competitive set deeply — not just traditional banks but other digital platforms — and presses on differentiation. Expect blockchain payments, crypto custody, and the deregulation-window opportunity to come up.",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
+  ]
 }

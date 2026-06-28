@@ -1,6 +1,46 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "How do you see the deregulation opportunity from the new administration's looser environment?",
+    "What are your emerging risks?",
+    "Who are your competitors?",
+    "Will the number of products eventually start to decrease as you grow the business?",
+    "What would you buy to grow / improve the business?",
+    "Are you adopting feedback from regulators, looking at peers, or bringing in talent?",
+    {
+      "text": "What is going to drive hockey-stick growth?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "When will this hockey-stick growth happen?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "Are there areas where you don't fully own the tech end-to-end?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "On the broker's side, is the goal to provide own products or open platform?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "Who are your tech platform's main competitors?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "You are moving from fintech to a full-fledged bank — where are you in that evolution?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "Is crypto an area that you're looking to get into? How are you planning to play in that space?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "Moody's specifically tracks the fintech-to-full-bank transition. Expect questions on where the issuer is in that evolution, what regulator feedback they're absorbing, peer benchmarks they're following, and talent inflows they're bringing in.",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
+  ]
 }

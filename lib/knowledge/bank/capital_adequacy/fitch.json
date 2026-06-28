@@ -1,5 +1,8 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "What's your operating range for capital?",
+    "Are there any capital raises assumed in your plan?"
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
   "agency_intel": []

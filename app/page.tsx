@@ -5,8 +5,17 @@ export default function Home() {
     <main className="flex flex-1 flex-col">
       <header className="border-b border-border">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            The Ratings Coach
+          <Link href="/" aria-label="The Ratings Coach" className="flex items-center">
+            {/* Wordmark uses Georgia serif — kept as inline SVG asset, not a
+                next/image component, so the file stays sharp at any scale and
+                no image-domain config is required. */}
+            <img
+              src="/wordmark-header.svg"
+              alt="The Ratings Coach"
+              width={240}
+              height={32}
+              className="h-8 w-auto"
+            />
           </Link>
           <nav className="flex items-center gap-6 text-sm">
             <Link href="/login" className="text-muted hover:text-foreground">

@@ -1,7 +1,14 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
-const PUBLIC_ROUTES = new Set(['/', '/login', '/signup'])
+const PUBLIC_ROUTES = new Set([
+  '/',
+  '/login',
+  '/signup',
+  '/privacy',
+  '/terms',
+  '/security',
+])
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request })

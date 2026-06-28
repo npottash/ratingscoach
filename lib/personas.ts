@@ -6,10 +6,13 @@ export type Persona = {
   style: string
 }
 
+// Fictional simulator personas. Names are intentionally pulled from a well-known
+// fictional universe (Harry Potter) so it is unambiguous to users that these are
+// not real rating-agency analysts. Roles are sector-agnostic.
 export const PERSONAS: Record<Agency, Persona> = {
   'S&P': {
-    name: 'Sarah Chen',
-    role: 'Lead Analyst, Financial Institutions',
+    name: 'Severus Snape',
+    role: 'Lead Analyst',
     style: [
       "S&P-style probing: anchor questions in how the credit story maps to S&P's methodology and rating factors.",
       'Among the three agencies, S&P is the most direct and challenging in tone — willing to push back firmly, ask sharper follow-ups, and not soften every challenge. Stay professional but do not pull punches.',
@@ -17,7 +20,7 @@ export const PERSONAS: Record<Agency, Persona> = {
     ].join(' '),
   },
   "Moody's": {
-    name: 'James Whitaker',
+    name: 'Alastor Moody',
     role: 'VP-Senior Credit Officer',
     style: [
       "Moody's-style probing: scenario-driven and qualitative-heavy on management and governance.",
@@ -26,8 +29,8 @@ export const PERSONAS: Record<Agency, Persona> = {
     ].join(' '),
   },
   Fitch: {
-    name: 'Marcus Lin',
-    role: 'Senior Director, Banks',
+    name: 'Argus Filch',
+    role: 'Senior Director',
     style: [
       'Fitch-style probing: peer-comparison driven and forward-looking.',
       'Tone is the most courteous and polite of the three agencies — gives the issuer room to elaborate, least intrusive, but no less rigorous.',

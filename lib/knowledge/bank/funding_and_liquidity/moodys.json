@@ -1,5 +1,11 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "What contingent liquidity access do you have?",
+    "Does the bank have access to the discount window?",
+    "What's the average account size for deposits?",
+    "Are you liability sensitive?",
+    "How do you hedge interest rate risk?"
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
   "agency_intel": []

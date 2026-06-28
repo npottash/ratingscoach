@@ -1,6 +1,28 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "How do you calculate LTV?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    "Has the enforcement of federal student loan payments affected you?",
+    "Any movement in loan modifications recently or over the past few years?",
+    "How do you think about high credit limits — some larger banks have gotten in trouble there?",
+    {
+      "text": "How does your data collection compare to large banks?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    {
+      "text": "For competitors who also collect data, are credit stats shown for all loans originated or just the ones retained on book?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    "Fitch is currently watching federal student loan repayment stress and high-credit-limit consumer card exposure (driven by recent issues at larger banks).",
+    {
+      "text": "The retained-vs.-originated credit-stat distinction is a specific Fitch lens for fintech-style lenders.",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
+  ]
 }

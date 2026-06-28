@@ -1,6 +1,22 @@
 {
-  "real_questions": [],
-  "common_pitfalls": [],
+  "real_questions": [
+    {
+      "text": "What is your capacity to handle a really high volume of transactions?",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    },
+    "Did appetites change during particular periods of market volatility?",
+    "Do you anticipate appetites to change when rates come down or go back up?",
+    "How do you manage risks of growing fast?",
+    "What happens when growth slows and you start to reach for growth?"
+  ],
+  "common_pitfalls": [
+    "Online / fintech / high-growth banks consistently under-prep for 'what happens when growth slows.' Fitch is asking this explicitly because past growth-bank cycles have ended badly."
+  ],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "For high-growth banks Fitch presses on operational capacity (transaction-volume handling), rate-cycle sensitivity of customer appetites, and the discipline trade-offs of fast growth.",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
+  ]
 }

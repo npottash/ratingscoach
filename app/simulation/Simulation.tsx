@@ -2,10 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PERSONAS } from '@/lib/personas'
+import { PERSONAS, type Persona } from '@/lib/personas'
 import { factorsFor } from '@/lib/factors'
 import { createClient } from '@/lib/supabase/client'
-import { getLeadAnalyst } from '@/lib/knowledge/analysts'
 import type { Agency } from '@/lib/types'
 
 export type SimulationSession = {
@@ -26,12 +25,31 @@ type Turn = {
   role: 'user' | 'assistant'
   content: string
   factor: string
+  /** Flag the model assigned to the user's previous answer.
+   * Only set on assistant turns that returned a non-'none' flag. */
+  flag?: Exclude<Flag, 'none'>
 }
 
 type FactorResult = {
   factor: string
   flags: Flag[]
   turns: Turn[]
+}
+
+// Per-agency avatar colors. Distinct from each other and from the brand blue,
+// so users can read the agency at a glance.
+const AGENCY_AVATAR_CLASSES: Record<Agency, string> = {
+  'S&P': 'bg-red-600',
+  "Moody's": 'bg-blue-700',
+  Fitch: 'bg-orange-500',
+}
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/)
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+  }
+  return parts[0].slice(0, 2).toUpperCase()
 }
 
 export function Simulation({ session }: { session: SimulationSession }) {
@@ -77,10 +95,8 @@ function SimulationChat({
   const router = useRouter()
   const factors = factorsFor(session.sector)
   const persona = PERSONAS[agency]
-  const realAnalyst = getLeadAnalyst(session.sector, agency)
-  const analystDisplayName = realAnalyst?.name ?? persona.name
-  const analystDisplayRole =
-    realAnalyst?.role ?? `Lead ${session.sector} analyst`
+  const analystDisplayName = persona.name
+  const analystDisplayRole = persona.role
 
   const [narrative, setNarrative] = useState<string | null>(null)
   const [missingNarrative, setMissingNarrative] = useState(false)
@@ -89,14 +105,90 @@ function SimulationChat({
   const [results, setResults] = useState<FactorResult[]>(() =>
     factors.map((factor) => ({ factor, flags: [], turns: [] }))
   )
-  const [turns, setTurns] = useState<Turn[]>([]) // running chat across all factors
+  const [turns, setTurns] = useState<Turn[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [completed, setCompleted] = useState(false)
+  const [showCompleteModal, setShowCompleteModal] = useState(false)
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const seededRef = useRef(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Web Speech API for talk-to-text. Works in Chrome / Safari / Edge.
+  const [recording, setRecording] = useState(false)
+  const recognitionRef = useRef<unknown>(null)
+  const [speechSupported, setSpeechSupported] = useState(false)
+
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)
+    ) {
+      setSpeechSupported(true)
+    }
+  }, [])
+
+  function stopRecording() {
+    const rec = recognitionRef.current as { stop?: () => void } | null
+    rec?.stop?.()
+    recognitionRef.current = null
+    setRecording(false)
+  }
+
+  function toggleRecording() {
+    if (recording) {
+      stopRecording()
+      return
+    }
+    type SRConstructor = new () => {
+      continuous: boolean
+      interimResults: boolean
+      lang: string
+      start: () => void
+      stop: () => void
+      onresult:
+        | ((event: {
+            resultIndex: number
+            results: Array<{ isFinal: boolean; 0: { transcript: string } }>
+          }) => void)
+        | null
+      onerror: ((event: { error?: string }) => void) | null
+      onend: (() => void) | null
+    }
+    const SR =
+      (window as unknown as { SpeechRecognition?: SRConstructor })
+        .SpeechRecognition ??
+      (window as unknown as { webkitSpeechRecognition?: SRConstructor })
+        .webkitSpeechRecognition
+    if (!SR) return
+
+    const recognition = new SR()
+    recognition.continuous = true
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onresult = (event) => {
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          const text = event.results[i][0].transcript.trim()
+          if (text) {
+            setInput((prev) => (prev ? `${prev} ${text}` : text))
+          }
+        }
+      }
+    }
+    recognition.onerror = () => setRecording(false)
+    recognition.onend = () => {
+      setRecording(false)
+      recognitionRef.current = null
+    }
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setRecording(true)
+  }
 
   // Load narrative from sessionStorage
   useEffect(() => {
@@ -108,13 +200,21 @@ function SimulationChat({
     setNarrative(n)
   }, [session.id])
 
-  // Autoscroll chat
+  // Auto-scroll chat to the latest message
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
       behavior: 'smooth',
     })
   }, [turns, loading])
+
+  // Refocus the input whenever the API call finishes (so the user can keep
+  // typing without re-clicking the field).
+  useEffect(() => {
+    if (!loading && !completed && !missingNarrative) {
+      inputRef.current?.focus()
+    }
+  }, [loading, completed, missingNarrative])
 
   const callSimulate = useCallback(
     async (factor: string, history: Turn[], isFirstTurn: boolean) => {
@@ -152,6 +252,8 @@ function SimulationChat({
     [
       narrative,
       session.sector,
+      session.industry,
+      session.sub_type,
       session.current_rating,
       session.outlook,
       session.issuer_name,
@@ -176,9 +278,7 @@ function SimulationChat({
         }
         setTurns([newTurn])
         setResults((prev) =>
-          prev.map((r, i) =>
-            i === 0 ? { ...r, turns: [newTurn] } : r
-          )
+          prev.map((r, i) => (i === 0 ? { ...r, turns: [newTurn] } : r))
         )
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to start simulation')
@@ -192,29 +292,38 @@ function SimulationChat({
     e.preventDefault()
     const text = input.trim()
     if (!text || loading || completed) return
+    if (recording) stopRecording()
     setInput('')
     setError(null)
 
     const currentFactor = factors[factorIdx]
-    const userTurn: Turn = { role: 'user', content: text, factor: currentFactor }
+    const userTurn: Turn = {
+      role: 'user',
+      content: text,
+      factor: currentFactor,
+    }
     const nextTurns = [...turns, userTurn]
     setTurns(nextTurns)
 
     setLoading(true)
     try {
-      // History for the model is just the current factor's exchanges
       const factorHistory = nextTurns.filter((t) => t.factor === currentFactor)
       const reply = await callSimulate(currentFactor, factorHistory, false)
       if (!reply) return
+
+      const flag: Exclude<Flag, 'none'> | undefined =
+        reply.previous_answer_flag === 'none'
+          ? undefined
+          : reply.previous_answer_flag
 
       const assistantTurn: Turn = {
         role: 'assistant',
         content: reply.message,
         factor: currentFactor,
+        flag,
       }
 
-      const flagsForFactor =
-        reply.previous_answer_flag === 'none' ? [] : [reply.previous_answer_flag]
+      const flagsForFactor = flag ? [flag as Flag] : []
 
       setResults((prev) =>
         prev.map((r, i) =>
@@ -231,10 +340,9 @@ function SimulationChat({
       if (reply.factor_complete) {
         const nextIdx = factorIdx + 1
         if (nextIdx >= factors.length) {
-          // Show the final assistant message, then complete
           setTurns([...nextTurns, assistantTurn])
-          await finalize([
-            ...results.map((r, i) =>
+          await finalize(
+            results.map((r, i) =>
               i === factorIdx
                 ? {
                     ...r,
@@ -242,13 +350,11 @@ function SimulationChat({
                     turns: [...r.turns, userTurn, assistantTurn],
                   }
                 : r
-            ),
-          ])
+            )
+          )
         } else {
-          // Show the closing message, then auto-start the next factor
           setTurns([...nextTurns, assistantTurn])
           setFactorIdx(nextIdx)
-          // Kick off next factor's opening question
           setLoading(true)
           try {
             const nextReply = await callSimulate(factors[nextIdx], [], true)
@@ -281,7 +387,6 @@ function SimulationChat({
   async function finalize(finalResults: FactorResult[]) {
     setCompleted(true)
 
-    // Compute summary
     let totalScore = 0
     let factorsFlagged = 0
     let criticalGaps = 0
@@ -296,14 +401,11 @@ function SimulationChat({
     const overall =
       finalResults.length > 0 ? totalScore / finalResults.length : 0
 
-    // Per-agency results: not persisted (privacy). Held in sessionStorage so
-    // /scorecard can render the breakdown.
     sessionStorage.setItem(
       `results:${session.id}:${agency}`,
       JSON.stringify(finalResults)
     )
 
-    // Mark completed agency
     const completedKey = `completed_agencies:${session.id}`
     const existing = JSON.parse(
       sessionStorage.getItem(completedKey) ?? '[]'
@@ -315,7 +417,6 @@ function SimulationChat({
       )
     }
 
-    // Persist summary metadata only
     try {
       const supabase = createClient()
       await supabase
@@ -331,6 +432,12 @@ function SimulationChat({
       // Non-fatal: scorecard will still render from sessionStorage
     }
 
+    // Show the completion modal instead of auto-navigating, so the user can
+    // see their final transcript before leaving.
+    setShowCompleteModal(true)
+  }
+
+  function goToScorecard() {
     router.push(
       `/scorecard?session_id=${session.id}&agency=${encodeURIComponent(agency)}`
     )
@@ -371,16 +478,19 @@ function SimulationChat({
       {/* Chat header */}
       <header className="rounded-t-lg border border-border bg-white px-5 py-4">
         <div className="flex items-center justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              {agency} analyst
-            </p>
-            <h1 className="mt-0.5 text-lg font-semibold">
-              {analystDisplayName}{' '}
-              <span className="font-normal text-muted">
-                — {analystDisplayRole}
-              </span>
-            </h1>
+          <div className="flex items-center gap-3">
+            <AgencyAvatar persona={persona} agency={agency} size="lg" />
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+                {agency} analyst
+              </p>
+              <h1 className="mt-0.5 text-lg font-semibold">
+                {analystDisplayName}{' '}
+                <span className="font-normal text-muted">
+                  — {analystDisplayRole}
+                </span>
+              </h1>
+            </div>
           </div>
           <div className="text-right text-sm">
             <p className="text-muted">Currently probing</p>
@@ -396,8 +506,10 @@ function SimulationChat({
             ref={scrollRef}
             className="flex-1 space-y-4 overflow-y-auto px-5 py-5"
           >
-            {turns.length === 0 && (
-              <p className="text-sm text-muted">Loading the analyst's first question…</p>
+            {turns.length === 0 && !loading && (
+              <p className="text-sm text-muted">
+                Loading the analyst&apos;s first question…
+              </p>
             )}
             {turns.map((turn, i) => {
               const prev = turns[i - 1]
@@ -411,16 +523,16 @@ function SimulationChat({
                       <span className="h-px flex-1 bg-border" />
                     </div>
                   )}
-                  <Bubble turn={turn} personaName={analystDisplayName} />
+                  <Bubble
+                    turn={turn}
+                    persona={persona}
+                    agency={agency}
+                  />
                 </div>
               )
             })}
-            {loading && (
-              <p className="text-xs text-muted">{analystDisplayName} is thinking…</p>
-            )}
-            {error && (
-              <p className="text-sm text-red-600">{error}</p>
-            )}
+            {loading && <TypingIndicator persona={persona} agency={agency} />}
+            {error && <p className="text-sm text-red-600">{error}</p>}
           </div>
 
           <form
@@ -428,16 +540,53 @@ function SimulationChat({
             className="flex gap-2 border-t border-border px-5 py-4"
           >
             <input
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder={
                 completed
                   ? 'Session complete.'
-                  : 'Type your response as the issuer…'
+                  : recording
+                    ? 'Listening… speak your response.'
+                    : 'Type your response as the issuer…'
               }
               disabled={loading || completed}
+              autoFocus
               className="flex-1 rounded-md border border-border bg-white px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             />
+            {speechSupported && (
+              <button
+                type="button"
+                onClick={toggleRecording}
+                disabled={loading || completed}
+                aria-pressed={recording}
+                aria-label={recording ? 'Stop dictation' : 'Start dictation'}
+                title={recording ? 'Stop dictation' : 'Dictate response'}
+                className={[
+                  'flex items-center justify-center rounded-md border px-3 py-2 text-sm font-medium transition',
+                  recording
+                    ? 'animate-pulse border-red-300 bg-red-50 text-red-700'
+                    : 'border-border bg-white text-foreground hover:border-brand hover:text-brand',
+                  'disabled:opacity-60',
+                ].join(' ')}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <rect x="9" y="2" width="6" height="12" rx="3" />
+                  <path d="M5 11a7 7 0 0 0 14 0" />
+                  <line x1="12" y1="19" x2="12" y2="22" />
+                </svg>
+              </button>
+            )}
             <button
               type="submit"
               disabled={loading || completed || !input.trim()}
@@ -454,7 +603,7 @@ function SimulationChat({
             <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
               Factor progress
             </h2>
-            <ul className="mt-3 space-y-2 text-sm">
+            <ul className="mt-3 space-y-2.5 text-sm">
               {factors.map((f, i) => {
                 const status: 'done' | 'in_progress' | 'pending' =
                   completed || i < factorIdx
@@ -463,13 +612,15 @@ function SimulationChat({
                       ? 'in_progress'
                       : 'pending'
                 return (
-                  <li key={f} className="flex items-center gap-2">
-                    <StatusDot status={status} />
+                  <li key={f} className="flex items-center gap-2.5">
+                    <StatusBadge status={status} />
                     <span
                       className={
                         status === 'pending'
                           ? 'text-muted'
-                          : 'font-medium text-foreground'
+                          : status === 'in_progress'
+                            ? 'font-semibold text-foreground'
+                            : 'font-medium text-foreground'
                       }
                     >
                       {f}
@@ -505,32 +656,80 @@ function SimulationChat({
           </section>
         </aside>
       </div>
+
+      {showCompleteModal && <CompleteModal onView={goToScorecard} />}
     </main>
+  )
+}
+
+/* ------------------------------------------------------------------------- */
+/* Sub-components                                                            */
+/* ------------------------------------------------------------------------- */
+
+function AgencyAvatar({
+  persona,
+  agency,
+  size = 'md',
+}: {
+  persona: Persona
+  agency: Agency
+  size?: 'sm' | 'md' | 'lg'
+}) {
+  const initials = getInitials(persona.name)
+  const sizeClasses =
+    size === 'lg'
+      ? 'h-11 w-11 text-sm'
+      : size === 'sm'
+        ? 'h-7 w-7 text-[10px]'
+        : 'h-9 w-9 text-xs'
+  return (
+    <span
+      aria-hidden
+      className={[
+        'inline-flex shrink-0 items-center justify-center rounded-full font-semibold tracking-wide text-white',
+        AGENCY_AVATAR_CLASSES[agency],
+        sizeClasses,
+      ].join(' ')}
+      title={`${persona.name} (${agency})`}
+    >
+      {initials}
+    </span>
   )
 }
 
 function Bubble({
   turn,
-  personaName,
+  persona,
+  agency,
 }: {
   turn: Turn
-  personaName: string
+  persona: Persona
+  agency: Agency
 }) {
   const isUser = turn.role === 'user'
   return (
-    <div className={['flex', isUser ? 'justify-end' : 'justify-start'].join(' ')}>
+    <div
+      className={[
+        'flex items-start gap-3',
+        isUser ? 'justify-end' : 'justify-start',
+      ].join(' ')}
+    >
+      {!isUser && <AgencyAvatar persona={persona} agency={agency} size="md" />}
       <div
         className={[
-          'max-w-[85%] rounded-lg px-4 py-2.5 text-sm leading-relaxed',
+          'max-w-[80%] rounded-lg px-4 py-2.5 text-sm leading-relaxed',
           isUser
             ? 'bg-brand text-white'
             : 'border border-border bg-surface text-foreground',
         ].join(' ')}
       >
         {!isUser && (
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">
-            {personaName}
-          </p>
+          <div className="mb-1 flex items-center gap-1.5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+              {persona.name}
+            </p>
+            {turn.flag && <MessageFlagIcon flag={turn.flag} />}
+          </div>
         )}
         <p className="whitespace-pre-wrap">{turn.content}</p>
       </div>
@@ -538,20 +737,143 @@ function Bubble({
   )
 }
 
-function StatusDot({ status }: { status: 'done' | 'in_progress' | 'pending' }) {
-  const cls =
-    status === 'done'
-      ? 'bg-brand'
-      : status === 'in_progress'
-        ? 'bg-brand/40 ring-2 ring-brand/20'
-        : 'border border-border bg-white'
+function TypingIndicator({
+  persona,
+  agency,
+}: {
+  persona: Persona
+  agency: Agency
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <AgencyAvatar persona={persona} agency={agency} size="md" />
+      <div
+        className="inline-flex items-end gap-1 rounded-lg border border-border bg-surface px-4 py-3"
+        aria-label={`${persona.name} is typing`}
+        role="status"
+      >
+        <span
+          className="block h-1.5 w-1.5 animate-bounce rounded-full bg-muted"
+          style={{ animationDelay: '0ms' }}
+        />
+        <span
+          className="block h-1.5 w-1.5 animate-bounce rounded-full bg-muted"
+          style={{ animationDelay: '150ms' }}
+        />
+        <span
+          className="block h-1.5 w-1.5 animate-bounce rounded-full bg-muted"
+          style={{ animationDelay: '300ms' }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function MessageFlagIcon({ flag }: { flag: Exclude<Flag, 'none'> }) {
+  if (flag === 'strong') {
+    return (
+      <span
+        title="Strong answer"
+        className="inline-flex h-4 w-4 items-center justify-center text-emerald-600"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M5 12l5 5L20 7" />
+        </svg>
+      </span>
+    )
+  }
+  if (flag === 'weak') {
+    return (
+      <span
+        title="Weak answer"
+        className="inline-flex h-4 w-4 items-center justify-center text-amber-600"
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden
+        >
+          <path d="M12 2L2 22h20L12 2z" />
+        </svg>
+      </span>
+    )
+  }
+  // critical_gap
   return (
     <span
-      className={[
-        'inline-block h-2.5 w-2.5 rounded-full',
-        cls,
-      ].join(' ')}
-    />
+      title="Critical gap"
+      className="inline-flex h-4 w-4 items-center justify-center text-red-600"
+    >
+      <svg
+        width="10"
+        height="10"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden
+      >
+        <circle cx="12" cy="12" r="10" />
+      </svg>
+    </span>
+  )
+}
+
+function StatusBadge({
+  status,
+}: {
+  status: 'done' | 'in_progress' | 'pending'
+}) {
+  if (status === 'done') {
+    return (
+      <span
+        aria-label="Factor complete"
+        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"
+      >
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M5 12l5 5L20 7" />
+        </svg>
+      </span>
+    )
+  }
+  if (status === 'in_progress') {
+    return (
+      <span
+        aria-label="Currently probing"
+        className="relative inline-flex h-5 w-5 shrink-0 items-center justify-center"
+      >
+        <span className="absolute inset-0 animate-ping rounded-full bg-brand/30" />
+        <span className="relative h-2.5 w-2.5 rounded-full bg-brand" />
+      </span>
+    )
+  }
+  return (
+    <span
+      aria-label="Pending"
+      className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-white"
+    >
+      <span className="h-2 w-2 rounded-full bg-border" />
+    </span>
   )
 }
 
@@ -581,5 +903,43 @@ function FlagPill({ flag }: { flag: Flag }) {
     >
       {label}
     </span>
+  )
+}
+
+function CompleteModal({ onView }: { onView: () => void }) {
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="complete-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6"
+    >
+      <div className="w-full max-w-md rounded-lg border border-border bg-white p-6 shadow-xl">
+        <p className="text-xs font-semibold uppercase tracking-wide text-brand">
+          Done
+        </p>
+        <h2
+          id="complete-modal-title"
+          className="mt-2 text-xl font-semibold tracking-tight text-foreground"
+        >
+          Session complete — view your scorecard
+        </h2>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          Nice work. Your scorecard is ready, including the factor-by-factor
+          breakdown, the draft committee memo, and your priority prep
+          actions.
+        </p>
+        <div className="mt-6 flex justify-end">
+          <button
+            type="button"
+            onClick={onView}
+            autoFocus
+            className="rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
+          >
+            View your scorecard
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }

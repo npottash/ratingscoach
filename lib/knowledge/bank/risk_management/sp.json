@@ -1,5 +1,10 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "Did appetites change during particular periods of market volatility?",
+    "Do you anticipate appetites to change when rates come down or go back up?",
+    "How do you manage risks of growing fast?",
+    "What happens when growth slows and you start to reach for growth?"
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
   "agency_intel": []

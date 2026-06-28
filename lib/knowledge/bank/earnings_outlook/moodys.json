@@ -1,6 +1,13 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "How do you think about recurring fee revenue across market cycles?",
+    "How has the revenue mix shifted over time?",
+    "What is in the contribution margin?",
+    "Is there a funds transfer pricing framework that allocates deposit costs to each of your segments?"
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    "Moody's focuses on recurring fee revenue durability across market cycles and how the mix has shifted. Expect drill into contribution margin economics and segment-level FTP (funds transfer pricing) frameworks."
+  ]
 }

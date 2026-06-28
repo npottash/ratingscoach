@@ -17,24 +17,30 @@ Sectors and factors use snake_case slugs. Mapping is in `lib/knowledge/index.ts`
 
 ### Cell schema
 
-Each JSON file has four arrays. All four are optional — leave any empty and the prompt will skip that section.
+Each JSON file has four arrays. Each item in an array can be a **plain string** (universal — applies to all sub-types of the sector) or an **object with `text` + `sub_types`** (applies only when the session's sub-type matches one in the list). Mix freely within the same array.
 
 ```json
 {
   "real_questions": [
-    "Verbatim or close-to-verbatim questions you have actually heard this agency ask on this factor."
+    "A universal question — fires for every sub-type of this sector.",
+    {
+      "text": "A sub-type-specific question.",
+      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+    }
   ],
   "common_pitfalls": [
-    "Patterns where issuers consistently stumble on this factor. Used to sharpen the analyst's probing and the scorecard's flagging."
+    "Universal pitfall.",
+    {
+      "text": "Pitfall that only applies to a specific sub-type.",
+      "sub_types": ["Community Bank"]
+    }
   ],
-  "strong_answer_markers": [
-    "What a good answer on this factor includes. Used by the scorecard to recognize strong responses."
-  ],
-  "agency_intel": [
-    "Non-public observations on what this agency actually weighs heavily, versus what their methodology says."
-  ]
+  "strong_answer_markers": [],
+  "agency_intel": []
 }
 ```
+
+The `sub_types` values must match the sub-type strings used in the intake form (see `SUB_TYPES_BY_SECTOR` in `app/intake/page.tsx`).
 
 ### How to add content
 
@@ -42,7 +48,7 @@ You do not need to edit JSON yourself. Drop unstructured notes into a chat (a pa
 
 ### How it flows into the product
 
-- The **simulate** route injects the cell for the current agency × sector × factor into the system prompt as proprietary analyst knowledge.
-- The **scorecard** route injects pitfalls and strong-answer markers for each factor so flagging and recommended actions reflect your experience.
+- The **simulate** route reads the cell for the current agency × sector × factor and filters items by the session's sub-type before injecting them into the analyst's system prompt.
+- The **scorecard** route does the same filtering when injecting pitfalls and strong-answer markers into the scorecard generator.
 
-If a cell is empty, both routes fall back to the static seed bank and general model knowledge.
+Universal items (plain strings or objects with empty `sub_types`) always fire. Sub-type-tagged items only fire when the session's sub-type matches.

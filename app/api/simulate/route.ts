@@ -3,8 +3,12 @@ import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@/lib/supabase/server'
 import { PERSONAS } from '@/lib/personas'
 import { questionsFor } from '@/lib/questions'
-import { getKnowledge, type KnowledgeCell } from '@/lib/knowledge'
-import { getLeadAnalyst } from '@/lib/knowledge/analysts'
+import {
+  getKnowledge,
+  filterItemsForSubType,
+  loadPlaybook,
+  type KnowledgeCell,
+} from '@/lib/knowledge'
 import type { Agency } from '@/lib/types'
 
 const MODEL = 'claude-sonnet-4-6'
@@ -73,13 +77,27 @@ const tools: Anthropic.Tool[] = [
 function renderKnowledgeBlock(
   knowledge: KnowledgeCell | null,
   fallbackBank: string[],
-  agency: Agency
+  agency: Agency,
+  subType: string | null
 ): string {
   const sections: string[] = []
 
-  if (knowledge && knowledge.real_questions.length > 0) {
+  const realQs = knowledge
+    ? filterItemsForSubType(knowledge.real_questions, subType)
+    : []
+  const pitfalls = knowledge
+    ? filterItemsForSubType(knowledge.common_pitfalls, subType)
+    : []
+  const markers = knowledge
+    ? filterItemsForSubType(knowledge.strong_answer_markers, subType)
+    : []
+  const intel = knowledge
+    ? filterItemsForSubType(knowledge.agency_intel, subType)
+    : []
+
+  if (realQs.length > 0) {
     sections.push(
-      `Real questions ${agency} analysts have asked on this factor (adapt; do not read verbatim):\n${knowledge.real_questions
+      `Real questions ${agency} analysts have asked on this factor (adapt; do not read verbatim):\n${realQs
         .map((q) => `- ${q}`)
         .join('\n')}`
     )
@@ -91,25 +109,25 @@ function renderKnowledgeBlock(
     )
   }
 
-  if (knowledge && knowledge.common_pitfalls.length > 0) {
+  if (pitfalls.length > 0) {
     sections.push(
-      `Common pitfalls — patterns where issuers consistently stumble on this factor. Probe for these specifically:\n${knowledge.common_pitfalls
+      `Common pitfalls — patterns where issuers consistently stumble on this factor. Probe for these specifically:\n${pitfalls
         .map((p) => `- ${p}`)
         .join('\n')}`
     )
   }
 
-  if (knowledge && knowledge.strong_answer_markers.length > 0) {
+  if (markers.length > 0) {
     sections.push(
-      `Markers of a strong answer on this factor — reserve a "strong" flag only when these markers are present:\n${knowledge.strong_answer_markers
+      `Markers of a strong answer on this factor — reserve a "strong" flag only when these markers are present:\n${markers
         .map((m) => `- ${m}`)
         .join('\n')}`
     )
   }
 
-  if (knowledge && knowledge.agency_intel.length > 0) {
+  if (intel.length > 0) {
     sections.push(
-      `${agency} intel — non-public observations on what they actually weigh heavily. Use to angle your questions:\n${knowledge.agency_intel
+      `${agency} intel — non-public observations on what they actually weigh heavily. Use to angle your questions:\n${intel
         .map((i) => `- ${i}`)
         .join('\n')}`
     )
@@ -126,14 +144,23 @@ function buildSystemPrompt(args: {
   pastRealQuestions: string[]
 }): string {
   const persona = PERSONAS[args.ctx.agency]
-  const realAnalyst = getLeadAnalyst(args.ctx.sector, args.ctx.agency)
-  const analystName = realAnalyst?.name ?? persona.name
-  const analystRole =
-    realAnalyst?.role ?? `Lead ${args.ctx.sector} analyst`
   const knowledge = getKnowledge(args.ctx.agency, args.ctx.sector, args.factor)
   const fallbackBank = questionsFor(args.ctx.sector, args.factor)
 
-  const knowledgeBlock = renderKnowledgeBlock(knowledge, fallbackBank, args.ctx.agency)
+  const knowledgeBlock = renderKnowledgeBlock(
+    knowledge,
+    fallbackBank,
+    args.ctx.agency,
+    args.ctx.sub_type
+  )
+
+  const playbook = loadPlaybook(args.ctx.outlook)
+  const playbookBlock = playbook
+    ? `ADVISORY PLAYBOOK FOR CURRENT OUTLOOK
+The issuer is on ${args.ctx.outlook}. The advisor recommends these issuer behaviors in this situation. Use them to inform your probing — if the issuer's narrative or responses reveal they are NOT doing these things, that is a meaningful concern worth surfacing.
+
+${playbook.recommended_actions.map((a) => `- ${a}`).join('\n')}`
+    : ''
 
   const historyBlock =
     args.pastRealQuestions.length > 0
@@ -143,7 +170,7 @@ This issuer has been asked these questions by ${args.ctx.agency} analysts in pas
 ${args.pastRealQuestions.map((q) => `- ${q}`).join('\n')}`
       : ''
 
-  return `You are ${analystName}, ${analystRole} at ${args.ctx.agency}. You are conducting a rating agency meeting with the issuer described below.
+  return `You are ${persona.name}, ${persona.role} at ${args.ctx.agency}. You are conducting a rating agency meeting with the issuer described below. You are a fictional analyst persona created for issuer prep — never claim to be a real person.
 
 PERSONA AND STYLE
 ${persona.style}
@@ -171,6 +198,8 @@ ${args.narrative}
 
 ${knowledgeBlock}
 
+${playbookBlock}
+
 RULES
 - Ask ONE short question per turn. Single sentence. No compound questions. No "and also tell me about X" tag-ons.
 - Probe the credit STORY — the durability of the narrative, the strategic rationale, management thinking, how the issuer reasons under pressure. Do not turn this into a metric drill.
@@ -178,7 +207,7 @@ RULES
 - Tone: professional, courteous, and curious. You are sharp underneath but respectful on the surface. You are a colleague exploring the credit, not an interrogator. Acknowledge a good point briefly before moving on. Never sarcastic, never blunt-to-the-point-of-rude.
 - Stay conversational. You are in a real meeting, not an oral exam.
 - Probe weaknesses and missing detail through curious questions, not confrontation. Do not coach, summarize, or feed answers.
-- After 2-3 exchanges on this factor, set factor_complete=true so we move on.
+- After 2-3 exchanges on this factor, set factor_complete=true. When you set factor_complete=true, your message must be a brief one or two sentence CLOSING acknowledgment of the topic — NOT a new question. Example: "Thanks, that gives me a clear picture of how you're thinking about funding." The simulation will introduce the next topic in the next turn.
 - Flag the issuer's previous answer honestly. "weak" = vague, evasive, or shallow. "critical_gap" = the answer exposed a material credit concern or showed the issuer is unprepared. "strong" = a clear, specific, well-reasoned answer that strengthens the story. Use "none" only on the very first turn.
 - Respond ONLY by calling the 'respond' tool.`
 }
@@ -241,7 +270,7 @@ export async function POST(request: Request) {
     ? [
         {
           role: 'user',
-          content: `Begin probing ${body.current_factor}. Open with your first question.`,
+          content: `Begin probing ${body.current_factor}. Open with a brief transition sentence acknowledging you're moving to this topic (e.g., "Let's turn to ${body.current_factor}." or "Moving on to ${body.current_factor}."), then ask your first question.`,
         },
       ]
     : body.history.map((t) => ({ role: t.role, content: t.content }))

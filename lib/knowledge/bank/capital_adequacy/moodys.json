@@ -1,5 +1,11 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "What's your operating range for capital?",
+    "Are there any capital raises assumed in your plan?",
+    "Any limits from regulators around how fast you can grow the bank?",
+    "What is the minimum amount of buffer maintained above well-capitalized?",
+    "How does targeted mortgage market share tie back to targeted balance sheet size?"
+  ],
   "common_pitfalls": [
     "Issuers respond to reduced regulatory burden (Basel 3 Finalization easing, less severe CCAR stress testing for >$100B banks) by planning to lower capital levels. Moody's views this as credit negative."
   ],

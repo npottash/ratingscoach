@@ -39,11 +39,10 @@ const OUTLOOKS = [
 const MEETING_TYPES = [
   'Annual Review',
   'New Rating Request',
-  'Outlook Change Discussion',
   'Transaction Update',
 ] as const
 
-const INDUSTRY_SUGGESTIONS = [
+const CORPORATE_INDUSTRIES = [
   'Aerospace, Defense & Industrials',
   'Auto',
   'Chemicals & Materials',
@@ -106,6 +105,8 @@ const SUB_TYPES_BY_SECTOR: Record<string, readonly string[]> = {
     'Sub-Sovereign — Municipal',
     'Supranational (IMF, World Bank, EIB, etc.)',
   ],
+  'Corporate IG': CORPORATE_INDUSTRIES,
+  'Corporate HY': CORPORATE_INDUSTRIES,
 }
 
 const AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
@@ -139,8 +140,8 @@ export default function IntakePage() {
             Session intake
           </h1>
           <p className="mt-2 text-muted">
-            Tell us about the issuer and the upcoming meeting. This shapes the
-            simulation.
+            Tell us about your business and background on the upcoming meeting.
+            This shapes the simulation.
           </p>
         </header>
 
@@ -151,7 +152,10 @@ export default function IntakePage() {
               <input name="issuer_name" required className={inputClass} />
             </label>
             <label className={labelClass}>
-              <span>Ticker</span>
+              <span>
+                Ticker{' '}
+                <span className="font-normal text-muted">(optional)</span>
+              </span>
               <input name="ticker" className={inputClass} />
             </label>
           </div>
@@ -175,44 +179,6 @@ export default function IntakePage() {
                   </option>
                 ))}
               </select>
-            </label>
-            <label className={labelClass}>
-              <span>Current rating</span>
-              <select
-                name="current_rating"
-                required
-                defaultValue=""
-                className={inputClass}
-              >
-                <option value="" disabled>
-                  Select rating
-                </option>
-                {RATINGS.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2">
-            <label className={labelClass}>
-              <span>
-                Industry{' '}
-                <span className="font-normal text-muted">(optional)</span>
-              </span>
-              <input
-                name="industry"
-                list="industry-suggestions"
-                placeholder="e.g. Utilities, Technology, Energy"
-                className={inputClass}
-              />
-              <datalist id="industry-suggestions">
-                {INDUSTRY_SUGGESTIONS.map((i) => (
-                  <option key={i} value={i} />
-                ))}
-              </datalist>
             </label>
             <label className={labelClass}>
               <span>
@@ -309,25 +275,45 @@ export default function IntakePage() {
             </span>
           </div>
 
-          <label className={labelClass}>
-            <span>Meeting date</span>
-            <input
-              name="meeting_date"
-              type="date"
-              required
-              className={inputClass}
-            />
-          </label>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <label className={labelClass}>
+              <span>Current rating</span>
+              <select
+                name="current_rating"
+                required
+                defaultValue=""
+                className={inputClass}
+              >
+                <option value="" disabled>
+                  Select rating
+                </option>
+                {RATINGS.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className={labelClass}>
+              <span>Meeting date</span>
+              <input
+                name="meeting_date"
+                type="date"
+                required
+                className={inputClass}
+              />
+            </label>
+          </div>
 
           <label className={labelClass}>
             <span>
-              Key topics{' '}
+              Key topics you'd like to address with the rating agencies{' '}
               <span className="font-normal text-muted">(optional)</span>
             </span>
             <textarea
               name="key_topics"
               rows={4}
-              placeholder="What do you expect the analyst to push on? Used to weight question selection."
+              placeholder="The themes, updates, or concerns you want to make sure get covered in the meeting."
               className={inputClass}
             />
           </label>

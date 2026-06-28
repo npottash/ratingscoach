@@ -208,5 +208,6 @@ export function getKnowledge(
   return CELLS[`${sectorSlug}|${factorSlug}|${agencySlug}`] ?? null
 }
 
-export type { KnowledgeCell } from './types'
-export { isEmptyCell } from './types'
+export type { KnowledgeCell, KnowledgeItem } from './types'
+export { isEmptyCell, filterItemsForSubType } from './types'
+export { loadPlaybook, type Playbook } from './playbook'

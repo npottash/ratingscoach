@@ -1,5 +1,8 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "What's your operating range for capital?",
+    "Are there any capital raises assumed in your plan?"
+  ],
   "common_pitfalls": [
     "Issuers premise capital release plans on the current regulatory framework even though requirements are about to be updated. S&P will probe the contingency if updated requirements constrain the planned release pace."
   ],
