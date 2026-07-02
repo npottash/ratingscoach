@@ -127,17 +127,11 @@ const inputClass =
 const labelClass = 'flex flex-col gap-1.5 text-sm font-medium text-foreground'
 
 export default function IntakePage() {
-  const [agencies, setAgencies] = useState<Agency[]>(['S&P'])
+  const [agency, setAgency] = useState<Agency>('S&P')
   const [sector, setSector] = useState<string>('')
   const [state, action, pending] = useActionState(submitIntake, initialState)
 
   const subTypeSuggestions = SUB_TYPES_BY_SECTOR[sector] ?? []
-
-  function toggleAgency(a: Agency) {
-    setAgencies((prev) =>
-      prev.includes(a) ? prev.filter((x) => x !== a) : [...prev, a]
-    )
-  }
 
   return (
     <>
@@ -261,12 +255,12 @@ export default function IntakePage() {
             <span>Agency</span>
             <div className="flex flex-wrap gap-2">
               {AGENCIES.map((a) => {
-                const selected = agencies.includes(a)
+                const selected = agency === a
                 return (
                   <button
                     type="button"
                     key={a}
-                    onClick={() => toggleAgency(a)}
+                    onClick={() => setAgency(a)}
                     className={[
                       'rounded-md border px-4 py-2 text-sm font-medium transition',
                       selected
@@ -280,11 +274,9 @@ export default function IntakePage() {
                 )
               })}
             </div>
-            {agencies.map((a) => (
-              <input key={a} type="hidden" name="agency" value={a} />
-            ))}
+            <input type="hidden" name="agency" value={agency} />
             <span className="text-xs font-normal text-muted">
-              Select one or more agencies.
+              Select the agency you&apos;re preparing for.
             </span>
           </div>
 
@@ -338,7 +330,7 @@ export default function IntakePage() {
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={pending || agencies.length === 0}
+              disabled={pending}
               className="rounded-md bg-brand px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
             >
               {pending ? 'Saving…' : 'Continue to narrative'}
