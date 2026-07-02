@@ -194,9 +194,13 @@ export default function IntakePage() {
                 Sub-type{' '}
                 <span className="font-normal text-muted">(optional)</span>
               </span>
+              {/* Keyed by sector: browsers cache datalist bindings, so the
+                  input + list must be remounted when the sector changes or
+                  stale suggestions from the previous sector keep showing. */}
               <input
+                key={sector}
                 name="sub_type"
-                list="sub-type-suggestions"
+                list={`sub-type-suggestions-${sector}`}
                 placeholder={
                   sector
                     ? subTypeSuggestions.length > 0
@@ -206,7 +210,7 @@ export default function IntakePage() {
                 }
                 className={inputClass}
               />
-              <datalist id="sub-type-suggestions">
+              <datalist id={`sub-type-suggestions-${sector}`}>
                 {subTypeSuggestions.map((s) => (
                   <option key={s} value={s} />
                 ))}
