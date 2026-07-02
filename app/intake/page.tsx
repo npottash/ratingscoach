@@ -188,28 +188,25 @@ export default function IntakePage() {
                 Sub-type{' '}
                 <span className="font-normal text-muted">(optional)</span>
               </span>
-              {/* Keyed by sector: browsers cache datalist bindings, so the
-                  input + list must be remounted when the sector changes or
-                  stale suggestions from the previous sector keep showing. */}
-              <input
+              {/* Keyed by sector so the selection resets on sector change. */}
+              <select
                 key={sector}
                 name="sub_type"
-                autoComplete="off"
-                list={`sub-type-suggestions-${sector}`}
-                placeholder={
-                  sector
-                    ? subTypeSuggestions.length > 0
-                      ? 'Pick or type a sub-type'
-                      : 'Free text (no presets for this sector yet)'
-                    : 'Select a sector first to see suggestions'
-                }
+                defaultValue=""
+                disabled={!sector}
                 className={inputClass}
-              />
-              <datalist id={`sub-type-suggestions-${sector}`}>
+              >
+                <option value="">
+                  {sector
+                    ? 'Select sub-type'
+                    : 'Select a sector first'}
+                </option>
                 {subTypeSuggestions.map((s) => (
-                  <option key={s} value={s} />
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
                 ))}
-              </datalist>
+              </select>
             </label>
           </div>
 
