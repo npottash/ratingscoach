@@ -31,13 +31,53 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
   const [uploadedName, setUploadedName] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  async function extractPdfViaApi(file: File): Promise<string> {
+    const buf = await file.arrayBuffer()
+    let binary = ''
+    const bytes = new Uint8Array(buf)
+    const chunk = 0x8000
+    for (let i = 0; i < bytes.length; i += chunk) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + chunk))
+    }
+    const res = await fetch('/api/extract', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pdf_base64: btoa(binary), filename: file.name }),
+    })
+    const data = (await res.json()) as { text?: string; error?: string }
+    if (!res.ok || !data.text) {
+      throw new Error(data.error ?? 'Document extraction failed.')
+    }
+    return data.text
+  }
+
   async function handleFile(file: File) {
     setUploadError(null)
     setExtracting(true)
     try {
-      // Extraction happens entirely in the browser — the file is never
-      // uploaded to a server (see /security).
-      const extracted = await extractTextFromFile(file)
+      let extracted: string
+      if (file.name.toLowerCase().endsWith('.pdf')) {
+        // PDFs go through AI transcription so tables keep their structure and
+        // charts are captured with their data. Processed in memory only —
+        // never stored. Falls back to local text extraction if that fails.
+        try {
+          extracted = await extractPdfViaApi(file)
+        } catch (apiErr) {
+          const local = await extractTextFromFile(file).catch(() => null)
+          if (local) {
+            extracted = local
+            setUploadError(
+              'AI transcription failed — used basic text extraction instead. Tables and charts may be incomplete. ' +
+                (apiErr instanceof Error ? apiErr.message : '')
+            )
+          } else {
+            throw apiErr
+          }
+        }
+      } else {
+        // DOCX and text files are read entirely in the browser.
+        extracted = await extractTextFromFile(file)
+      }
       setText(extracted)
       setUploadedName(file.name)
       setTab('paste')
@@ -155,8 +195,9 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
                       : 'Drag and drop a file, or click to browse'}
                 </p>
                 <p className="mt-1 text-sm text-muted">
-                  PDF, DOCX, or TXT. Read entirely in your browser — the file
-                  is never uploaded.
+                  PDF, DOCX, or TXT. PDFs are transcribed by AI so tables and
+                  charts are preserved — processed in memory, never stored.
+                  DOCX and TXT are read entirely in your browser.
                 </p>
                 {uploadError && (
                   <p className="mt-3 text-sm text-red-600">{uploadError}</p>

@@ -12,7 +12,7 @@ export const ACCEPTED_EXTENSIONS = [
   ...TEXT_EXTENSIONS,
 ]
 
-export const MAX_FILE_BYTES = 20 * 1024 * 1024 // 20MB
+export const MAX_FILE_BYTES = 20 * 1024 * 1024 // 20MB (local extraction only)
 
 function extensionOf(name: string): string {
   const dot = name.lastIndexOf('.')
