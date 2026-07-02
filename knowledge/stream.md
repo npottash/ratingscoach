@@ -113,3 +113,37 @@ As a general rule, when a company is on negative outlook or on review for downgr
 - You want the rating analysts to feel like they are insiders — that helps them get more comfortable around stabilizing the credit.
 - Always be prepared with robust materials that address their most important concerns.
 - Resolution windows: negative outlook needs to be resolved in 18–24 months; review for downgrade or credit watch negative needs to be resolved within 90 days.
+
+## 2026-07-02
+
+### Banks — diverging agency views (background)
+
+Across the three agencies there are slightly diverging views on US banks.
+
+### Moody's — Bank (posture and scorecard mechanics)
+
+Moody's, post-SVB, changed their posture to become more negative on banks broadly in the US. In the months following the collapse of SVB, they took broad-ranging negative action across the industry to lower their average rating on North American banks. Since then, they've also revised their methodology to be more punitive on capital, so the same capital levels now correspond to lower sub-scores on the Moody's Scorecard. Broadly speaking, Moody's has taken a more negative tone. On the back of recent regulatory proposals, they have announced that they view lower capital ratios as a result of regulatory changes to be a credit negative. That's a negative posture on the industry. They've also announced, on the back of the stress test results, that lower capital requirements (not even lower actual capital ratios, but lower capital requirements) they also view as a credit negative. Moody's tone has shifted more negative across banks broadly — for existing issuers but also for new issuers. They have come in lower than the other agencies on new engagements, and they've also been slower to upgrade on existing ratings.
+
+Moody's methodology looks at the regulatory requirements because the denominator of their capital ratio is risk-weighted assets as calculated by the regulatory framework. The numerator for them is Tangible Common Equity — comparable to CET1 but it's their own metric — so they really look across simple common equity capital metrics.
+
+Other pieces of the Moody's scorecard: the asset risk piece, calculated as problem loans to gross loans, is largely viewed much more negatively as it plays through their scorecard. They consistently notch down ratings from the scorecard-implied outcome to where they actually rate the issuer — so even for issuers with really good asset quality, it doesn't play through as strongly as you would expect on the Moody's scorecard. They've also revised their views of liquidity and funding as part of the new methodology to be less focused on market funds and more focused on what could potentially happen to deposits through a cycle.
+
+### S&P — Bank (RAC ratio and constructive posture)
+
+S&P, for capital, uses the risk-adjusted capital (RAC) ratio — their own evaluation of capital. The numerator is most comparable to tier one capital, and the denominator is their own calculation of risk-weighted assets, separate from the regulatory calculation. They are more punitive on operational risks, which they include within the denominator of their capital ratio — operational risk tends to be more of a focus for S&P because it's included in that capital ratio. The RAC ratio is what S&P is most focused on as relates to rating banks.
+
+S&P also relies more on regulatory metrics for the other factors:
+- For liquidity, they look at the liquidity coverage ratio (LCR).
+- For funding, they look at a stable funding ratio.
+
+S&P has tended to be more constructive on banks as of late. On new engagements, they've come out at least a notch ahead of Moody's for certain banks. They've been more constructive particularly in the consumer space — more willing to give higher ratings for consumer platforms where losses can be a little bit higher. They've shown a willingness to be more constructive on asset risk.
+
+### Fitch — Bank (less constructive than expected; positioning by bank size)
+
+Fitch has surprisingly been less constructive than expected. There's a general conception that Fitch will always rate better, but they've actually come in lower on a few new bank ratings and have been less willing to upgrade in certain instances — tread lightly on Fitch.
+
+Fitch has tended to be harsher on lower credit quality assets, and has not given as much credit when banks take risk into securitization or warehousing. Fitch continues to be constructive on larger banks (trust banks, money centers) — they've tended to upgrade faster and are willing to do more for those banks. For smaller banks, Fitch is decently well-positioned. But for mid-range banks (call it $50bn through Category 2), steer clear of Fitch for a new rating. For existing Fitch ratings in that range, focus attention on educating the rating analysts around asset quality, forward strength of capital, and the strong liquidity position.
+
+### All agencies — Bank (capital focus in meetings)
+
+All the agencies are going to want to know the 18- to 24-month view on capital and what run-rate capital is expected to be over the long term. Particularly, Moody's will want to look at run-rate capital and measure it against their framework as a large input into the rating. S&P will look at the RAC ratio, but will also rely on their own evaluation of asset risk and are more likely to look across to competitors when assigning the rating.
