@@ -1,8 +1,9 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { Agency } from '@/lib/types'
+import { ACCEPTED_EXTENSIONS, extractTextFromFile } from '@/lib/extractText'
 
 export type SessionSummary = {
   id: string
@@ -24,6 +25,38 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
   const [tab, setTab] = useState<'paste' | 'upload'>('paste')
   const [text, setText] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [dragging, setDragging] = useState(false)
+  const [extracting, setExtracting] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const [uploadedName, setUploadedName] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  async function handleFile(file: File) {
+    setUploadError(null)
+    setExtracting(true)
+    try {
+      // Extraction happens entirely in the browser — the file is never
+      // uploaded to a server (see /security).
+      const extracted = await extractTextFromFile(file)
+      setText(extracted)
+      setUploadedName(file.name)
+      setTab('paste')
+    } catch (err) {
+      setUploadError(
+        err instanceof Error ? err.message : 'Could not read that file.'
+      )
+    } finally {
+      setExtracting(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault()
+    setDragging(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) void handleFile(file)
+  }
 
   const focusAreas = (session.key_topics ?? '')
     .split(/[,;\n]/)
@@ -73,25 +106,72 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
           </div>
 
           {tab === 'paste' ? (
-            <textarea
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              rows={18}
-              placeholder="Paste your prepared narrative, talking points, and key messaging..."
-              className="rounded-md border border-border bg-white px-3 py-3 text-sm leading-6 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-              required
-            />
+            <>
+              {uploadedName && (
+                <p className="text-xs text-muted">
+                  Loaded from <span className="font-medium">{uploadedName}</span>{' '}
+                  — review and edit below.
+                </p>
+              )}
+              <textarea
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                rows={18}
+                placeholder="Paste your prepared narrative, talking points, and key messaging..."
+                className="rounded-md border border-border bg-white px-3 py-3 text-sm leading-6 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+                required
+              />
+            </>
           ) : (
-            <div className="flex h-96 items-center justify-center rounded-md border-2 border-dashed border-border bg-surface text-center">
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => fileInputRef.current?.click()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  fileInputRef.current?.click()
+                }
+              }}
+              onDragOver={(e) => {
+                e.preventDefault()
+                setDragging(true)
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={handleDrop}
+              className={[
+                'flex h-96 cursor-pointer items-center justify-center rounded-md border-2 border-dashed text-center transition',
+                dragging
+                  ? 'border-brand bg-brand/5'
+                  : 'border-border bg-surface hover:border-brand',
+              ].join(' ')}
+            >
               <div className="px-6">
                 <p className="font-medium text-foreground">
-                  Drag and drop a file
+                  {extracting
+                    ? 'Reading your document…'
+                    : dragging
+                      ? 'Drop to load your narrative'
+                      : 'Drag and drop a file, or click to browse'}
                 </p>
                 <p className="mt-1 text-sm text-muted">
-                  PDF, DOCX, or TXT — file upload is coming soon. For now, paste
-                  your text in the other tab.
+                  PDF, DOCX, or TXT. Read entirely in your browser — the file
+                  is never uploaded.
                 </p>
+                {uploadError && (
+                  <p className="mt-3 text-sm text-red-600">{uploadError}</p>
+                )}
               </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={ACCEPTED_EXTENSIONS.join(',')}
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) void handleFile(file)
+                }}
+              />
             </div>
           )}
 
@@ -103,7 +183,7 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={submitting || tab === 'upload' || !text.trim()}
+              disabled={submitting || extracting || !text.trim()}
               className="rounded-md bg-brand px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
             >
               {submitting ? 'Loading simulation…' : 'Start simulation'}
