@@ -6,8 +6,13 @@
   "common_pitfalls": [
     "Issuers premise capital release plans on the current regulatory framework even though requirements are about to be updated. S&P will probe the contingency if updated requirements constrain the planned release pace."
   ],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    "Comes prepared with an explicit 18–24 month capital view and a long-term run-rate capital target."
+  ],
   "agency_intel": [
+    "S&P's capital anchor is the risk-adjusted capital (RAC) ratio — their own evaluation of capital, with a numerator most comparable to Tier 1 and a denominator that is S&P's own risk-weighted asset calculation, separate from the regulatory one. The RAC ratio is what S&P is most focused on when rating banks.",
+    "Operational risk sits inside the denominator of S&P's RAC ratio, so operational risk gets more focus at S&P than at the other agencies.",
+    "S&P is more likely than the other agencies to look across to competitors when assigning the rating — peer positioning matters.",
     "S&P sees room for capital releases — improvements in capital ratios, lower stress capital buffers, and declines in unrealized losses have created the room. However, S&P cautions that the extent only becomes clearer once regulators update capital requirements."
   ]
 }

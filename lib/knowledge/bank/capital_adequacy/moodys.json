@@ -4,13 +4,19 @@
     "Are there any capital raises assumed in your plan?",
     "Any limits from regulators around how fast you can grow the bank?",
     "What is the minimum amount of buffer maintained above well-capitalized?",
-    "How does targeted mortgage market share tie back to targeted balance sheet size?"
+    "How does targeted mortgage market share tie back to targeted balance sheet size?",
+    "What is your run-rate capital expectation over the long term, and your 18–24 month capital trajectory?"
   ],
   "common_pitfalls": [
     "Issuers respond to reduced regulatory burden (Basel 3 Finalization easing, less severe CCAR stress testing for >$100B banks) by planning to lower capital levels. Moody's views this as credit negative."
   ],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    "Comes prepared with an explicit 18–24 month capital view and a long-term run-rate capital target."
+  ],
   "agency_intel": [
+    "Post-SVB, Moody's revised its methodology to be more punitive on capital — the same capital levels now map to lower sub-scores on the Moody's Scorecard.",
+    "Moody's capital ratio mechanics: the numerator is Tangible Common Equity (their own metric, comparable to CET1) over regulatory risk-weighted assets — the focus is on simple common-equity capital metrics.",
+    "Run-rate capital measured against Moody's framework is a large input into the rating — expect them to test the issuer's run-rate capital directly against their scorecard.",
     "Moody's is more concerned than S&P about capital rule uncertainty and the prospect of lower capital requirements. Expect stricter questions on how the issuer plans to keep capital levels higher in the face of reduced regulatory burden.",
     "For CCAR banks (>$100B assets), Moody's specifically watches the gap between the now-lower regulatory minimum and the operating capital level. A bank that lets the buffer compress simply because rules allow it will be flagged."
   ]
