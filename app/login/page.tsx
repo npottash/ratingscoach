@@ -48,6 +48,15 @@ export default function LoginPage() {
             <p className="text-sm text-red-600">{state.error}</p>
           )}
 
+          <p className="text-right text-sm">
+            <Link
+              href="/forgot-password"
+              className="text-brand hover:text-brand-hover"
+            >
+              Forgot password?
+            </Link>
+          </p>
+
           <button
             type="submit"
             disabled={pending}

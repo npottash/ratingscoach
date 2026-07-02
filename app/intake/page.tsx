@@ -17,6 +17,7 @@ const SECTORS = [
 ] as const
 
 const RATINGS = [
+  'AAA',
   'AA+',
   'AA',
   'AA-',

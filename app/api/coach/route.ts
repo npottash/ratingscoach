@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
+import { checkRateLimit } from '@/lib/rateLimit'
 import { PERSONAS } from '@/lib/personas'
 import { factorsFor } from '@/lib/factors'
 import {
@@ -56,6 +57,17 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const allowed = await checkRateLimit(supabase, user.id, 'coach')
+  if (!allowed) {
+    return NextResponse.json(
+      {
+        error:
+          'Daily coach question limit reached. Your limit resets at midnight UTC.',
+      },
+      { status: 429 }
+    )
   }
 
   // Required env

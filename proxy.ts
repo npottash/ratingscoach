@@ -5,6 +5,8 @@ const PUBLIC_ROUTES = new Set([
   '/',
   '/login',
   '/signup',
+  '/forgot-password',
+  '/auth/confirm',
   '/landing',
   '/demo',
   '/privacy',
@@ -62,6 +64,6 @@ export const config = {
   // Exclude /api — those routes self-protect (auth cookie OR shared secret)
   // and need to return JSON errors, not HTML redirects.
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.svg$|.*\\.png$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|.*\\.svg$|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.webp$|.*\\.mp4$).*)',
   ],
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@/lib/supabase/server'
+import { checkRateLimit } from '@/lib/rateLimit'
 import { PERSONAS } from '@/lib/personas'
 import { questionsFor } from '@/lib/questions'
 import {
@@ -220,6 +221,17 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const allowed = await checkRateLimit(supabase, user.id, 'simulate')
+  if (!allowed) {
+    return NextResponse.json(
+      {
+        error:
+          'Daily simulation limit reached. Your limit resets at midnight UTC.',
+      },
+      { status: 429 }
+    )
   }
 
   if (!process.env.ANTHROPIC_API_KEY) {
