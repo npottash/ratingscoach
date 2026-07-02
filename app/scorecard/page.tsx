@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { StepIndicator } from '@/components/StepIndicator'
+import { PageHeader } from '@/components/PageHeader'
 import { Scorecard, type ScorecardSession } from './Scorecard'
 import type { Agency } from '@/lib/types'
 
@@ -28,7 +29,8 @@ export default async function ScorecardPage({
 
   return (
     <>
-      <StepIndicator current={4} />
+      <PageHeader />
+      <StepIndicator current={4} sessionId={session.id} agency={agency} />
       <Scorecard session={session} agency={agency as Agency} />
     </>
   )

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { PageHeader } from '@/components/PageHeader'
 
 export const metadata: Metadata = {
   title: 'How The Ratings Coach Protects Your Information',
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
 
 export default function SecurityPage() {
   return (
-    <main className="mx-auto flex w-full max-w-[720px] flex-1 flex-col gap-10 px-6 py-14">
+    <>
+      <PageHeader />
+      <main className="mx-auto flex w-full max-w-[720px] flex-1 flex-col gap-10 px-6 py-14">
       <header className="flex flex-col gap-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-muted">
           Security
@@ -279,7 +282,8 @@ export default function SecurityPage() {
         you want to understand our architecture in more detail, ask us. We
         will explain it.
       </p>
-    </main>
+      </main>
+    </>
   )
 }
 

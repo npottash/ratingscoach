@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useActionState } from 'react'
+import { PageHeader } from '@/components/PageHeader'
 import { signup } from './actions'
 import type { AuthFormState } from '../login/actions'
 
@@ -11,20 +12,16 @@ export default function SignupPage() {
   const [state, action, pending] = useActionState(signup, initialState)
 
   return (
-    <main className="flex flex-1 items-center justify-center px-6 py-16">
-      <div className="w-full max-w-md">
-        <div className="text-center">
-          <Link
-            href="/"
-            className="text-lg font-semibold tracking-tight text-foreground"
-          >
-            The Ratings Coach
-          </Link>
-          <h1 className="mt-8 text-2xl font-semibold">Create your account</h1>
-          <p className="mt-2 text-sm text-muted">
-            Start prepping for your next agency meeting.
-          </p>
-        </div>
+    <>
+      <PageHeader />
+      <main className="flex flex-1 items-center justify-center px-6 py-16">
+        <div className="w-full max-w-md">
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold">Create your account</h1>
+            <p className="mt-2 text-sm text-muted">
+              Start prepping for your next agency meeting.
+            </p>
+          </div>
 
         <form action={action} className="mt-8 flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
@@ -63,13 +60,14 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-muted">
-          Already have an account?{' '}
-          <Link href="/login" className="text-brand hover:text-brand-hover">
-            Sign in
-          </Link>
-        </p>
-      </div>
-    </main>
+          <p className="mt-6 text-center text-sm text-muted">
+            Already have an account?{' '}
+            <Link href="/login" className="text-brand hover:text-brand-hover">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </main>
+    </>
   )
 }

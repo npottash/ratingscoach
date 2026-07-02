@@ -1,0 +1,284 @@
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { PageHeader } from '@/components/PageHeader'
+import { signOut } from './actions'
+import { DeleteSessionButton } from './DeleteSessionButton'
+import type { Agency } from '@/lib/types'
+
+type SessionRow = {
+  id: string
+  issuer_name: string
+  agency: Agency[] | null
+  meeting_date: string
+  overall_score: number | null
+  status: string
+  created_at: string
+}
+
+export default async function DashboardPage() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  // Proxy already gates /dashboard, but a defensive redirect keeps the page
+  // safe to render in any code path.
+  if (!user) redirect('/login')
+
+  // RLS scopes to the requesting user automatically.
+  const { data: sessionsRaw } = await supabase
+    .from('sessions')
+    .select(
+      'id, issuer_name, agency, meeting_date, overall_score, status, created_at'
+    )
+    .order('created_at', { ascending: false })
+
+  const sessions: SessionRow[] = sessionsRaw ?? []
+
+  return (
+    <>
+      <PageHeader />
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Dashboard
+          </p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight">
+            Welcome back
+          </h1>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 text-sm text-muted">
+            <span>
+              Signed in as{' '}
+              <span className="font-medium text-foreground">{user.email}</span>
+            </span>
+            <span aria-hidden>·</span>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="text-brand hover:text-brand-hover"
+              >
+                Sign out
+              </button>
+            </form>
+          </div>
+        </div>
+        <Link
+          href="/intake"
+          className="rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
+        >
+          New session
+        </Link>
+      </header>
+
+      <section className="mt-10">
+        {sessions.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <SessionsTable sessions={sessions} />
+        )}
+      </section>
+      </main>
+    </>
+  )
+}
+
+/* ------------------------------------------------------------------------- */
+/* Sub-components                                                            */
+/* ------------------------------------------------------------------------- */
+
+function SessionsTable({ sessions }: { sessions: SessionRow[] }) {
+  return (
+    <div className="overflow-hidden rounded-lg border border-border bg-white">
+      <div className="border-b border-border bg-surface px-5 py-3">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
+          Your sessions
+        </h2>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
+            <tr>
+              <th className="px-5 py-3">Issuer</th>
+              <th className="px-5 py-3">Agency</th>
+              <th className="px-5 py-3">Meeting date</th>
+              <th className="px-5 py-3">Score</th>
+              <th className="px-5 py-3">Status</th>
+              <th className="px-5 py-3" />
+              <th className="px-5 py-3" />
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {sessions.map((s) => (
+              <tr key={s.id} className="hover:bg-surface/60">
+                <td className="px-5 py-3 font-medium text-foreground">
+                  {s.issuer_name}
+                </td>
+                <td className="px-5 py-3 text-muted">
+                  {s.agency && s.agency.length > 0
+                    ? s.agency.join(', ')
+                    : '—'}
+                </td>
+                <td className="px-5 py-3 text-muted">
+                  {formatMeetingDate(s.meeting_date)}
+                </td>
+                <td className="px-5 py-3">
+                  <ScorePill score={s.overall_score} />
+                </td>
+                <td className="px-5 py-3">
+                  <StatusBadge status={s.status} />
+                </td>
+                <td className="px-5 py-3 text-right">
+                  <SessionAction session={s} />
+                </td>
+                <td className="px-5 py-3 text-right">
+                  <DeleteSessionButton
+                    sessionId={s.id}
+                    issuerName={s.issuer_name}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+function ScorePill({ score }: { score: number | null }) {
+  if (score == null) {
+    return <span className="text-muted">—</span>
+  }
+  const cls =
+    score >= 8
+      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+      : score >= 6
+        ? 'bg-amber-50 text-amber-700 border-amber-200'
+        : 'bg-red-50 text-red-700 border-red-200'
+  return (
+    <span
+      className={[
+        'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold',
+        cls,
+      ].join(' ')}
+    >
+      {score.toFixed(1)}
+    </span>
+  )
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, { label: string; cls: string }> = {
+    intake: {
+      label: 'Setup',
+      cls: 'bg-surface text-muted border-border',
+    },
+    completed: {
+      label: 'Completed',
+      cls: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    },
+  }
+  const entry =
+    map[status] ?? { label: status, cls: 'bg-surface text-muted border-border' }
+  return (
+    <span
+      className={[
+        'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium',
+        entry.cls,
+      ].join(' ')}
+    >
+      {entry.label}
+    </span>
+  )
+}
+
+function SessionAction({ session }: { session: SessionRow }) {
+  if (
+    session.status === 'completed' &&
+    session.agency &&
+    session.agency.length > 0
+  ) {
+    const agency = encodeURIComponent(session.agency[0])
+    return (
+      <Link
+        href={`/scorecard?session_id=${session.id}&agency=${agency}`}
+        className="font-medium text-brand hover:text-brand-hover"
+      >
+        View scorecard
+      </Link>
+    )
+  }
+  if (session.status === 'intake') {
+    return (
+      <Link
+        href={`/narrative?session_id=${session.id}`}
+        className="font-medium text-brand hover:text-brand-hover"
+      >
+        Continue
+      </Link>
+    )
+  }
+  return <span className="text-muted">—</span>
+}
+
+function EmptyState() {
+  return (
+    <div className="rounded-lg border border-border bg-white px-6 py-14 text-center">
+      <div className="mx-auto h-28 w-28 text-border">
+        <EmptyIllustration />
+      </div>
+      <h2 className="mt-6 text-xl font-semibold tracking-tight">
+        No sessions yet
+      </h2>
+      <p className="mx-auto mt-2 max-w-md text-sm text-muted">
+        Prep for your next rating agency meeting with a guided simulation, a
+        readiness scorecard, and tailored advice. Start with the issuer and
+        meeting details.
+      </p>
+      <Link
+        href="/intake"
+        className="mt-6 inline-block rounded-md bg-brand px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
+      >
+        Start your first session
+      </Link>
+    </div>
+  )
+}
+
+function EmptyIllustration() {
+  // Simple line-art clipboard with ascending bar chart inside. Uses
+  // `currentColor` so it picks up the muted border tone via parent.
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <rect x="22" y="22" width="84" height="96" rx="6" />
+      <rect x="46" y="12" width="36" height="18" rx="4" fill="white" />
+      <line x1="40" y1="46" x2="88" y2="46" strokeWidth="1.5" />
+      <line x1="40" y1="56" x2="76" y2="56" strokeWidth="1.5" />
+      <rect x="38" y="84" width="10" height="16" rx="1" />
+      <rect x="54" y="74" width="10" height="26" rx="1" />
+      <rect x="70" y="64" width="10" height="36" rx="1" />
+      <rect x="86" y="78" width="10" height="22" rx="1" />
+    </svg>
+  )
+}
+
+function formatMeetingDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  } catch {
+    return iso
+  }
+}

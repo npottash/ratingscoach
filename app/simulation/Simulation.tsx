@@ -25,9 +25,6 @@ type Turn = {
   role: 'user' | 'assistant'
   content: string
   factor: string
-  /** Flag the model assigned to the user's previous answer.
-   * Only set on assistant turns that returned a non-'none' flag. */
-  flag?: Exclude<Flag, 'none'>
 }
 
 type FactorResult = {
@@ -216,6 +213,24 @@ function SimulationChat({
     }
   }, [loading, completed, missingNarrative])
 
+  // Warn before browser refresh / tab close / address-bar nav while a
+  // simulation is actively in progress. The wordmark link and the step
+  // indicator already trigger our own React modals; this covers everything
+  // outside Next's client-side router. Modern browsers ignore the custom
+  // string and show their own "Leave site?" dialog — the listener just has
+  // to be present.
+  useEffect(() => {
+    const active = turns.length > 0 && !completed && !missingNarrative
+    if (!active) return
+
+    const handler = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [turns.length, completed, missingNarrative])
+
   const callSimulate = useCallback(
     async (factor: string, history: Turn[], isFirstTurn: boolean) => {
       if (!narrative) return null
@@ -311,19 +326,16 @@ function SimulationChat({
       const reply = await callSimulate(currentFactor, factorHistory, false)
       if (!reply) return
 
-      const flag: Exclude<Flag, 'none'> | undefined =
-        reply.previous_answer_flag === 'none'
-          ? undefined
-          : reply.previous_answer_flag
-
       const assistantTurn: Turn = {
         role: 'assistant',
         content: reply.message,
         factor: currentFactor,
-        flag,
       }
 
-      const flagsForFactor = flag ? [flag as Flag] : []
+      const flagsForFactor: Flag[] =
+        reply.previous_answer_flag === 'none'
+          ? []
+          : [reply.previous_answer_flag]
 
       setResults((prev) =>
         prev.map((r, i) =>
@@ -724,12 +736,9 @@ function Bubble({
         ].join(' ')}
       >
         {!isUser && (
-          <div className="mb-1 flex items-center gap-1.5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              {persona.name}
-            </p>
-            {turn.flag && <MessageFlagIcon flag={turn.flag} />}
-          </div>
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">
+            {persona.name}
+          </p>
         )}
         <p className="whitespace-pre-wrap">{turn.content}</p>
       </div>
@@ -766,66 +775,6 @@ function TypingIndicator({
         />
       </div>
     </div>
-  )
-}
-
-function MessageFlagIcon({ flag }: { flag: Exclude<Flag, 'none'> }) {
-  if (flag === 'strong') {
-    return (
-      <span
-        title="Strong answer"
-        className="inline-flex h-4 w-4 items-center justify-center text-emerald-600"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <path d="M5 12l5 5L20 7" />
-        </svg>
-      </span>
-    )
-  }
-  if (flag === 'weak') {
-    return (
-      <span
-        title="Weak answer"
-        className="inline-flex h-4 w-4 items-center justify-center text-amber-600"
-      >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden
-        >
-          <path d="M12 2L2 22h20L12 2z" />
-        </svg>
-      </span>
-    )
-  }
-  // critical_gap
-  return (
-    <span
-      title="Critical gap"
-      className="inline-flex h-4 w-4 items-center justify-center text-red-600"
-    >
-      <svg
-        width="10"
-        height="10"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        aria-hidden
-      >
-        <circle cx="12" cy="12" r="10" />
-      </svg>
-    </span>
   )
 }
 

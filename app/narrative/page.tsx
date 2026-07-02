@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { StepIndicator } from '@/components/StepIndicator'
+import { PageHeader } from '@/components/PageHeader'
 import { NarrativeForm, type SessionSummary } from './NarrativeForm'
 
 export default async function NarrativePage({
@@ -22,7 +23,8 @@ export default async function NarrativePage({
 
   return (
     <>
-      <StepIndicator current={2} />
+      <PageHeader />
+      <StepIndicator current={2} sessionId={session.id} />
       <NarrativeForm session={session} />
     </>
   )

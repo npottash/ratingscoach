@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from 'react'
 import { StepIndicator } from '@/components/StepIndicator'
+import { PageHeader } from '@/components/PageHeader'
 import { submitIntake, type IntakeFormState } from './actions'
 import type { Agency } from '@/lib/types'
 
@@ -16,6 +17,9 @@ const SECTORS = [
 ] as const
 
 const RATINGS = [
+  'AA+',
+  'AA',
+  'AA-',
   'A+',
   'A',
   'A-',
@@ -133,6 +137,7 @@ export default function IntakePage() {
 
   return (
     <>
+      <PageHeader />
       <StepIndicator current={1} />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-6 py-10">
         <header>

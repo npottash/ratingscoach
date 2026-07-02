@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { StepIndicator } from '@/components/StepIndicator'
+import { PageHeader } from '@/components/PageHeader'
 import { Simulation, type SimulationSession } from './Simulation'
 
 export default async function SimulationPage({
@@ -24,7 +25,12 @@ export default async function SimulationPage({
 
   return (
     <>
-      <StepIndicator current={3} />
+      <PageHeader confirmExit="Leaving will end the simulation. Your conversation and answers live only in this browser tab and will be lost." />
+      <StepIndicator
+        current={3}
+        sessionId={session.id}
+        confirmBack="Leaving will end the simulation. Your conversation and answers live only in this browser tab and will be lost."
+      />
       <Simulation session={session} />
     </>
   )

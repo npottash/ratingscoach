@@ -35,10 +35,6 @@ export default function DemoPage() {
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             See it in 60 seconds
           </h1>
-          <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted">
-            A walkthrough of the product from intake to the post-session
-            coaching chat. No signup required.
-          </p>
         </header>
 
         {hasVimeoVideo ? (

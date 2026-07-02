@@ -5,6 +5,8 @@ const PUBLIC_ROUTES = new Set([
   '/',
   '/login',
   '/signup',
+  '/landing',
+  '/demo',
   '/privacy',
   '/terms',
   '/security',
@@ -49,7 +51,7 @@ export async function proxy(request: NextRequest) {
 
   if (user && (path === '/login' || path === '/signup')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/intake'
+    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 

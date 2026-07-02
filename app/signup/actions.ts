@@ -26,6 +26,7 @@ export async function signup(
   }
 
   // If email confirmation is OFF in Supabase, a session is created and proxy.ts
-  // will let /intake through. If confirmation is ON, /intake will bounce to /login.
-  redirect('/intake')
+  // lets /dashboard through. If confirmation is ON, /dashboard bounces to /login
+  // until the user confirms.
+  redirect('/dashboard')
 }

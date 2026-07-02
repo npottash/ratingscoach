@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { PageHeader } from '@/components/PageHeader'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — The Ratings Coach',
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-6 py-12">
+    <>
+      <PageHeader />
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-6 py-12">
       <header>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted">
           Legal
@@ -219,7 +222,8 @@ export default function PrivacyPage() {
           security@theratingscoach.com.
         </p>
       </Section>
-    </main>
+      </main>
+    </>
   )
 }
 

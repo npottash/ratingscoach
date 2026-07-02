@@ -42,12 +42,18 @@ export default function Home() {
             Finish each session with a structured scorecard and a focused prep
             list.
           </p>
-          <div className="mt-10 flex justify-center">
+          <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link
               href="/signup"
               className="rounded-md bg-brand px-6 py-3 text-base font-medium text-white hover:bg-brand-hover"
             >
               Start a session
+            </Link>
+            <Link
+              href="/demo"
+              className="rounded-md border border-border bg-white px-6 py-3 text-base font-medium text-foreground hover:border-brand hover:text-brand"
+            >
+              Watch the 60-second demo
             </Link>
           </div>
         </div>
