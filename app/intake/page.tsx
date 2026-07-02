@@ -30,6 +30,9 @@ const RATINGS = [
   'BB+',
   'BB',
   'BB-',
+  'B+',
+  'B',
+  'B-',
   'Not yet rated',
 ] as const
 
