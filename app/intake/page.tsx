@@ -194,6 +194,7 @@ export default function IntakePage() {
               <input
                 key={sector}
                 name="sub_type"
+                autoComplete="off"
                 list={`sub-type-suggestions-${sector}`}
                 placeholder={
                   sector
