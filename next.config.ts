@@ -5,14 +5,15 @@ const nextConfig: NextConfig = {
   /* config options here */
 };
 
-// Sentry wraps the config for source-map upload during builds. It only
-// activates when SENTRY_ORG / SENTRY_PROJECT / SENTRY_AUTH_TOKEN are set;
-// without them the build behaves as before.
+// Sentry build-time config. Source-map upload only runs when SENTRY_AUTH_TOKEN
+// is set (CI / Vercel); local builds without it skip upload silently.
 export default withSentryConfig(nextConfig, {
   silent: true,
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
+  org: "the-ratings-coach",
+  project: "javascript-nextjs",
   authToken: process.env.SENTRY_AUTH_TOKEN,
   widenClientFileUpload: true,
+  // Route Sentry ingestion through our own domain to dodge ad blockers.
+  tunnelRoute: "/monitoring",
   disableLogger: true,
 });
