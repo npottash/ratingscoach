@@ -1,3 +1,4 @@
+import { timingSafeEqual } from 'node:crypto'
 import { NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
@@ -52,8 +53,12 @@ export async function POST(request: Request) {
       { status: 500 }
     )
   }
-  const providedSecret = request.headers.get('x-stream-secret')
-  if (providedSecret !== expectedSecret) {
+  const providedSecret = request.headers.get('x-stream-secret') ?? ''
+  // Constant-time comparison so the secret can't be recovered byte-by-byte
+  // via response-timing differences.
+  const a = Buffer.from(providedSecret)
+  const b = Buffer.from(expectedSecret)
+  if (a.length !== b.length || !timingSafeEqual(a, b)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

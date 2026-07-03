@@ -255,6 +255,26 @@ export async function POST(request: Request) {
     )
   }
 
+  // Bound the cost of a single turn. ~200k chars ≈ 50k tokens of narrative.
+  if (body.narrative.length > 200_000) {
+    return NextResponse.json(
+      {
+        error:
+          'Narrative is too long. Trim it to the material that matters for the meeting (under ~200,000 characters).',
+      },
+      { status: 413 }
+    )
+  }
+
+  // A non-first turn with no history would produce an empty messages array,
+  // which the Anthropic API rejects. Return a clean error instead.
+  if (!body.is_first_turn && (!body.history || body.history.length === 0)) {
+    return NextResponse.json(
+      { error: 'History is required after the first turn.' },
+      { status: 400 }
+    )
+  }
+
   // Pull the most recent real questions this issuer has been asked by this
   // agency in this sector. Used to calibrate the analyst's probing direction.
   const { data: pastQRows } = await supabase

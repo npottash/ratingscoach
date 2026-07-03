@@ -63,7 +63,10 @@ export async function proxy(request: NextRequest) {
 export const config = {
   // Exclude /api — those routes self-protect (auth cookie OR shared secret)
   // and need to return JSON errors, not HTML redirects.
+  // "monitoring" is the Sentry tunnel route (see next.config.ts tunnelRoute):
+  // browsers POST error events there, including from logged-out visitors on
+  // public pages — the auth redirect must not swallow them.
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|.*\\.svg$|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.webp$|.*\\.mp4$).*)',
+    '/((?!api|monitoring|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|opengraph-image|.*\\.svg$|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.webp$|.*\\.mp4$).*)',
   ],
 }

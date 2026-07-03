@@ -419,9 +419,16 @@ function SimulationChat({
     )
 
     const completedKey = `completed_agencies:${session.id}`
-    const existing = JSON.parse(
-      sessionStorage.getItem(completedKey) ?? '[]'
-    ) as Agency[]
+    let existing: Agency[] = []
+    try {
+      existing = JSON.parse(
+        sessionStorage.getItem(completedKey) ?? '[]'
+      ) as Agency[]
+      if (!Array.isArray(existing)) existing = []
+    } catch {
+      // Corrupted entry — start fresh rather than crash at the finish line.
+      existing = []
+    }
     if (!existing.includes(agency)) {
       sessionStorage.setItem(
         completedKey,

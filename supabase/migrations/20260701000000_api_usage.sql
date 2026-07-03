@@ -18,6 +18,11 @@ alter table public.api_usage enable row level security;
 
 -- Atomically increments the caller's counter and reports whether the new
 -- count is within the limit. Returns true = allowed, false = over limit.
+--
+-- SECURITY: p_user_id must match the caller's own auth.uid(). Without this
+-- check, any authenticated user could call this RPC directly (it is exposed
+-- via the Supabase REST API) with another user's UUID and burn through the
+-- victim's daily quota, locking them out of simulations.
 create or replace function public.increment_api_usage(
   p_user_id uuid,
   p_endpoint text,
@@ -31,6 +36,10 @@ as $$
 declare
   new_count integer;
 begin
+  if p_user_id is distinct from auth.uid() then
+    raise exception 'increment_api_usage: p_user_id must be the caller';
+  end if;
+
   insert into public.api_usage (user_id, day, endpoint, count)
   values (p_user_id, current_date, p_endpoint, 1)
   on conflict (user_id, day, endpoint)

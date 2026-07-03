@@ -143,21 +143,32 @@ export function Scorecard({
   }
 
   useEffect(() => {
-    const completedRaw = sessionStorage.getItem(
-      `completed_agencies:${session.id}`
+    const completed = readJson<Agency[]>(
+      `completed_agencies:${session.id}`,
+      []
     )
-    const completed = completedRaw ? (JSON.parse(completedRaw) as Agency[]) : []
     setRemainingAgencies(session.agency.filter((a) => !completed.includes(a)))
   }, [session.id, session.agency])
 
   useEffect(() => {
-    const raw = sessionStorage.getItem(`results:${session.id}:${agency}`)
-    if (!raw) {
+    const parsed = readJson<FactorResult[] | null>(
+      `results:${session.id}:${agency}`,
+      null
+    )
+    if (!parsed) {
       setMissing(true)
       return
     }
-    const parsed = JSON.parse(raw) as FactorResult[]
     setResults(parsed)
+
+    // Reuse a previously generated scorecard for this session+agency so a
+    // refresh or back-navigation doesn't burn another Claude call.
+    const cacheKey = `scorecard_output:${session.id}:${agency}`
+    const cached = readJson<ScorecardOutput | null>(cacheKey, null)
+    if (cached) {
+      setOutput(cached)
+      return
+    }
 
     ;(async () => {
       try {
@@ -183,6 +194,11 @@ export function Scorecard({
         }
         const out = (await res.json()) as ScorecardOutput
         setOutput(out)
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify(out))
+        } catch {
+          // Storage full/unavailable — non-fatal, just no caching.
+        }
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to generate scorecard')
       }
@@ -506,6 +522,21 @@ export function Scorecard({
       </section>
     </main>
   )
+}
+
+/**
+ * Parse a JSON value from sessionStorage, returning the fallback on any
+ * failure (missing key, corrupted value, storage unavailable). A corrupted
+ * entry must not crash the scorecard render.
+ */
+function readJson<T>(key: string, fallback: T): T {
+  try {
+    const raw = sessionStorage.getItem(key)
+    if (!raw) return fallback
+    return JSON.parse(raw) as T
+  } catch {
+    return fallback
+  }
 }
 
 function CoachBubble({

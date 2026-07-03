@@ -11,7 +11,13 @@ export async function GET(request: NextRequest) {
   const tokenHash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
   const code = searchParams.get('code')
-  const next = searchParams.get('next') ?? '/dashboard'
+  // Only allow same-origin path redirects — a value like "//evil.com" or a
+  // full URL must not steer the post-verification redirect.
+  const rawNext = searchParams.get('next') ?? '/dashboard'
+  const next =
+    rawNext.startsWith('/') && !rawNext.startsWith('//')
+      ? rawNext
+      : '/dashboard'
 
   const redirectTo = request.nextUrl.clone()
   redirectTo.pathname = next
