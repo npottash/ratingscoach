@@ -29,7 +29,7 @@ export function PageHeader({ confirmExit }: { confirmExit?: string }) {
 
   return (
     <>
-      <header className="border-b border-border bg-white">
+      <header className="border-b border-border bg-white print:hidden">
         <div className="mx-auto flex w-full max-w-6xl items-center px-6 py-5">
           <Link
             href="/"

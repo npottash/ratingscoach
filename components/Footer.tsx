@@ -3,7 +3,7 @@ import Link from 'next/link'
 export function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-border bg-surface">
+    <footer className="border-t border-border bg-surface print:hidden">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm text-muted">
         <p>&copy; {year} The Ratings Coach. All rights reserved.</p>
         <nav className="flex items-center gap-6">

@@ -576,9 +576,10 @@ function SimulationChat({
             ref={scrollRef}
             className="flex-1 space-y-4 overflow-y-auto px-5 py-5"
           >
-            {turns.length === 0 && !loading && (
+            {turns.length === 0 && (
               <p className="text-sm text-muted">
-                Loading the analyst&apos;s first question…
+                Setting up your meeting with {persona.name} and reviewing your
+                narrative…
               </p>
             )}
             {turns.map((turn, i) => {

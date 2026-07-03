@@ -65,7 +65,7 @@ export function StepIndicator({
 
   return (
     <>
-      <nav aria-label="Progress" className="border-b border-border bg-surface">
+      <nav aria-label="Progress" className="border-b border-border bg-surface print:hidden">
         <ol className="mx-auto flex w-full max-w-5xl items-center gap-4 px-6 py-4 text-sm">
           {STEPS.map((step, idx) => {
             const isCurrent = step.id === current

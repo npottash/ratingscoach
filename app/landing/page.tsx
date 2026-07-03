@@ -55,7 +55,7 @@ function Hero() {
             href="/demo"
             className="rounded-md border border-border bg-white px-6 py-3 text-base font-medium text-foreground hover:border-brand hover:text-brand"
           >
-            Watch the 60-second demo
+            Watch the demo
           </Link>
         </div>
       </div>

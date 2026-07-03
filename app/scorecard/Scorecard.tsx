@@ -226,21 +226,64 @@ export function Scorecard({
     : session.critical_gaps
 
   if (missing) {
+    const hasSummary = session.overall_score != null
     return (
-      <main className="mx-auto w-full max-w-2xl px-6 py-16 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Scorecard not available
-        </h1>
-        <p className="mt-2 text-muted">
-          Detailed results are held only in this browser tab and were not found.
-          Run the simulation again to regenerate.
-        </p>
-        <Link
-          href={`/simulation?session_id=${session.id}`}
-          className="mt-6 inline-block rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
-        >
-          Back to simulation
-        </Link>
+      <main className="mx-auto w-full max-w-2xl px-6 py-16">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {hasSummary
+              ? 'Your saved results for this session'
+              : 'Detailed scorecard not available here'}
+          </h1>
+          <p className="mx-auto mt-3 max-w-lg text-muted">
+            {hasSummary ? (
+              <>
+                By design, the full transcript and factor-by-factor breakdown
+                live only in the browser tab where you ran the simulation — we
+                never store them. The summary below is what we keep. Re-run the
+                simulation to regenerate the full detail.
+              </>
+            ) : (
+              <>
+                The detailed results are held only in the browser tab where you
+                ran the simulation and were not found here. Re-run the
+                simulation to regenerate them.
+              </>
+            )}
+          </p>
+        </div>
+
+        {hasSummary && (
+          <div className="mt-8 rounded-lg border border-border bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+              {agency} readiness · {session.issuer_name}
+            </p>
+            <div className="mt-4 grid grid-cols-3 gap-6">
+              <Stat
+                label="Readiness"
+                value={`${session.overall_score!.toFixed(1)}/10`}
+                accent
+              />
+              <Stat
+                label="Flagged factors"
+                value={String(session.factors_flagged)}
+              />
+              <Stat
+                label="Critical gaps"
+                value={String(session.critical_gaps)}
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8 text-center">
+          <Link
+            href={`/simulation?session_id=${session.id}`}
+            className="inline-block rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
+          >
+            Re-run the simulation
+          </Link>
+        </div>
       </main>
     )
   }
@@ -376,30 +419,37 @@ export function Scorecard({
             </ol>
           </section>
 
-          <section className="rounded-lg border border-border bg-white p-5">
+          <section className="rounded-lg border border-border bg-white p-5 print:hidden">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
               Next
             </h2>
             <div className="mt-3 flex flex-col gap-2">
               <button
                 type="button"
-                onClick={() => alert('Export to PDF coming soon.')}
-                className="rounded-md border border-border bg-white px-4 py-2 text-sm font-medium hover:border-brand hover:text-brand"
+                onClick={() => window.print()}
+                disabled={!output}
+                title={
+                  output ? undefined : 'Available once the scorecard finishes generating'
+                }
+                className="rounded-md border border-border bg-white px-4 py-2 text-sm font-medium hover:border-brand hover:text-brand disabled:opacity-50 disabled:hover:border-border disabled:hover:text-foreground"
               >
                 Export to PDF
               </button>
-              <button
-                type="button"
-                onClick={() => alert('Advisory booking coming soon.')}
-                className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover"
+              <Link
+                href="/advisory"
+                className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
               >
                 Book advisory session
-              </button>
+              </Link>
             </div>
+            <p className="mt-2 text-xs text-muted">
+              Export opens your browser&apos;s print dialog — choose “Save as
+              PDF”. Generated locally; nothing is uploaded.
+            </p>
           </section>
 
           {remainingAgencies.length > 0 && (
-            <section className="rounded-lg border border-border bg-white p-5">
+            <section className="rounded-lg border border-border bg-white p-5 print:hidden">
               <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
                 Run another agency
               </h2>
@@ -417,7 +467,7 @@ export function Scorecard({
             </section>
           )}
 
-          <section className="rounded-lg border border-border bg-white p-5">
+          <section className="rounded-lg border border-border bg-white p-5 print:hidden">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
               After your real meeting
             </h2>
@@ -454,7 +504,7 @@ export function Scorecard({
       </div>
 
       {/* Ask the AI Ratings Coach */}
-      <section className="mt-10 overflow-hidden rounded-lg border border-border bg-white">
+      <section className="mt-10 overflow-hidden rounded-lg border border-border bg-white print:hidden">
         <header className="border-b border-border bg-surface px-5 py-4">
           <h2 className="text-lg font-semibold tracking-tight">
             Ask the AI Ratings Coach

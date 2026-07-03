@@ -95,7 +95,10 @@ function SessionsTable({ sessions }: { sessions: SessionRow[] }) {
           Your sessions
         </h2>
       </div>
-      <div className="overflow-x-auto">
+
+      {/* Desktop: table. Hidden below md, where the columns and the primary
+          action would clip off the right edge. */}
+      <div className="hidden md:block">
         <table className="w-full text-sm">
           <thead className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
             <tr>
@@ -142,6 +145,39 @@ function SessionsTable({ sessions }: { sessions: SessionRow[] }) {
           </tbody>
         </table>
       </div>
+
+      {/* Mobile: stacked cards. Every row's primary action stays reachable. */}
+      <ul className="divide-y divide-border md:hidden">
+        {sessions.map((s) => (
+          <li key={s.id} className="px-5 py-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate font-medium text-foreground">
+                  {s.issuer_name}
+                </p>
+                <p className="mt-0.5 text-sm text-muted">
+                  {s.agency && s.agency.length > 0
+                    ? s.agency.join(', ')
+                    : '—'}
+                  {' · '}
+                  {formatMeetingDate(s.meeting_date)}
+                </p>
+              </div>
+              <DeleteSessionButton
+                sessionId={s.id}
+                issuerName={s.issuer_name}
+              />
+            </div>
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <StatusBadge status={s.status} />
+                <ScorePill score={s.overall_score} />
+              </div>
+              <SessionAction session={s} />
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

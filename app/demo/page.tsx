@@ -30,10 +30,10 @@ export default function DemoPage() {
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-10 px-6 py-10">
         <header className="flex flex-col gap-2 text-center">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand">
-            60-second tour
+            Product tour
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            See it in 60 seconds
+            See it in action
           </h1>
         </header>
 

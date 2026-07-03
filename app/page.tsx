@@ -1,5 +1,25 @@
 import Link from 'next/link'
 
+const AGENCIES = ['S&P', "Moody's", 'Fitch']
+
+const STEPS = [
+  {
+    n: 1,
+    title: 'Intake',
+    body: 'Tell us the issuer, sector, agency, and current rating. Two minutes.',
+  },
+  {
+    n: 2,
+    title: 'Rehearse',
+    body: 'A simulated analyst probes your credit narrative, factor by factor.',
+  },
+  {
+    n: 3,
+    title: 'Scorecard',
+    body: 'Leave with a readiness score, a committee memo, and a prep list.',
+  },
+]
+
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
@@ -31,8 +51,9 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Hero */}
       <section className="flex flex-1 items-center">
-        <div className="mx-auto w-full max-w-3xl px-6 py-24 text-center">
+        <div className="mx-auto w-full max-w-3xl px-6 py-20 text-center sm:py-24">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             Walk into your rating agency meeting prepared.
           </h1>
@@ -53,9 +74,52 @@ export default function Home() {
               href="/demo"
               className="rounded-md border border-border bg-white px-6 py-3 text-base font-medium text-foreground hover:border-brand hover:text-brand"
             >
-              Watch the 60-second demo
+              Watch the demo
             </Link>
           </div>
+
+          {/* Credibility line */}
+          <p className="mt-10 text-sm text-muted">
+            Built by senior credit ratings advisors.
+          </p>
+
+          {/* Agency band */}
+          <div className="mt-4 flex items-center justify-center gap-3 text-sm font-medium tracking-wide text-foreground/70">
+            {AGENCIES.map((a, i) => (
+              <span key={a} className="flex items-center gap-3">
+                {i > 0 && (
+                  <span aria-hidden className="text-border">
+                    ·
+                  </span>
+                )}
+                {a}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="border-t border-border bg-surface">
+        <div className="mx-auto w-full max-w-5xl px-6 py-14">
+          <p className="text-center text-xs font-semibold uppercase tracking-wide text-muted">
+            How it works
+          </p>
+          <ol className="mt-8 grid gap-8 sm:grid-cols-3">
+            {STEPS.map((step) => (
+              <li key={step.n} className="flex flex-col items-center text-center">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-sm font-semibold text-white">
+                  {step.n}
+                </span>
+                <h2 className="mt-4 text-base font-semibold text-foreground">
+                  {step.title}
+                </h2>
+                <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-muted">
+                  {step.body}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
     </main>
