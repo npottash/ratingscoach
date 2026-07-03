@@ -15,7 +15,7 @@ export type ScorecardSession = {
   current_rating: string
   outlook: string
   agency: Agency[]
-  meeting_date: string
+  meeting_date: string | null
   overall_score: number | null
   factors_flagged: number
   critical_gaps: number

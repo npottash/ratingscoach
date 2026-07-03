@@ -251,9 +251,12 @@ GUIDELINES
     const out = toolBlock.input as ScorecardOutput
     return NextResponse.json(out)
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Unknown error'
+    console.error(
+      'scorecard: model call failed:',
+      err instanceof Error ? err.message : err
+    )
     return NextResponse.json(
-      { error: `Anthropic call failed: ${msg}` },
+      { error: 'Scorecard generation failed. Please try again.' },
       { status: 502 }
     )
   }

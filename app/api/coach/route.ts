@@ -113,10 +113,12 @@ export async function POST(request: Request) {
     })
     queryEmbedding = embResp.data[0].embedding
   } catch (e) {
+    console.error(
+      'coach: embedding failed:',
+      e instanceof Error ? e.message : e
+    )
     return NextResponse.json(
-      {
-        error: `Embedding failed: ${e instanceof Error ? e.message : 'unknown'}`,
-      },
+      { error: 'The coach is briefly unavailable. Please try again.' },
       { status: 502 }
     )
   }
@@ -242,10 +244,12 @@ Answer the user's question directly using the above. Do not list your sources un
     }
     return NextResponse.json({ answer: textBlock.text })
   } catch (e) {
+    console.error(
+      'coach: model call failed:',
+      e instanceof Error ? e.message : e
+    )
     return NextResponse.json(
-      {
-        error: `Anthropic call failed: ${e instanceof Error ? e.message : 'unknown'}`,
-      },
+      { error: 'The coach is briefly unavailable. Please try again.' },
       { status: 502 }
     )
   }

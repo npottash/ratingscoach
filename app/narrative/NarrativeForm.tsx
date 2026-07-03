@@ -9,7 +9,7 @@ export type SessionSummary = {
   id: string
   issuer_name: string
   agency: Agency[]
-  meeting_date: string
+  meeting_date: string | null
   key_topics: string | null
 }
 
@@ -103,10 +103,13 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
     .map((s) => s.trim())
     .filter(Boolean)
 
-  const meetingDate = new Date(session.meeting_date).toLocaleDateString(
-    undefined,
-    { year: 'numeric', month: 'short', day: 'numeric' }
-  )
+  const meetingDate = session.meeting_date
+    ? new Date(session.meeting_date).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : '—'
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()

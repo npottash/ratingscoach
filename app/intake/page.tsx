@@ -298,13 +298,11 @@ export default function IntakePage() {
               </select>
             </label>
             <label className={labelClass}>
-              <span>Meeting date</span>
-              <input
-                name="meeting_date"
-                type="date"
-                required
-                className={inputClass}
-              />
+              <span>
+                Meeting date{' '}
+                <span className="font-normal text-muted">(optional)</span>
+              </span>
+              <input name="meeting_date" type="date" className={inputClass} />
             </label>
           </div>
 

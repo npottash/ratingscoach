@@ -32,7 +32,8 @@ export async function submitIntake(
   const agency = agencyRaw.filter((a): a is Agency =>
     (VALID_AGENCIES as string[]).includes(a)
   )
-  const meeting_date = String(formData.get('meeting_date') ?? '').trim()
+  const meeting_date =
+    String(formData.get('meeting_date') ?? '').trim() || null
   const meeting_type = String(formData.get('meeting_type') ?? '').trim()
   const key_topics = String(formData.get('key_topics') ?? '').trim() || null
 
@@ -42,7 +43,6 @@ export async function submitIntake(
     !current_rating ||
     !outlook ||
     agency.length === 0 ||
-    !meeting_date ||
     !meeting_type
   ) {
     return { error: 'Please fill in all required fields.' }

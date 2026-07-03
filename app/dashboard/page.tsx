@@ -10,7 +10,7 @@ type SessionRow = {
   id: string
   issuer_name: string
   agency: Agency[] | null
-  meeting_date: string
+  meeting_date: string | null
   overall_score: number | null
   status: string
   created_at: string
@@ -271,7 +271,8 @@ function EmptyIllustration() {
   )
 }
 
-function formatMeetingDate(iso: string): string {
+function formatMeetingDate(iso: string | null): string {
+  if (!iso) return '—'
   try {
     return new Date(iso).toLocaleDateString(undefined, {
       year: 'numeric',

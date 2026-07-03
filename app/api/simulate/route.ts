@@ -336,9 +336,12 @@ export async function POST(request: Request) {
     const result = toolBlock.input as ToolResponse
     return NextResponse.json(result)
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Unknown error'
+    console.error(
+      'simulate: model call failed:',
+      err instanceof Error ? err.message : err
+    )
     return NextResponse.json(
-      { error: `Anthropic call failed: ${msg}` },
+      { error: 'The analyst is briefly unavailable. Please try again.' },
       { status: 502 }
     )
   }

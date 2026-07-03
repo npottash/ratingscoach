@@ -108,6 +108,9 @@ function SimulationChat({
   const [error, setError] = useState<string | null>(null)
   const [completed, setCompleted] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
+  // The session row the scorecard should load. Each completed run gets its
+  // own dashboard row; this holds the new row's id once created.
+  const [scorecardSessionId, setScorecardSessionId] = useState(session.id)
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const seededRef = useRef(false)
@@ -436,19 +439,70 @@ function SimulationChat({
       )
     }
 
+    // Every completed run gets its OWN dashboard row — a run never overwrites
+    // a previous run's score. The intake row acts as setup; the first (and
+    // each subsequent) completed run is recorded as a fresh row copied from
+    // it, and the setup row is removed once it has no remaining agencies.
+    const scoreFields = {
+      overall_score: Number(overall.toFixed(2)),
+      factors_flagged: factorsFlagged,
+      critical_gaps: criticalGaps,
+      status: 'completed' as const,
+    }
+
     try {
       const supabase = createClient()
-      await supabase
+
+      const { data: master } = await supabase
         .from('sessions')
-        .update({
-          overall_score: Number(overall.toFixed(2)),
-          factors_flagged: factorsFlagged,
-          critical_gaps: criticalGaps,
-          status: 'completed',
-        })
+        .select('*')
         .eq('id', session.id)
+        .single()
+      if (!master) throw new Error('session row not found')
+
+      // Copy the setup row into a new per-run row (drop identity columns).
+      const {
+        id: _id,
+        created_at: _createdAt,
+        ...copy
+      } = master as Record<string, unknown> & { id: string; created_at?: string }
+
+      const { data: inserted, error: insertErr } = await supabase
+        .from('sessions')
+        .insert({ ...copy, agency: [agency], ...scoreFields })
+        .select('id')
+        .single()
+      if (insertErr || !inserted) {
+        throw new Error(insertErr?.message ?? 'insert failed')
+      }
+
+      // Point the scorecard at the new row and re-key its detailed results.
+      setScorecardSessionId(inserted.id)
+      sessionStorage.setItem(
+        `results:${inserted.id}:${agency}`,
+        JSON.stringify(finalResults)
+      )
+
+      // Remove the setup row once every selected agency has been run — but
+      // never delete a row that carries a completed run's score.
+      const remaining = session.agency.filter(
+        (a) => a !== agency && !existing.includes(a)
+      )
+      if (remaining.length === 0 && master.status !== 'completed') {
+        await supabase.from('sessions').delete().eq('id', session.id)
+      }
     } catch {
-      // Non-fatal: scorecard will still render from sessionStorage
+      // Fallback: keep the legacy update-in-place so the score isn't lost
+      // entirely if the copy-insert path fails.
+      try {
+        const supabase = createClient()
+        await supabase
+          .from('sessions')
+          .update(scoreFields)
+          .eq('id', session.id)
+      } catch {
+        // Non-fatal: scorecard still renders from sessionStorage
+      }
     }
 
     // Show the completion modal instead of auto-navigating, so the user can
@@ -458,7 +512,7 @@ function SimulationChat({
 
   function goToScorecard() {
     router.push(
-      `/scorecard?session_id=${session.id}&agency=${encodeURIComponent(agency)}`
+      `/scorecard?session_id=${scorecardSessionId}&agency=${encodeURIComponent(agency)}`
     )
   }
 
