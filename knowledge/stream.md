@@ -147,3 +147,93 @@ Fitch has tended to be harsher on lower credit quality assets, and has not given
 ### All agencies — Bank (capital focus in meetings)
 
 All the agencies are going to want to know the 18- to 24-month view on capital and what run-rate capital is expected to be over the long term. Particularly, Moody's will want to look at run-rate capital and measure it against their framework as a large input into the rating. S&P will look at the RAC ratio, but will also rely on their own evaluation of asset risk and are more likely to look across to competitors when assigning the rating.
+
+## 2026-07-03 — Bank / FIG knowledge base v1
+
+### Agency behavior — S&P (peer benchmarking)
+
+S&P's methodology is built up from individual sub-components — the building blocks that move the anchor up and down — rather than a grid scorecard like the other agencies use. Because of this, S&P is far more focused on how your building blocks move up and down relative to your most direct peers. Their benchmarking is much more intensive than the other agencies'. In the meeting, an S&P analyst will often ask directly: "Who do you view as your direct peers?" But they typically won't go so far as to ask how you look relative to those peers — they'll run that relative analysis themselves, off your metrics. So expect the peer question, and expect the comparison to happen behind the scenes.
+
+### Agency behavior — Moody's (qualitative overlay)
+
+Moody's, as a general rule, applies the most qualitative overlay of the three agencies — true across their methodologies broadly, not just banks. Their analysts have significant discretion to take a historical ratio and adjust the implied sub-score based on their own view of forward projections and how the issuer looks versus peers. The qualitative factors they lean on for banks include complexity, diversification, and above all concentration risk. They'll probe how concentrated your portfolio is and your forward expectations around that concentration. They can double-hit an issuer if they're overly concerned about concentration. They'll also ding issuers for complexity or opacity — if there are aspects of the business they simply don't understand, that counts against you. More than any other agency, Moody's wants to see the business simplified.
+
+### Agency behavior — Fitch (non-core risk, complexity)
+
+Fitch will also frequently ding complexity. Their analysts tend to be less deep in a lot of technical areas, so if things aren't explained simply, Fitch is more likely than the other agencies to penalize you for it. Keep your explanations clean and simple in a Fitch meeting. Fitch also tends to focus on risks outside the core business — oversized relative to the other agencies. In a bank meeting, Fitch is the one likely to ask about crypto exposure, digital assets, and stablecoin — areas outside the core business — while S&P and Moody's stay focused on core business risks. Prepare for the tangential questions with Fitch.
+
+### Agency behavior — concern language (S&P / Fitch)
+
+The specific language an agency uses when concerned varies by analyst, but there are patterns. S&P tends to frame concerns in peer terms — phrases like "relative to your peers," reflecting how peer-comparison-driven their process is. Fitch similarly anchors on close peers; when Fitch has a concern, they'll often reference that something "is not necessarily what we've seen with some of your peers." When you hear peer framing from S&P or Fitch, read it as a signal that they've spotted a relative weakness.
+
+### FIG — CET1 treatment differs by agency
+
+The three agencies treat CET1 differently. Fitch references CET1 directly. Moody's looks at its own capital metric but will also reference CET1 when that's what's provided to them. S&P will reference CET1, but their more important metric is their risk-adjusted capital (RAC) ratio — so S&P likely won't ask about CET1 directly, though they may ask about capital trends and Tier 1 capital, especially for a trust bank or securities firm where Tier 1 leverage matters more than a capital ratio. For those businesses — trust banks and securities firms with a bank inside them — expect questions about Tier 1 leverage targets and go-forward Tier 1 leverage expectations rather than a capital ratio.
+
+### FIG — deposit beta, rate risk, NII and AOCI
+
+With uncertainty over whether rates rise or fall over the next year, agencies are focused on deposit betas as they relate to potential rate increases. Their primary focus is the impact to NII, but they also care about the impact to AOCI from significant rate moves and how banks are hedging those risks. Be ready to speak to your deposit beta assumptions, how they compare to prior cycles, and the downstream effect on both NII and AOCI.
+
+### FIG — AOCI included in capital for Category 4+ (S&P)
+
+The market has moved toward a world where, for Category 4 banks and above (greater than $100B in assets), AOCI is included in capital — both from a regulatory perspective and by the rating agencies. S&P has formally included unrealized gains and losses on AFS securities in its methodology as an adjustment to the numerator of the risk-adjusted capital ratio, so they explicitly include it now. The other agencies treat it as a secondary metric once it's formally included in regulatory requirements, and the expectation is that everyone will look at it — phased in over the next few years per the recent proposal.
+
+### FIG — AOCI and buffer-stacking (how to answer)
+
+The way agencies now probe AOCI is less about the raw number and more about how AOCI volatility is incorporated into capital management targets. The mental model: a bank's capital build is the 4.5% CET1 minimum, plus any relevant regulatory buffers, plus a buffer for AOCI volatility (so that a drastic rate move doesn't breach minimums), plus a buffer for potential losses. Agencies are focused on the all-in management buffer — the level below which management is unwilling to operate, and above which the agency can be comfortable the bank will consistently run. When asked about AOCI, answer in terms of that all-in buffer, not just the current mark.
+
+### FIG — TLAC and LTD
+
+TLAC (Total Loss-Absorbing Capacity) and LTD (Long-Term Debt) come from the same concept. TLAC is the total amount of capital agencies and regulators require — including debt, sub-debt, additional Tier 1, and CET1. LTD is the senior unsecured debt a bank issues. Both carry regulatory requirements for GSIBs in the US and large banks globally. A 2023 proposal would have extended long-term debt requirements to banks above $100B in assets; given the shift in the regulatory environment, that's no longer expected to be finalized in the near term — but it's a fair question for agencies to raise, because it could return under a future administration. The useful framing for any bank above ~$50B: how would you handle long-term debt requirements if they were finalized, even if it doesn't currently look like they will be?
+
+### FIG — NSFR, LCR, and deposit questions (legacy SVB)
+
+NSFR (Net Stable Funding Ratio) is really only something S&P cares about; the other agencies have their own ways of looking at liquidity and funding, so don't expect much time spent on NSFR itself. What all agencies will look at: the funding profile, the liquidity profile (including LCR), how deposits look, how the securities portfolio is constructed, how liquid the assets are, and the overall funding mix. On deposits specifically, expect questions on stickiness, concentration, the percentage of insured deposits, and the level of uninsured deposits you're willing to operate below. These are legacy SVB questions and will come up in essentially any meeting — including deposit concentration risk.
+
+### FIG — regulation: Basel endgame / ERBA context
+
+Post-SVB, there was strong political momentum for regulators to act on the risks tied to the collapse. The initial proposal was viewed by the industry as overly punitive, and that window closed. After the change in administration and new heads of supervision at the Fed and other agencies in early 2026, a new finalization proposal was released — the last major capital regulation since 2013. The broad expectation is that risk-weighted assets decrease under the new regime, so capital ratios rise automatically on day one of implementation. There are two proposals affecting the US bank population, the key one being the Expanded Risk-Based Approach (ERBA) for larger banks, with non-GSIBs able to opt in.
+
+### FIG — ERBA opt-in and deregulation as credit negative (Moody's)
+
+Over the next few years, a recurring agency question will be: why have you — or why have you not — opted into ERBA, and what did you see in terms of your capital ratios? That's a major consideration for non-GSIB banks. Separately, with higher capital ratios and presumably lower requirements coming out of recent stress test results and the forward expectations for CCAR banks, agencies (especially Moody's) broadly view this deregulation as a credit negative. Expect them to ask how the deregulatory environment affects where you run your ratios, and whether you're concerned that a future ramp-up in requirements could dampen business growth and how you manage capital. On the liquidity side, there's a broad expectation of deregulation — for example, allowing prepositioned discount-window assets to count in liquidity ratios, letting banks run with less liquidity. That's broadly a credit negative, and agencies will ask whether banks intend to run leaner on liquidity as a result.
+
+### Narrative craft — opening statement (new issuer)
+
+A strong opening statement depends heavily on whether it's a new-issuer engagement or an annual meeting. For a new-issuer engagement, the opening should cover the history of the business, the strength of the management team, and a strong, clear vision of what the future looks like — including how the business will mitigate downside risks. The analyst doesn't know you yet, so this is about establishing the narrative from scratch.
+
+### Narrative craft — opening statement (annual review)
+
+For an annual meeting, the opening is different because the analyst already knows your business. What they want to hear is a progress report: the things you promised at prior meetings, shown through tangible examples and real content. Show how you've addressed the risks flagged previously and executed on the mitigants. If you promised to stay within a leverage range or hit a capital target, show that you actually did it. If integration risk was flagged last time, walk them through how the integration is progressing with concrete, tangible examples. Opening this way sets up and shapes the probing questions that follow.
+
+### Narrative craft — framing a weakness (disclosure judgment)
+
+The best way to frame a weakness before they ask is to address it head-on and immediately lay out the mitigants you plan to take. That said, not every weakness needs to be raised. If it's a weakness that isn't obvious and that you don't think they'll probe, it's often best to leave it out for now. This is a judgment call: proactively own the weaknesses they will find, but don't hand them problems they weren't going to raise.
+
+### Narrative craft — confidence language
+
+Language matters. Phrases that signal uncertainty: "we think," "we believe," "it remains to be seen," "we'll need to wait for X to happen to determine." Phrases that signal confidence: "we have strong conviction in this," "we have a clear path to execute," "we have a track record of addressing this type of risk." The same underlying fact lands very differently depending on which register you use — default to the confident framing wherever it's honestly warranted.
+
+### Narrative craft — red flags in management tone
+
+What agencies read as red flags in management tone: deferring to other people or saying "that's the responsibility of X team" — i.e., not taking ownership. Not being aware of, or not having a good answer to, an obvious red flag or issue in the business. Not having a plan to mitigate macro or geopolitical risks. The through-line is ownership and preparedness — agencies want to see management that knows its own risks and has a plan.
+
+### Narrative craft — handling hard questions
+
+When you get a question you don't have a perfect answer to, the strong move is to provide an answer and then commit to follow up: "We'll follow up with more concrete examples and documentation that support this." You neither freeze nor overreach — you give your best answer and credibly promise to close the gap with support.
+
+### Historical patterns — regional bank downgrade drivers (SVB)
+
+The last wave of regional bank downgrades was primarily driven by risks revealed when SVB collapsed: compensating-balance/deposit dynamics, interest rate risk in the securities portfolio, capital levels lower than expected, and uninsured deposit exposure. When a bank is probed today on any of these, understand that the questions trace directly back to that episode.
+
+### Historical patterns — 2023 stress agency behavior
+
+During the 2023 regional banking stress, agencies acted quickly. They immediately reached out to issuers for more detail on the parts of the business that SVB had exposed. They adjusted core metrics — not methodologically, but as secondary metrics — to flag problem banks. And they were not shy about broad-ranging action: negative outlooks, downgrades, and reviews for downgrade, even for larger banks without the same obvious risks, partly just to buy themselves time to do a broader review. The lesson: in a stress episode, agencies act first and refine later, so being ahead of the narrative matters.
+
+### Historical patterns — press-release downgrade signals
+
+When agencies are preparing to downgrade, they start calling out very specific downgrade thresholds and shift their language toward conditional warnings — e.g., if the bank doesn't maintain certain levels, they could take action. Reading a press release for this shift in language (from descriptive to threshold-and-conditional) is a leading indicator that action may be coming.
+
+### Historical patterns — upgrade catalysts (BBB banks)
+
+Common upgrade catalysts at this point in the cycle: banks that were downgraded or watch-listed post-SVB but have since proven either that those risks don't apply to them or that they've fully managed them. Another catalyst is fully integrating an acquisition that had caused a negative outlook or downgrade — if the bank can demonstrate the integration is complete and systems are up and running, that can support an upgrade. In both cases the pattern is the same: a prior concern, credibly and demonstrably resolved.

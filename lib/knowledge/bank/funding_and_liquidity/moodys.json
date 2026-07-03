@@ -4,11 +4,16 @@
     "Does the bank have access to the discount window?",
     "What's the average account size for deposits?",
     "Are you liability sensitive?",
-    "How do you hedge interest rate risk?"
+    "How do you hedge interest rate risk?",
+    "What percentage of your deposits are insured, and what level of uninsured deposits are you willing to operate below?",
+    "How concentrated is your deposit base, and how sticky are those deposits through a cycle?",
+    "What are your deposit beta assumptions, and how do they flow through to NII and AOCI?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
   "agency_intel": [
-    "Moody's revised its liquidity and funding views in the new methodology: less focused on market funds, more focused on what could happen to deposits through a cycle. Expect probing on deposit behavior under stress, not just the current funding mix."
+    "Moody's revised its liquidity and funding views in the new methodology: less focused on market funds, more focused on what could happen to deposits through a cycle. Expect probing on deposit behavior under stress, not just the current funding mix.",
+    "Moody's (and the agencies broadly) view liquidity deregulation — e.g. letting prepositioned discount-window assets count in liquidity ratios so banks can run leaner — as a credit negative. Expect a question on whether you intend to run with less liquidity as a result.",
+    "Deposit stickiness, concentration, and the insured/uninsured split are legacy-SVB questions that come up in essentially every meeting."
   ]
 }

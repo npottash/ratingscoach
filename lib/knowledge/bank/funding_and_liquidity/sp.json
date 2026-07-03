@@ -6,7 +6,9 @@
     "What are your plans for debt issuance going forward?",
     "Given the market demand for whole loan sales, what has pricing been looking like in the last 12 months?",
     "Typically when banks try to build direct deposit franchises, they end up with high-net-worth customers attracted to elevated rates who leave once rates come down — is that the case with your bank?",
-    "What contingent liquidity access do you have?"
+    "What contingent liquidity access do you have?",
+    "What percentage of your deposits are insured, and what level of uninsured deposits are you willing to operate below?",
+    "What are your deposit beta assumptions, how do they compare to prior cycles, and what's the downstream effect on NII and AOCI?"
   ],
   "common_pitfalls": [
     "Issuers overstate held-for-sale loans as a liquidity source. S&P treats them as not truly liquid in stress.",
@@ -17,6 +19,7 @@
   ],
   "agency_intel": [
     "S&P leans on regulatory metrics here more than the other agencies: the liquidity coverage ratio (LCR) for liquidity and a stable funding ratio for funding. Know both numbers cold and their trajectory.",
-    "S&P presses the link between whole-loan secondary market liquidity and balance-sheet liquidity. If the secondary market shuts, the held-for-sale book becomes an asset, not a liquidity source."
+    "S&P presses the link between whole-loan secondary market liquidity and balance-sheet liquidity. If the secondary market shuts, the held-for-sale book becomes an asset, not a liquidity source.",
+    "NSFR (Net Stable Funding Ratio) is really only an S&P concern; the other agencies use their own funding views. S&P looks at the funding profile, liquidity profile (including LCR), deposit stickiness/concentration, insured vs. uninsured mix, and how liquid the securities book is."
   ]
 }

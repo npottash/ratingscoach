@@ -3,23 +3,32 @@
     "Who do you consider your competitors?",
     {
       "text": "You're taking share from big banks — what about other online platforms?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "How are you differentiated from those platforms?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     "How do you see the deregulation opportunity from the new administration's looser environment?",
     "Is this a long-term opportunity or a near-term one?",
     {
       "text": "What is the real advantage of blockchain for real-time payments?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Are you handling crypto custody?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
-    "What are your emerging risks?"
+    "What are your emerging risks?",
+    "What is your exposure to crypto, digital assets, or stablecoin?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
@@ -27,7 +36,10 @@
     "For existing Fitch ratings on mid-range banks (roughly $50bn through Category 2), focus meetings on educating the analysts around asset quality, the forward strength of capital, and the liquidity position — Fitch has been less constructive than its reputation suggests in this size range.",
     {
       "text": "For online / fintech / high-growth banks, Fitch probes the competitive set deeply — not just traditional banks but other digital platforms — and presses on differentiation. Expect blockchain payments, crypto custody, and the deregulation-window opportunity to come up.",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
-    }
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
+    },
+    "Fitch analysts tend to be less deep technically, so Fitch penalizes complexity more readily than the other agencies — keep explanations clean and simple. Fitch also over-indexes on risks outside the core business (crypto, digital assets, stablecoin), where S&P and Moody's stay focused on core risks. Prepare for the tangential questions."
   ]
 }

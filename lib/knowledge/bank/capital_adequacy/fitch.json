@@ -1,11 +1,15 @@
 {
   "real_questions": [
     "What's your operating range for capital?",
-    "Are there any capital raises assumed in your plan?"
+    "Are there any capital raises assumed in your plan?",
+    "Who do you view as your direct peers?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [
-    "Comes prepared with an explicit 18–24 month capital view and a long-term run-rate capital target."
+    "Comes prepared with an explicit 18–24 month capital view and a long-term run-rate capital target.",
+    "Answers AOCI questions in terms of the all-in management buffer, not just the current mark."
   ],
-  "agency_intel": []
+  "agency_intel": [
+    "Fitch references CET1 directly (unlike S&P, whose anchor is the RAC ratio, or Moody's, which uses its own Tangible Common Equity metric). Have your CET1 trajectory and drivers ready."
+  ]
 }

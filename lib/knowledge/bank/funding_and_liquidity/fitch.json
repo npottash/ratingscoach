@@ -1,8 +1,11 @@
 {
   "real_questions": [
-    "What contingent liquidity access do you have?"
+    "What contingent liquidity access do you have?",
+    "How concentrated is your deposit base, and what share is insured versus uninsured?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    "Deposit concentration and the insured/uninsured split are legacy-SVB questions that surface in essentially any bank meeting, Fitch included."
+  ]
 }
