@@ -35,7 +35,6 @@ export async function submitIntake(
   const meeting_date =
     String(formData.get('meeting_date') ?? '').trim() || null
   const meeting_type = String(formData.get('meeting_type') ?? '').trim()
-  const key_topics = String(formData.get('key_topics') ?? '').trim() || null
 
   if (
     !issuer_name ||
@@ -62,7 +61,6 @@ export async function submitIntake(
       agency,
       meeting_date,
       meeting_type,
-      key_topics,
       status: 'intake',
     })
     .select('id')

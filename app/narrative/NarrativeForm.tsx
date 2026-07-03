@@ -10,7 +10,6 @@ export type SessionSummary = {
   issuer_name: string
   agency: Agency[]
   meeting_date: string | null
-  key_topics: string | null
 }
 
 const TIPS = [
@@ -97,11 +96,6 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
     const file = e.dataTransfer.files?.[0]
     if (file) void handleFile(file)
   }
-
-  const focusAreas = (session.key_topics ?? '')
-    .split(/[,;\n]/)
-    .map((s) => s.trim())
-    .filter(Boolean)
 
   const meetingDate = session.meeting_date
     ? new Date(session.meeting_date).toLocaleDateString(undefined, {
@@ -255,24 +249,6 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
               </div>
             </dl>
           </section>
-
-          {focusAreas.length > 0 && (
-            <section className="rounded-lg border border-border bg-white p-5">
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-                Focus areas
-              </h2>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {focusAreas.map((area) => (
-                  <li
-                    key={area}
-                    className="rounded-full bg-brand/10 px-3 py-1 text-xs font-medium text-brand"
-                  >
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
 
           <section className="rounded-lg border border-border bg-surface p-5">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">

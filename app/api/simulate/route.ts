@@ -28,7 +28,6 @@ type SessionContext = {
   current_rating: string
   outlook: string
   issuer_name: string
-  key_topics: string | null
 }
 
 type SimulateBody = {
@@ -183,7 +182,6 @@ ${args.ctx.industry ? `- Industry: ${args.ctx.industry}` : ''}
 ${args.ctx.sub_type ? `- Sub-type: ${args.ctx.sub_type}` : ''}
 - Current rating: ${args.ctx.current_rating}
 - Outlook: ${args.ctx.outlook}
-${args.ctx.key_topics ? `- Topics the issuer flagged: ${args.ctx.key_topics}` : ''}
 
 ${historyBlock}
 

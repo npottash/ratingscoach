@@ -15,7 +15,7 @@ export default async function NarrativePage({
   const supabase = await createClient()
   const { data: session } = await supabase
     .from('sessions')
-    .select('id, issuer_name, agency, meeting_date, key_topics')
+    .select('id, issuer_name, agency, meeting_date')
     .eq('id', session_id)
     .single<SessionSummary>()
 

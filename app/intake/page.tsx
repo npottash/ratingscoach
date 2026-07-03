@@ -306,19 +306,6 @@ export default function IntakePage() {
             </label>
           </div>
 
-          <label className={labelClass}>
-            <span>
-              Key topics you'd like to address with the rating agencies{' '}
-              <span className="font-normal text-muted">(optional)</span>
-            </span>
-            <textarea
-              name="key_topics"
-              rows={4}
-              placeholder="The themes, updates, or concerns you want to make sure get covered in the meeting."
-              className={inputClass}
-            />
-          </label>
-
           {state?.error && (
             <p className="text-sm text-red-600">{state.error}</p>
           )}
