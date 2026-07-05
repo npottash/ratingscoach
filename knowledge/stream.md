@@ -385,3 +385,65 @@ What agencies are focused on globally in life and health insurance that could sl
 Tags: insurance · life · M&A · earnings-pressure · group-disability
 
 There is increasing concern around large-scale M&A reshaping the life insurance sector, and around lower net income driven by lower returns on alternative investments and weaker results in group disability. Issuers with alternatives-heavy portfolios or meaningful group disability books should be ready to explain recent earnings drivers and whether the weakness is cyclical or structural.
+
+## 2026-07-05 — Alternative asset managers, BDCs, private credit risk framework (v4)
+
+### NBFI / Alt managers — Q1 2026 earnings, redemptions, AI-disruption strain points
+
+Tags: nbfi · alt-managers · earnings · redemptions · AI-disruption
+
+Earnings at the major alternative asset managers remained strong in Q1 2026 amid choppy market conditions. The concerns within private credit are primarily isolated to software and technology exposures, particularly within BDCs — but these exposures have little impact on overall results. The strain points agencies are watching: redemption requests are elevated, driven by two forces — AI disruption risk in software companies and broader private credit risk concerns, both of which are driving increased redemptions. The agency view remains that alternative managers' underlying fundamentals are strong and their diversified funding pipelines will continue to support growth. In a meeting, expect agencies to probe earnings growth, realizations, and redemption requests in non-traded BDCs specifically.
+
+### NBFI / Alt managers — Fitch focus areas (traditional vs alternative managers)
+
+Tags: nbfi · alt-managers · Fitch · investment-managers · focus-areas
+
+Fitch's current focus areas for traditional investment managers: valuation declines, weak flows, and fee pressure. For alternative investment managers: slowing realizations and the competitive environment. An alternatives manager prepping for a Fitch meeting should have direct answers on realization pace (what's exiting, what's stuck, and why) and on how they're defending economics against competition.
+
+### NBFI / Alt managers — Fitch 2026 macro watch items (US–Iran war, rates, transaction activity)
+
+Tags: nbfi · alt-managers · Fitch · macro-watch-items · 2026
+
+Fitch's macro watch items for the NBFI space in 2026: the evolution of the US–Iran conflict and its impact on global growth, asset quality, and general market sentiment; monetary policy and inflation expectations and their impact on lender revenue, asset quality, funding costs and availability, and credit demand; and transaction activity dynamics (M&A and IPOs) and their impact on valuations, realizations, and fee generation for investment managers. Fitch has turned more negative on nonbank financial institutions overall: global growth prospects have been revised downward in the wake of the US–Iran war, most expected rate cuts have not materialized, and inflation risks have increased. Latin American NBFIs face additional political uncertainty from upcoming elections in certain countries.
+
+### NBFI / BDC — Fitch stress construct: four quarters of redemptions plus valuation declines
+
+Tags: nbfi · bdc · Fitch · leverage · asset-coverage · stress
+
+For BDCs, a question Fitch is specifically focused on: whether the BDC maintains leverage below a defined level under stress scenarios, and whether its asset coverage cushions are sufficient to absorb four quarters of maximum redemptions and valuation declines simultaneously. That's the stress construct to prepare against — not a single-quarter shock but a sustained four-quarter drawdown. A BDC walking into a Fitch meeting should have this exact scenario pre-run with the results ready.
+
+### NBFI / BDC — Fitch primary focus: liquidity and portfolio cash flows
+
+Tags: nbfi · bdc · Fitch · liquidity · portfolio-cash-flows · redemptions
+
+Fitch's primary BDC focus is liquidity levels. Their view: portfolio cash flows will be key to a BDC's ability to manage leverage and liquidity at appropriate levels if quarterly redemptions stay elevated beyond 2026. The implication for prep: know your portfolio cash flow generation cold — repayments, exits, interest collections — and be able to bridge from those flows to your redemption capacity without relying on asset sales.
+
+### NBFI / BDC — Fitch: AI disruption, rates, private credit competition
+
+Tags: nbfi · bdc · Fitch · AI-disruption · rates · private-credit-competition
+
+For BDCs specifically, Fitch is focused on: their ability to manage AI disruption risk (software/tech borrower exposure), higher-than-expected interest rates, and heightened redemptions; plus the rise of private credit and its impact on underwriting competition and regulation. The AI disruption angle is newer and worth preparing for explicitly — which portfolio companies have business models exposed to AI displacement, and how is the BDC underwriting that risk.
+
+### NBFI / Private credit — the agency risk probe list
+
+Tags: nbfi · private-credit · risk-list · agency-probes
+
+The risks agencies will probe on private credit — treat this as the checklist of expected questions: outsized growth; lack of through-the-cycle track record for many lenders; deterioration in lending terms; rising borrower credit risk; higher loan concentration within lender portfolios; elevated competition pressuring spreads; certain borrowers facing elevated maturity walls; borrower-level leverage continuing to climb; less transparency and regulation in private credit lending versus bank lending; banks lending to NBFIs creating second-order exposure; and insurance companies being among the largest investors in private credit, creating downside risk for policyholders. Any private credit lender or investor should have a prepared answer for each item on this list.
+
+### NBFI / Private credit — the mitigant answer key
+
+Tags: nbfi · private-credit · mitigants · agency-framework
+
+The mitigants agencies look for against the private credit risk list — this is the answer key to pair with the probe list: lenders primarily focused on secured lending with meaningful equity cushions; good alignment of interests; declining base rates supporting underlying borrowers' debt service capacity; limited liquidity transformation risk; solid asset coverage cushions and low leverage; the relatively small market size potentially limiting impacts on the wider system; large banks' private credit exposure being low relative to their equity; strong capital buffers; diversification; strong underwriting; and matching regulatory oversight with limited redemption risk. The strongest meeting posture maps each risk the agency raises to the specific mitigant in your structure — secured position, equity cushion, coverage ratio — rather than disputing that the risk exists.
+
+### NBFI / Private credit — fund finance structural risks by structure
+
+Tags: nbfi · private-credit · fund-finance · structural-risks · NAV-loans
+
+Emerging structural risks within fund finance products that can come up in agency meetings, by structure: for rated note feeders — LTVs, advance rates, and portfolio concentration. For continuation vehicle financing — LTV, advance rates, portfolio concentration, the presence of volatile or risky underlying assets, and cash sweep holidays. For collateralized fund obligations (CFOs) — the presence of volatile or risky underlying assets is increasing. For NAV loans (net asset value loans) — the biggest risk is loan-to-value and advance rates. For subscription finance facilities — tranching into subclasses is an increasing risk, along with LTVs. An issuer active in any of these structures should expect structure-specific questions and be ready to defend the LTV and advance rate discipline in each.
+
+### NBFI / Private credit — Level 3 asset concentration and valuation governance
+
+Tags: nbfi · private-credit · level-3-assets · valuation · fair-value
+
+Agencies are assessing Level 1 versus Level 2 versus Level 3 assets within funds — the fair value hierarchy as a proxy for valuation risk. Reference point: US life insurers hold a very low percentage of Level 3 fair-market-value assets relative to total fair-market-value assets, while alternative investment managers hold almost five times the Level 3 concentration of life insurers. An alternatives manager should expect the Level 3 question and be ready to explain the valuation governance around those positions — who marks them, how often, with what third-party validation.
