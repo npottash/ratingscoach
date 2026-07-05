@@ -37,6 +37,9 @@ type CoachBody = {
     current_rating: string
     outlook: string
     agency: Agency
+    ticker?: string | null
+    meeting_type?: string | null
+    meeting_date?: string | null
   }
   session_results?: FactorResult[]
 }
@@ -186,13 +189,32 @@ export async function POST(request: Request) {
   // 6. System prompt
   const persona = PERSONAS[ctx.agency]
   const industryLine = [ctx.industry, ctx.sub_type].filter(Boolean).join(' / ')
+  const tickerBit = ctx.ticker ? `, ticker: ${ctx.ticker}` : ''
   const issuerDescriptor = industryLine
-    ? `${ctx.issuer_name} (${ctx.sector} — ${industryLine}, currently ${ctx.current_rating} ${ctx.outlook}, prepping for ${ctx.agency})`
-    : `${ctx.issuer_name} (${ctx.sector}, currently ${ctx.current_rating} ${ctx.outlook}, prepping for ${ctx.agency})`
+    ? `${ctx.issuer_name} (${ctx.sector} — ${industryLine}${tickerBit}, currently ${ctx.current_rating} ${ctx.outlook}, prepping for ${ctx.agency})`
+    : `${ctx.issuer_name} (${ctx.sector}${tickerBit}, currently ${ctx.current_rating} ${ctx.outlook}, prepping for ${ctx.agency})`
+
+  // Meeting context: type shapes what prep advice fits; a dated meeting
+  // bounds what is achievable before it.
+  const meetingBits: string[] = []
+  if (ctx.meeting_type) {
+    meetingBits.push(`The upcoming meeting is a ${ctx.meeting_type}.`)
+  }
+  if (ctx.meeting_date) {
+    const days = Math.ceil(
+      (new Date(ctx.meeting_date).getTime() - Date.now()) / 86_400_000
+    )
+    if (Number.isFinite(days) && days >= 0) {
+      meetingBits.push(
+        `It is ${days === 0 ? 'TODAY' : `in ${days} day${days === 1 ? '' : 's'}`} (${ctx.meeting_date}) — keep prep advice actionable within that runway.`
+      )
+    }
+  }
+  const meetingLine = meetingBits.length ? `\n${meetingBits.join(' ')}` : ''
 
   const systemPrompt = `You are the AI Ratings Coach, an expert advisor sitting alongside a senior credit ratings consultant and their CFO / IR client. You just finished a simulated rating prep meeting between the client and a ${ctx.agency} analyst persona (${persona.name}).
 
-The client is: ${issuerDescriptor}.
+The client is: ${issuerDescriptor}.${meetingLine}
 
 Your job is to answer the user's question using everything below: the simulation results, the proprietary knowledge overlay, the playbook for the current outlook, and retrieved advisor notes from the corpus. Be specific to THIS issuer's situation — do not give generic answers.
 

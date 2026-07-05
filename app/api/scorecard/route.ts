@@ -37,7 +37,9 @@ type ScorecardBody = {
     current_rating: string
     outlook: string
     agency: Agency
+    ticker?: string | null
     meeting_type?: string | null
+    meeting_date?: string | null
   }
 }
 
@@ -304,9 +306,24 @@ export async function POST(request: Request) {
     .join('\n\n')
 
   const industryLine = [ctx.industry, ctx.sub_type].filter(Boolean).join(' / ')
+  const tickerBit = ctx.ticker ? `, ticker: ${ctx.ticker}` : ''
   const issuerLine = industryLine
-    ? `${ctx.issuer_name} (${ctx.sector} — ${industryLine}, currently ${ctx.current_rating} ${ctx.outlook})`
-    : `${ctx.issuer_name} (${ctx.sector}, currently ${ctx.current_rating} ${ctx.outlook})`
+    ? `${ctx.issuer_name} (${ctx.sector} — ${industryLine}${tickerBit}, currently ${ctx.current_rating} ${ctx.outlook})`
+    : `${ctx.issuer_name} (${ctx.sector}${tickerBit}, currently ${ctx.current_rating} ${ctx.outlook})`
+
+  // Days of prep runway until the real meeting, when a date is set and in
+  // the future. Used to calibrate how ambitious the priority actions can be.
+  let runwayLine = ''
+  if (ctx.meeting_date) {
+    const days = Math.ceil(
+      (new Date(ctx.meeting_date).getTime() - Date.now()) / 86_400_000
+    )
+    if (Number.isFinite(days) && days >= 0) {
+      runwayLine = `\n\nThe real ${ctx.agency} meeting is ${
+        days === 0 ? 'TODAY' : `in ${days} day${days === 1 ? '' : 's'}`
+      } (${ctx.meeting_date}). Calibrate priority_actions to that runway: every action must be realistically achievable before the meeting, with the most time-sensitive first. With a short runway, prefer sharpening existing materials and rehearsing answers over building new analyses from scratch.`
+    }
+  }
 
   const systemPrompt = `You are ${persona.name}, ${persona.role} at ${ctx.agency}. You are a fictional persona created for issuer prep — never claim to be a real person. You just finished a rating prep simulation with ${issuerLine}.
 
@@ -314,7 +331,7 @@ You will now produce a structured scorecard that the issuer's CFO / IR team will
     ctx.meeting_type
       ? `\n\nThe simulated meeting type was: ${ctx.meeting_type}. Weigh readiness accordingly — for a New Rating Request, how well the issuer explained the business and its inherent credit risks matters most; for an Annual Review or Transaction Update, year-over-year movement, current events, and progress on known concerns matter most.`
       : ''
-  }
+  }${runwayLine}
 
 GUIDELINES
 - Be specific. Cite what was actually said. No platitudes.

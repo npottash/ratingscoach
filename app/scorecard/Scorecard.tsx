@@ -9,6 +9,7 @@ import type { Agency } from '@/lib/types'
 export type ScorecardSession = {
   id: string
   issuer_name: string
+  ticker: string | null
   sector: string
   industry: string | null
   sub_type: string | null
@@ -124,6 +125,9 @@ export function Scorecard({
             current_rating: session.current_rating,
             outlook: session.outlook,
             agency,
+            ticker: session.ticker,
+            meeting_type: session.meeting_type,
+            meeting_date: session.meeting_date,
           },
           session_results: results ?? [],
         }),
@@ -206,7 +210,9 @@ export function Scorecard({
               current_rating: session.current_rating,
               outlook: session.outlook,
               agency,
+              ticker: session.ticker,
               meeting_type: session.meeting_type,
+              meeting_date: session.meeting_date,
             },
           }),
         })

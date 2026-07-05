@@ -16,7 +16,7 @@ export default async function SimulationPage({
   const { data: session } = await supabase
     .from('sessions')
     .select(
-      'id, issuer_name, sector, industry, sub_type, current_rating, outlook, agency, meeting_type'
+      'id, issuer_name, ticker, sector, industry, sub_type, current_rating, outlook, agency, meeting_type'
     )
     .eq('id', session_id)
     .single<SimulationSession>()

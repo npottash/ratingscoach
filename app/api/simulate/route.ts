@@ -33,6 +33,7 @@ type SessionContext = {
   current_rating: string
   outlook: string
   issuer_name: string
+  ticker?: string | null
   meeting_type?: string | null
 }
 
@@ -209,7 +210,7 @@ ${persona.style}
 Today's date: ${new Date().toISOString().slice(0, 10)}.
 
 ISSUER UNDER REVIEW
-- Name: ${args.ctx.issuer_name}
+- Name: ${args.ctx.issuer_name}${args.ctx.ticker ? ` (ticker: ${args.ctx.ticker} — use what you know of this public issuer to sharpen your probing, but never invent specifics you are unsure of)` : ''}
 - Sector: ${args.ctx.sector}
 ${args.ctx.industry ? `- Industry: ${args.ctx.industry}` : ''}
 ${args.ctx.sub_type ? `- Sub-type: ${args.ctx.sub_type}` : ''}

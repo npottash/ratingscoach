@@ -10,6 +10,7 @@ import type { Agency } from '@/lib/types'
 export type SimulationSession = {
   id: string
   issuer_name: string
+  ticker: string | null
   sector: string
   industry: string | null
   sub_type: string | null
@@ -251,6 +252,7 @@ function SimulationChat({
             current_rating: session.current_rating,
             outlook: session.outlook,
             issuer_name: session.issuer_name,
+            ticker: session.ticker,
             meeting_type: session.meeting_type,
           },
           current_factor: factor,
