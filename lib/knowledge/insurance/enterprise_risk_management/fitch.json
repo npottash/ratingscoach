@@ -1,6 +1,35 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "Map your counterparty web across the financial system — which banks, which private credit funds, which sponsors, and where do the correlated exposures sit?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    "How large is your currency mismatch, and how is it hedged?"
+  ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "strong_answer_markers": [
+    {
+      "text": "Can map the counterparty web on request — banks, funds, sponsors — and identifies where correlated exposures concentrate.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ],
+  "agency_intel": [
+    {
+      "text": "Renewed focus on interconnectivity risk: deep ties between private credit funds and traditional financial institutions could heighten contagion in a downturn. Interconnectivity itself can be framed as a credit negative — expect questions on exposure to banks and across different types of financial institutions.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    "For insurers with large currency mismatches (an Asia-Pacific focus): FX swings are a live risk — expect questions on hedging and the size of the mismatch."
+  ]
 }

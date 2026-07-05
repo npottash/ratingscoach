@@ -28,7 +28,8 @@
       ]
     },
     "What are your emerging risks?",
-    "What is your exposure to crypto, digital assets, or stablecoin?"
+    "What is your exposure to crypto, digital assets, or stablecoin?",
+    "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
@@ -40,6 +41,7 @@
         "Online / Digital Bank / Neobank / Fintech Bank"
       ]
     },
-    "Fitch analysts tend to be less deep technically, so Fitch penalizes complexity more readily than the other agencies — keep explanations clean and simple. Fitch also over-indexes on risks outside the core business (crypto, digital assets, stablecoin), where S&P and Moody's stay focused on core risks. Prepare for the tangential questions."
+    "Fitch analysts tend to be less deep technically, so Fitch penalizes complexity more readily than the other agencies — keep explanations clean and simple. Fitch also over-indexes on risks outside the core business (crypto, digital assets, stablecoin), where S&P and Moody's stay focused on core risks. Prepare for the tangential questions.",
+    "Moody's published a stress analysis of specific US banking credit risks — rate-policy predictability, a long-Treasury spike, CRE re-emergence, an equity-market crash (via wealth/investment-management revenue share), consumer defaults, and deregulation combined with shadow-bank deterioration and deposit runoff. The other agencies are expected to focus on the same list through 2026 — prepare an exposure answer for each."
   ]
 }

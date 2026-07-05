@@ -1,6 +1,131 @@
 {
-  "real_questions": [],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "real_questions": [
+    {
+      "text": "What share of the portfolio is in private credit, what are your largest single-name exposures, and what is the credit-quality distribution of your privately rated holdings?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "What is the anticipated growth in private credit over the next few years, what concentrations will develop, and in which regions will the growth occur?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "How much PIK exposure do you hold, and what is the forward trend in that exposure?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Walk us through prepayment and extension risk in your residential exposure — how does the ALM position hold up if prepayment accelerates in a lower-rate environment or slows in a higher-rate one?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ],
+  "common_pitfalls": [
+    {
+      "text": "Pointing to currently low default rates when asked about private credit downside. The agencies are asking about the impairment asymmetry — in a downside scenario, impairment rates in the private credit segment can exceed those of the liquid portfolio.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Growing allocations to structurally complex instruments (asset-based finance, fund finance, non-US mid-market lending) and expecting the underlying risk profile to carry the argument. The opacity itself is the penalty — agencies will ding rising structural complexity even when the risk is not overly aggressive.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Treating a substantial or growing PIK book as benign — PIK is read as an early-warning signal of tightening borrower cash-flow coverage.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ],
+  "strong_answer_markers": [
+    {
+      "text": "Acknowledges the private credit impairment asymmetry directly and quantifies the downside scenario, rather than leaning on current low defaults.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Has the PIK trend line ready, not just the current level.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Speaks to prepayment/extension modeling on residential exposure, not just loan credit quality — including servicing, deal structure, and collateral.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Where current allocation is modest, answers the forward-trajectory probe anyway: anticipated growth, future concentrations, and regions. The probe is about the plan, not the current book.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ],
+  "agency_intel": [
+    {
+      "text": "The agency focus on life and health insurers has shifted from earnings and capital — viewed as resilient — to rising asset risk, mainly growing private credit allocations that are harder to value and sell than public securities. Expect far more meeting time on the asset side of the balance sheet than on earnings or capital adequacy.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified",
+        "Health Insurance / Managed Care"
+      ]
+    },
+    {
+      "text": "US life insurers lead the charge into private credit, with over one-third of combined portfolios in the asset class — spanning middle-market lending, real estate, infrastructure, and asset-based finance. Agencies will dig in on single-name concentration, the credit quality of privately rated holdings, and the growth trajectory.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Regulators are proposing changes to reporting on private placements that would identify all insurer debt securities as public or private. The regulatory attention cuts both ways: it validates the concern while giving well-prepared issuers a framework to demonstrate discipline.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "For UK insurers: private credit exposure is smaller than US peers but rising — the illiquidity, long duration, and yield of private assets match annuity liabilities grown by pension risk transfer demand, and recent capital-regime reforms may lift sub-investment-grade exposure. The UK conversation is about trajectory and the liability-match rationale, not current levels.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ]
 }

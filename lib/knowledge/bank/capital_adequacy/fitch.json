@@ -2,14 +2,22 @@
   "real_questions": [
     "What's your operating range for capital?",
     "Are there any capital raises assumed in your plan?",
-    "Who do you view as your direct peers?"
+    "Who do you view as your direct peers?",
+    "Capital requirements are falling — will the released capacity be used to increase payouts or to increase risk-taking?"
   ],
-  "common_pitfalls": [],
+  "common_pitfalls": [
+    "Treating falling capital requirements as released capacity for payouts or risk-taking — agencies read that as a credit negative. The deployment question is the single most predictable probe wherever requirements are falling (UK, North America)."
+  ],
   "strong_answer_markers": [
     "Comes prepared with an explicit 18–24 month capital view and a long-term run-rate capital target.",
-    "Answers AOCI questions in terms of the all-in management buffer, not just the current mark."
+    "Answers AOCI questions in terms of the all-in management buffer, not just the current mark.",
+    "Frames capital deployment under falling requirements within a disciplined, stated buffer framework — not as an opportunity to run leaner."
   ],
   "agency_intel": [
-    "Fitch references CET1 directly (unlike S&P, whose anchor is the RAC ratio, or Moody's, which uses its own Tangible Common Equity metric). Have your CET1 trajectory and drivers ready."
+    "Fitch references CET1 directly (unlike S&P, whose anchor is the RAC ratio, or Moody's, which uses its own Tangible Common Equity metric). Have your CET1 trajectory and drivers ready.",
+    "For UK banks: the Bank of England announced (Dec 2025) that the Tier 1 capital benchmark moves from 14% to 13%, driven by lower average risk weights, revised risk measurement, and reduced systemic importance of some banks since 2015. Agencies read this simplification and recalibration as broadly negative for UK bank ratings — expect questions on how the lower benchmark changes capital targets and distribution plans.",
+    "For Swiss banks: Switzerland is the exception to the global deregulatory trend — the too-big-to-fail framework would increase capital requirements. The Swiss conversation is about absorbing higher requirements; the UK and North American conversation is about how much of the released capital gets paid out.",
+    "For EU banks: whether the EU Commission's bank-competitiveness report supports keeping capital requirements stable or proposes reducing them is an open question. A reduction proposal would accelerate a credit-negative trend of gradually falling requirements — the agencies are actively forming their view, and management's stated intentions feed directly into that assessment.",
+    "For Canadian D-SIBs: OSFI lowered the domestic stability buffer and the top of its range (Jun 2026), giving banks more flexibility to deploy capital. Moody's called this credit negative — it facilitates lower capital at banks already running thinner buffers above minimums — and the same read should be expected here. The predictable question: does the lower buffer mean you will deploy capital or run with lower capital over time, and how should the added risk-taking that comes with lower capital be thought about?"
   ]
 }

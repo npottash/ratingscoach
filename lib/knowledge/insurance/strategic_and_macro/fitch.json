@@ -2,5 +2,23 @@
   "real_questions": [],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "Three global tripwires could turn the agencies' life & health view from confirmatory to defensive: a substantial increase in regulatory scrutiny, more stress on financial markets, or signs of deterioration in asset quality. Evidence on any of them shifts the meeting tone.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified",
+        "Health Insurance / Managed Care"
+      ]
+    },
+    {
+      "text": "Increasing agency concern around large-scale M&A reshaping the life insurance sector. For Japanese insurers specifically, agencies expect international M&A to limit capital growth — be ready on the capital-trajectory implications of overseas acquisition appetite.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ]
 }

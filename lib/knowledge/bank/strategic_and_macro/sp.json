@@ -12,7 +12,8 @@
     "Do you service your own loans?",
     "Is it different for personal, student, auto, or other types of loans?",
     "How do you see the deregulation opportunity from the new administration's looser environment?",
-    "What are your emerging risks?"
+    "What are your emerging risks?",
+    "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?"
   ],
   "common_pitfalls": [
     "Fintech and retail-focused banks consistently fail to address customer-graduation risk — successful customers outgrow the platform and move to traditional institutions.",
@@ -25,6 +26,7 @@
     "Trump administration regulatory and supervisory easing introduces 2026 uncertainty. S&P notes it is unclear how the balance between efficiency / effectiveness and less stringent oversight will play out.",
     "Asset price volatility is on S&P's 2026 risk list. Elevated asset prices have boosted fees and trading; a correction would weigh on revenue and add to counterparty risk.",
     "Below-trend US economic growth is a 2026 base-case concern. Threatens asset quality and weighs on business activity.",
-    "S&P's methodology builds up from individual sub-components (the building blocks that move the anchor) rather than a grid scorecard, which makes it far more peer-benchmark-driven than the other agencies. Expect S&P to ask who your direct peers are, then run the relative comparison itself off your metrics — so the benchmarking happens behind the scenes."
+    "S&P's methodology builds up from individual sub-components (the building blocks that move the anchor) rather than a grid scorecard, which makes it far more peer-benchmark-driven than the other agencies. Expect S&P to ask who your direct peers are, then run the relative comparison itself off your metrics — so the benchmarking happens behind the scenes.",
+    "Moody's published a stress analysis of specific US banking credit risks — rate-policy predictability, a long-Treasury spike, CRE re-emergence, an equity-market crash (via wealth/investment-management revenue share), consumer defaults, and deregulation combined with shadow-bank deterioration and deposit runoff. The other agencies are expected to focus on the same list through 2026 — prepare an exposure answer for each."
   ]
 }

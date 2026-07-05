@@ -9,34 +9,49 @@
     "Are all originations direct, or would you consider buying or sourcing from brokers?",
     {
       "text": "Are customers blind to who owns the loan?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Is the ultimate purchaser of the loans' credit box different than your own?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Can your offtake counterparties shut the spigot off in short order?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "What are the covenants specifically to the offtake providers?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Is credit a covenant in the loan platform agreements?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "To what extent are you looking to broaden the offtake roster to other banks?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
-    }
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
+    },
+    "Your growth in C&I, CRE, or NDFI lending is running against the sector-wide tightening shown in the SLOOS — what underwrites your confidence?"
   ],
   "common_pitfalls": [
     "Issuers still over-prep CRE and under-prep the consumer-side cycle story for 2026. Moody's is past CRE and focused on consumer loan performance as the economy cools.",
     {
       "text": "Issuers with originate-and-distribute / loan offtake programs underestimate Moody's focus on offtake counterparty risk — covenant scope, credit-box divergence, shut-off mechanics, and counterparty diversification.",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     }
   ],
   "strong_answer_markers": [],
@@ -46,7 +61,10 @@
     "NBFI lending is a Moody's concern via private credit underwriting quality — same theme as the S&P read, mirrored at Moody's.",
     {
       "text": "For loan offtake programs, Moody's probes whether the ultimate purchaser's credit box differs from the originator's (creating adverse-selection risk), how fast the offtake spigot can be cut, and whether credit performance is itself a covenant in the loan-platform agreements.",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
-    }
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
+    },
+    "SLOOS (Q1 2026) shows credit-standard tightening in both C&I and CRE lending, with NDFI lending restrained. Useful two ways in a meeting: as evidence of sector-wide discipline when explaining underwriting posture, and as the backdrop for questions about growth running against the tightening trend — which draws scrutiny."
   ]
 }

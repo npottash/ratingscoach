@@ -1,6 +1,61 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "Recent net income weakness — how much is lower returns on alternative investments versus group disability results, and is it cyclical or structural?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified",
+        "Health Insurance / Managed Care"
+      ]
+    }
+  ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "strong_answer_markers": [
+    {
+      "text": "Attributes earnings weakness precisely between alternatives returns and group disability, with a view on cyclical versus structural.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified",
+        "Health Insurance / Managed Care"
+      ]
+    }
+  ],
+  "agency_intel": [
+    {
+      "text": "Agencies view life and health earnings and capital as resilient — expect the meeting to spend less time here and far more on the asset side of the balance sheet.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified",
+        "Health Insurance / Managed Care"
+      ]
+    },
+    {
+      "text": "Increasing concern about lower net income driven by weaker alternative-investment returns and weaker group disability results — issuers with either should be ready to explain the drivers.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified",
+        "Health Insurance / Managed Care"
+      ]
+    },
+    {
+      "text": "For Chinese life insurers: profitability is pressured by steeply fallen rates against growing exposure to high-guarantee savings products. Spread compression between guaranteed liabilities and achievable investment yields is the central meeting topic.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "For Japanese life insurers: rising rates create surrender risk — customers may lapse savings policies for higher-yielding alternatives (the mirror image of China's problem). Be prepared on the surrender/lapse sensitivity of the in-force book.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ]
 }

@@ -1,6 +1,38 @@
 {
-  "real_questions": [],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "real_questions": [
+    {
+      "text": "Who are your asset-intensive reinsurance counterparties, what is the affiliated versus unaffiliated mix, and how much of it sits offshore?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ],
+  "common_pitfalls": [
+    "Leaning on RBC as the company's internal capital-management metric. The NAIC's new solvency standards explicitly reinforce RBC as a regulatory tool rather than a management metric — expect agencies to distinguish your regulatory RBC position from your internal capital framework."
+  ],
+  "strong_answer_markers": [
+    "Clearly separates the regulatory RBC position from the internal capital-management framework, and can speak to both.",
+    {
+      "text": "On asset-intensive reinsurance: quantifies counterparty credit quality, the affiliated/unaffiliated mix, and the offshore component without prompting.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
+  ],
+  "agency_intel": [
+    "The NAIC is rolling out new solvency standards and risk-based capital principles — clarifying the use of RBC, improving consistency across insurance RBC formulas, and increasing methodology transparency to manage emerging risks.",
+    {
+      "text": "Asset-intensive reinsurance (the reinsurer assumes both liabilities and the associated assets) boosts the cedent's margins and frees capital — trading direct investment risk for counterparty risk, which can reduce overall risk when reinsurer credit quality is strong. But the growth in affiliated and private-capital-backed transactions has heightened concerns around counterparty exposure, governance and transparency, and liquidity/systemic risk. A separate US-specific concern: offshore reinsurance may weaken capital adequacy.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    "In Asia Pacific, the new global insurance capital standards (ICS) will raise capital requirements, while Europe's Solvency II moves the opposite way. Issuers on either side of that divergence should be ready to explain the transition impact on their reported capital position."
+  ]
 }

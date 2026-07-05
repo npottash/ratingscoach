@@ -16,14 +16,17 @@
         "Trust / Custody Bank",
         "Regional / Super-Regional Bank (>$100bn in Assets)"
       ]
-    }
+    },
+    "Capital requirements are falling — will the released capacity be used to increase payouts or to increase risk-taking?"
   ],
   "common_pitfalls": [
-    "Issuers premise capital release plans on the current regulatory framework even though requirements are about to be updated. S&P will probe the contingency if updated requirements constrain the planned release pace."
+    "Issuers premise capital release plans on the current regulatory framework even though requirements are about to be updated. S&P will probe the contingency if updated requirements constrain the planned release pace.",
+    "Treating falling capital requirements as released capacity for payouts or risk-taking — agencies read that as a credit negative. The deployment question is the single most predictable probe wherever requirements are falling (UK, North America)."
   ],
   "strong_answer_markers": [
     "Comes prepared with an explicit 18–24 month capital view and a long-term run-rate capital target.",
-    "Answers AOCI questions in terms of the all-in management buffer (CET1 minimum + regulatory buffers + AOCI-volatility buffer + loss buffer) — the level below which management won't operate — rather than just the current mark."
+    "Answers AOCI questions in terms of the all-in management buffer (CET1 minimum + regulatory buffers + AOCI-volatility buffer + loss buffer) — the level below which management won't operate — rather than just the current mark.",
+    "Frames capital deployment under falling requirements within a disciplined, stated buffer framework — not as an opportunity to run leaner."
   ],
   "agency_intel": [
     "S&P's capital anchor is the risk-adjusted capital (RAC) ratio — their own evaluation of capital, with a numerator most comparable to Tier 1 and a denominator that is S&P's own risk-weighted asset calculation, separate from the regulatory one. The RAC ratio is what S&P is most focused on when rating banks.",
@@ -31,6 +34,10 @@
     "S&P is more likely than the other agencies to look across to competitors when assigning the rating — peer positioning matters.",
     "S&P sees room for capital releases — improvements in capital ratios, lower stress capital buffers, and declines in unrealized losses have created the room. However, S&P cautions that the extent only becomes clearer once regulators update capital requirements.",
     "S&P references CET1 but its more important metric is the RAC ratio, so it likely won't ask about CET1 directly. It may ask about capital trends and Tier 1 capital, especially for a trust bank or securities firm where Tier 1 leverage matters more than a capital ratio.",
-    "For Category 4 banks and above (>$100B assets), S&P has formally included unrealized gains/losses on AFS securities as an adjustment to the numerator of its RAC ratio — so AOCI is explicitly in S&P's capital view now, phased in over the next few years."
+    "For Category 4 banks and above (>$100B assets), S&P has formally included unrealized gains/losses on AFS securities as an adjustment to the numerator of its RAC ratio — so AOCI is explicitly in S&P's capital view now, phased in over the next few years.",
+    "For UK banks: the Bank of England announced (Dec 2025) that the Tier 1 capital benchmark moves from 14% to 13%, driven by lower average risk weights, revised risk measurement, and reduced systemic importance of some banks since 2015. Agencies read this simplification and recalibration as broadly negative for UK bank ratings — expect questions on how the lower benchmark changes capital targets and distribution plans.",
+    "For Swiss banks: Switzerland is the exception to the global deregulatory trend — the too-big-to-fail framework would increase capital requirements. The Swiss conversation is about absorbing higher requirements; the UK and North American conversation is about how much of the released capital gets paid out.",
+    "For EU banks: whether the EU Commission's bank-competitiveness report supports keeping capital requirements stable or proposes reducing them is an open question. A reduction proposal would accelerate a credit-negative trend of gradually falling requirements — the agencies are actively forming their view, and management's stated intentions feed directly into that assessment.",
+    "For Canadian D-SIBs: OSFI lowered the domestic stability buffer and the top of its range (Jun 2026), giving banks more flexibility to deploy capital. Moody's called this credit negative — it facilitates lower capital at banks already running thinner buffers above minimums — and the same read should be expected here. The predictable question: does the lower buffer mean you will deploy capital or run with lower capital over time, and how should the added risk-taking that comes with lower capital be thought about?"
   ]
 }

@@ -8,39 +8,57 @@
     "Are you adopting feedback from regulators, looking at peers, or bringing in talent?",
     {
       "text": "What is going to drive hockey-stick growth?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "When will this hockey-stick growth happen?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Are there areas where you don't fully own the tech end-to-end?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "On the broker's side, is the goal to provide own products or open platform?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Who are your tech platform's main competitors?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "You are moving from fintech to a full-fledged bank — where are you in that evolution?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
     },
     {
       "text": "Is crypto an area that you're looking to get into? How are you planning to play in that space?",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
-    }
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
+    },
+    "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
   "agency_intel": [
     {
       "text": "Moody's specifically tracks the fintech-to-full-bank transition. Expect questions on where the issuer is in that evolution, what regulator feedback they're absorbing, peer benchmarks they're following, and talent inflows they're bringing in.",
-      "sub_types": ["Online / Digital Bank / Neobank / Fintech Bank"]
-    }
+      "sub_types": [
+        "Online / Digital Bank / Neobank / Fintech Bank"
+      ]
+    },
+    "Moody's stressed specific credit risks in the US banking sector and these are the focus areas through 2026: interest-rate policy and its predictability; a spike in medium- to long-term Treasury rates; CRE risks re-emerging; a stock-market crash — specifically wealth and investment management exposure, measured as segment net revenues as a share of total net revenues; consumer defaults and delinquencies; and the combination of significant deregulation, shadow-bank credit deterioration, and deposit runoff risks. Have a ready answer on exposure to each."
   ]
 }
