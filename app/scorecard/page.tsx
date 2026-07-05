@@ -20,7 +20,7 @@ export default async function ScorecardPage({
   const { data: session } = await supabase
     .from('sessions')
     .select(
-      'id, issuer_name, sector, industry, sub_type, current_rating, outlook, agency, meeting_date, overall_score, factors_flagged, critical_gaps'
+      'id, issuer_name, sector, industry, sub_type, current_rating, outlook, agency, meeting_type, meeting_date, overall_score, factors_flagged, critical_gaps'
     )
     .eq('id', session_id)
     .single<ScorecardSession>()

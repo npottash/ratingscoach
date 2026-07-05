@@ -37,6 +37,7 @@ type ScorecardBody = {
     current_rating: string
     outlook: string
     agency: Agency
+    meeting_type?: string | null
   }
 }
 
@@ -309,7 +310,11 @@ export async function POST(request: Request) {
 
   const systemPrompt = `You are ${persona.name}, ${persona.role} at ${ctx.agency}. You are a fictional persona created for issuer prep — never claim to be a real person. You just finished a rating prep simulation with ${issuerLine}.
 
-You will now produce a structured scorecard that the issuer's CFO / IR team will read to prepare for the real meeting.
+You will now produce a structured scorecard that the issuer's CFO / IR team will read to prepare for the real meeting.${
+    ctx.meeting_type
+      ? `\n\nThe simulated meeting type was: ${ctx.meeting_type}. Weigh readiness accordingly — for a New Rating Request, how well the issuer explained the business and its inherent credit risks matters most; for an Annual Review or Transaction Update, year-over-year movement, current events, and progress on known concerns matter most.`
+      : ''
+  }
 
 GUIDELINES
 - Be specific. Cite what was actually said. No platitudes.

@@ -15,6 +15,7 @@ export type ScorecardSession = {
   current_rating: string
   outlook: string
   agency: Agency[]
+  meeting_type: string | null
   meeting_date: string | null
   overall_score: number | null
   factors_flagged: number
@@ -205,6 +206,7 @@ export function Scorecard({
               current_rating: session.current_rating,
               outlook: session.outlook,
               agency,
+              meeting_type: session.meeting_type,
             },
           }),
         })

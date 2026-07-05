@@ -33,6 +33,7 @@ type SessionContext = {
   current_rating: string
   outlook: string
   issuer_name: string
+  meeting_type?: string | null
 }
 
 type SimulateBody = {
@@ -143,6 +144,30 @@ function renderKnowledgeBlock(
   return `ANALYST KNOWLEDGE (PROPRIETARY — use to sharpen your probing)\n\n${sections.join('\n\n')}`
 }
 
+/**
+ * Meeting-type focus block. An annual review is an update meeting — the
+ * analyst knows the business and probes what changed plus current events.
+ * A new rating request is a first-time meeting — the analyst is building
+ * an understanding of the business and its inherent credit risks from
+ * scratch. Old sessions without a meeting_type get no block (update-style
+ * default behavior).
+ */
+function meetingFocusBlock(meetingType: string | null | undefined): string {
+  switch (meetingType) {
+    case 'Annual Review':
+      return `MEETING TYPE: ANNUAL REVIEW (update meeting)
+You have covered this issuer before. Focus on what has CHANGED: year-over-year movement in the credit story, progress on concerns flagged in prior reviews, and current events and the latest agency pressure points as they hit this issuer. Assume familiarity with the basics of the business — do not re-litigate what the company is or how it makes money.`
+    case 'New Rating Request':
+      return `MEETING TYPE: NEW RATING REQUEST (first-time issuer meeting)
+This issuer has no rating history with you. Focus on UNDERSTANDING: how the business model works and makes money, the credit risks inherent to this type of company, and your agency's focus areas for the sector. You are establishing the baseline — there is no prior year to compare against, so avoid update-style "what changed" questions and dig into fundamentals, structure, competitive position, and management quality instead.`
+    case 'Transaction Update':
+      return `MEETING TYPE: TRANSACTION UPDATE
+This meeting exists because of a specific transaction or event. Prioritize the transaction: its rationale, financing and structure, and its credit impact — then material changes in the broader credit story since the last review, including relevant current events.`
+    default:
+      return ''
+  }
+}
+
 function buildSystemPrompt(args: {
   narrative: string
   ctx: SessionContext
@@ -191,6 +216,8 @@ ${args.ctx.sub_type ? `- Sub-type: ${args.ctx.sub_type}` : ''}
 - Current rating: ${args.ctx.current_rating}
 - Outlook: ${args.ctx.outlook}
 
+${meetingFocusBlock(args.ctx.meeting_type)}
+
 ${historyBlock}
 
 CURRENT FACTOR
@@ -210,7 +237,7 @@ ${playbookBlock}
 RULES
 - Ask ONE short question per turn. Single sentence. No compound questions. No "and also tell me about X" tag-ons.
 - Probe the credit STORY — the durability of the narrative, the strategic rationale, management thinking, how the issuer reasons under pressure. Do not turn this into a metric drill.
-- This meeting is an UPDATE meeting — especially if it is an annual review. Alongside factor fundamentals, regularly tie your probing to current events and the latest agency pressure points: how recent geopolitical, macro, or sector developments (drawn from the ANALYST KNOWLEDGE block, the issuer history, and developments you know of as of today's date) are impacting the issuer's portfolio and business, and what management is doing about the resulting risks. The pattern: "How is [recent event] impacting [credit risk in your portfolio / your business / your fundraising], and how are you addressing it?" At least one question per factor should have this current-events character when the knowledge block or recent developments give you material for it.
+- When the MEETING TYPE calls for update focus (annual review, transaction update, or unspecified), regularly tie your probing to current events and the latest agency pressure points: how recent geopolitical, macro, or sector developments (drawn from the ANALYST KNOWLEDGE block, the issuer history, and developments you know of as of today's date) are impacting the issuer's portfolio and business, and what management is doing about the resulting risks. The pattern: "How is [recent event] impacting [credit risk in your portfolio / your business / your fundraising], and how are you addressing it?" At least one question per factor should have this current-events character when the knowledge block or recent developments give you material for it.
 - Only ask for a specific number when the narrative itself cited one and you are stress-testing the interpretation. Do not quiz on memorized ratios.
 - Tone: professional, courteous, and curious. You are sharp underneath but respectful on the surface. You are a colleague exploring the credit, not an interrogator. Acknowledge a good point briefly before moving on. Never sarcastic, never blunt-to-the-point-of-rude.
 - Stay conversational. You are in a real meeting, not an oral exam.
@@ -338,10 +365,15 @@ export async function POST(request: Request) {
       type: 'text',
       text: `The issuer has now given ${answerCount} answers on this factor. You MUST set factor_complete=true this turn: flag the previous answer as usual and give a brief one or two sentence closing acknowledgment — NOT a new question.`,
     })
-  } else if (answerCount === FACTOR_ANSWER_TARGET - 1) {
+  } else if (
+    answerCount === FACTOR_ANSWER_TARGET - 1 &&
+    body.session_context.meeting_type !== 'New Rating Request'
+  ) {
     // Left to itself the analyst follows the narrative thread and never gets
     // to the update-meeting material — steer the factor's last question
-    // toward current events when the knowledge block offers any.
+    // toward current events when the knowledge block offers any. First-time
+    // issuer meetings skip this: their focus is understanding the business,
+    // not the update agenda.
     system.push({
       type: 'text',
       text: "Your next question MUST be a current-events question. That means a specific, NAMED external event or development — a geopolitical conflict, a sector shock, a policy or regulatory change — taken from your ANALYST KNOWLEDGE for this factor (items phrased around a named event) or from developments you know of. Ask how that event is impacting this issuer and how management is addressing the resulting risk, adapted to their book. Questions about the issuer's own narrative topics (their portfolio cycles, their reserves, their targets) do NOT count — the subject must be the external event. Park your current thread; you can note it in your closing. Ask it naturally — do not announce it as a current-events question. Skip ONLY if neither source offers any named external event relevant to this factor.",

@@ -16,6 +16,7 @@ export type SimulationSession = {
   current_rating: string
   outlook: string
   agency: Agency[]
+  meeting_type: string | null
 }
 
 type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
@@ -250,6 +251,7 @@ function SimulationChat({
             current_rating: session.current_rating,
             outlook: session.outlook,
             issuer_name: session.issuer_name,
+            meeting_type: session.meeting_type,
           },
           current_factor: factor,
           is_first_turn: isFirstTurn,
