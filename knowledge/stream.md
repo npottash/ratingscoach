@@ -237,3 +237,47 @@ When agencies are preparing to downgrade, they start calling out very specific d
 ### Historical patterns — upgrade catalysts (BBB banks)
 
 Common upgrade catalysts at this point in the cycle: banks that were downgraded or watch-listed post-SVB but have since proven either that those risks don't apply to them or that they've fully managed them. Another catalyst is fully integrating an acquisition that had caused a negative outlook or downgrade — if the bank can demonstrate the integration is complete and systems are up and running, that can support an upgrade. In both cases the pattern is the same: a prior concern, credibly and demonstrably resolved.
+
+## 2026-07-05 — International bank regulation + 2026 US risk landscape (v2)
+
+### Regulation — UK (Bank of England capital benchmark)
+
+Tags: fig-concepts · regulation · UK · Bank-of-England · capital-requirements
+
+In December 2025, the Bank of England announced that the Tier 1 capital benchmark for UK banks would move from 14% to 13%. The drivers: lower average risk weights, revised risk measurement, and reductions in the systemic importance of some banks since 2015. Rating agencies view the credit implications of this proposed simplification and recalibration of UK capital requirements as broadly negative for UK bank ratings. For a UK bank heading into an agency meeting, expect questions about how the lower benchmark will change capital targets and distribution plans.
+
+### Regulation — Switzerland (too-big-to-fail, the counter-trend)
+
+Tags: fig-concepts · regulation · Switzerland · too-big-to-fail · capital-requirements
+
+Switzerland is the exception to the global deregulatory trend in bank capital. The Swiss too-big-to-fail framework would increase capital requirements at Swiss banks — moving in the opposite direction from the UK and North America, where agencies expect banks to lower capital targets and increase expected distributions. For Swiss banks, the agency conversation is about absorbing higher requirements; for UK and North American banks, it's about how much of the released capital gets paid out.
+
+### Regulation — EU (Commission competitiveness report, open question)
+
+Tags: fig-concepts · regulation · EU · capital-requirements · credit-negative
+
+An open question in Europe: whether the EU Commission's report on bank competitiveness will support keeping capital requirements stable or propose reducing them. A reduction proposal would accelerate a credit-negative trend of gradually reducing regulatory requirements. Expect agencies to ask EU banks how they're thinking about these potential changes and what their responses would be — the agencies are actively determining whether this is a credit negative, and management's stated intentions feed directly into that assessment.
+
+### Regulation — capital deployment under loosening regimes (the predictable probe)
+
+Tags: fig-concepts · regulation · capital-deployment · payout-risk · credit-negative
+
+The central capital question across the UK, North America, and anywhere requirements are falling — this is where agencies double-click with banks: will lower capital requirements be used to increase payouts or increase risk-taking? If the answer is yes, that's a credit negative. Every bank operating under a loosening capital regime should have a prepared answer to this exact question, because it's the single most predictable probe in the current environment. A strong answer frames capital deployment within a disciplined, stated buffer framework rather than as an opportunity to run leaner.
+
+### Regulation — Canada (OSFI domestic stability buffer)
+
+Tags: fig-concepts · regulation · Canada · OSFI · domestic-stability-buffer
+
+In June 2026, OSFI (Canada's bank regulator) lowered the domestic stability buffer applicable to domestic systemically important banks (D-SIBs), and lowered the top of the range the buffer can reach. This gives Canadian banks more flexibility to deploy capital. Moody's views this as a credit negative because it effectively facilitates lower capital levels — at a time when Canadian banks were already operating with thinner buffers above their minimum requirements. Expect the same read from S&P and Fitch. The predictable agency question for Canadian banks: does the lower domestic stability buffer mean you will deploy capital or run with lower capital over time, and how should we think about the additional risk-taking and the bank's increased exposure that comes with lower capital?
+
+### Historical patterns — 2026 US bank risk landscape (Moody's stress areas)
+
+Tags: historical-patterns · US-banks · 2026-risks · Moody's · stress-analysis
+
+Moody's ran an analysis stressing specific credit risks within the US banking sector, and these are the areas Moody's and the other agencies can be expected to focus on through 2026: interest rate policy and the predictability of that policy; a spike in medium- to long-term Treasury rates; commercial real estate risks re-emerging; a stock market crash — specifically the exposure of wealth and investment management segments, measured as segment net revenues as a percentage of total net revenues; consumer defaults and delinquencies; and the combination of significant deregulation, shadow bank and credit deterioration, and deposit runoff risks. Banks preparing for a 2026 agency meeting should have a ready answer on their exposure to each of these.
+
+### Historical patterns — US credit standards (SLOOS Q1 2026: C&I, CRE, NDFI)
+
+Tags: historical-patterns · US-banks · credit-standards · SLOOS · C&I · CRE · NDFI
+
+On credit standard tightening in the US banking sector: based on the senior loan officer opinion survey (SLOOS) released in Q1 2026, there has been credit standard tightening in both C&I and CRE lending, and lending to non-depository financial institutions (NDFIs) continues to be restrained. This is useful context in a meeting two ways: as evidence of sector-wide discipline when explaining your own underwriting posture, and as the backdrop for agency questions about whether your growth in any of these categories is running against the tightening trend — which would draw scrutiny.
