@@ -1,6 +1,23 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "How are you defending your fee economics against the competitive environment?",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "Fee pressure is one of Fitch's three current focus areas for traditional managers (with valuation declines and weak flows).",
+      "sub_types": [
+        "Traditional — Active Equity & Fixed Income"
+      ]
+    }
+  ]
 }

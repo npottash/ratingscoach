@@ -1,6 +1,10 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "For each fund finance structure you use — rated note feeders, continuation vehicles, CFOs, NAV loans, subscription facilities — defend the LTV and advance-rate discipline."
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    "Fund finance structural risks agencies raise, by structure: rated note feeders — LTVs, advance rates, portfolio concentration. Continuation vehicle financing — LTV, advance rates, concentration, volatile/risky underlying assets, cash sweep holidays. CFOs — volatile/risky underlying assets increasing. NAV loans — loan-to-value and advance rates are the biggest risk. Subscription facilities — tranching into subclasses is an increasing risk, along with LTVs. Issuers active in any of these should expect structure-specific questions."
+  ]
 }

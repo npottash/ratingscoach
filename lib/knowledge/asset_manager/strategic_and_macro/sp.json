@@ -1,8 +1,55 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "For each fund finance structure you use — rated note feeders, continuation vehicles, CFOs, NAV loans, subscription facilities — defend the LTV and advance-rate discipline.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
+  ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    {
+      "text": "Maps each private credit risk the agency raises to the specific mitigant in the structure — secured position, equity cushion, coverage ratio — rather than disputing that the risk exists.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
+  ],
   "agency_intel": [
-    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals."
+    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals.",
+    {
+      "text": "Fund finance structural risks agencies raise, by structure: rated note feeders — LTVs, advance rates, portfolio concentration. Continuation vehicle financing — LTV, advance rates, concentration, volatile/risky underlying assets, cash sweep holidays. CFOs — volatile/risky underlying assets increasing. NAV loans — loan-to-value and advance rates are the biggest risk. Subscription facilities — tranching into subclasses is an increasing risk, along with LTVs. Issuers active in any of these should expect structure-specific questions.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "The private credit risk probe list — treat as the checklist of expected questions for any private credit lender or investor: outsized growth; lack of through-the-cycle track record; deterioration in lending terms; rising borrower credit risk; higher loan concentration; competition pressuring spreads; borrower maturity walls; climbing borrower-level leverage; less transparency and regulation versus bank lending; banks lending to NBFIs creating second-order exposure; and insurers among the largest private credit investors, creating policyholder downside. Have a prepared answer for each.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "The mitigant answer key agencies look for against the private credit risk list: secured lending with meaningful equity cushions; alignment of interests; declining base rates supporting borrower debt service; limited liquidity transformation; solid asset coverage and low leverage; small market size limiting systemic impact; banks' private credit exposure low relative to equity; strong capital buffers; diversification; strong underwriting; and regulatory oversight matched with limited redemption risk.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
   ]
 }

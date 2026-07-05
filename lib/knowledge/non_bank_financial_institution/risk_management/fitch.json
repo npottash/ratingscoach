@@ -1,6 +1,13 @@
 {
   "real_questions": [],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "common_pitfalls": [
+    "Disputing that a private credit risk exists instead of mapping it to the mitigant in your structure — the agencies' risk list is settled; the meeting is about your answer to each item."
+  ],
+  "strong_answer_markers": [
+    "Maps each private credit risk the agency raises to the specific mitigant in the structure — secured position, equity cushion, coverage ratio — rather than disputing that the risk exists."
+  ],
+  "agency_intel": [
+    "The private credit risk probe list — treat as the checklist of expected questions for any private credit lender or investor: outsized growth; lack of through-the-cycle track record; deterioration in lending terms; rising borrower credit risk; higher loan concentration; competition pressuring spreads; borrower maturity walls; climbing borrower-level leverage; less transparency and regulation versus bank lending; banks lending to NBFIs creating second-order exposure; and insurers among the largest private credit investors, creating policyholder downside. Have a prepared answer for each.",
+    "The mitigant answer key agencies look for against the private credit risk list: secured lending with meaningful equity cushions; alignment of interests; declining base rates supporting borrower debt service; limited liquidity transformation; solid asset coverage and low leverage; small market size limiting systemic impact; banks' private credit exposure low relative to equity; strong capital buffers; diversification; strong underwriting; and regulatory oversight matched with limited redemption risk."
+  ]
 }

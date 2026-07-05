@@ -1,6 +1,27 @@
 {
-  "real_questions": [],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "real_questions": [
+    {
+      "text": "Do you maintain leverage below your defined ceiling under stress, and are your asset coverage cushions sufficient to absorb four quarters of maximum redemptions and valuation declines simultaneously?",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    }
+  ],
+  "common_pitfalls": [
+    {
+      "text": "Preparing for a single-quarter shock — Fitch's BDC stress construct is a sustained four-quarter drawdown of maximum redemptions and valuation declines at the same time.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    }
+  ],
+  "strong_answer_markers": [
+    {
+      "text": "Has the four-quarter redemption + valuation-decline stress pre-run, with leverage and asset coverage results ready to show.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    }
+  ],
   "agency_intel": []
 }

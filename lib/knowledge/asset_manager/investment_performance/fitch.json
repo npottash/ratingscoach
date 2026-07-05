@@ -1,8 +1,64 @@
 {
   "real_questions": [
-    "Are recent AI rollouts and high interest rates impacting any of your portfolio companies?"
+    "Are recent AI rollouts and high interest rates impacting any of your portfolio companies?",
+    {
+      "text": "What share of fund assets is Level 3 under the fair-value hierarchy, and what is the valuation governance around those positions — who marks them, how often, and with what third-party validation?",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Walk us through your realization pace — what is exiting, what is stuck, and why?",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
   ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "strong_answer_markers": [
+    {
+      "text": "Explains Level 3 valuation governance concretely: who marks the positions, marking frequency, and third-party validation.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Has direct answers on realization pace — what's exiting, what's stuck, and why — rather than pointing to fund-level IRRs.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
+  ],
+  "agency_intel": [
+    {
+      "text": "Agencies use the Level 1/2/3 fair-value hierarchy as a proxy for valuation risk. Reference point: alternative investment managers hold almost five times the Level 3 concentration of US life insurers — expect the Level 3 question.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Fitch's current focus for alternative investment managers: slowing realizations and the competitive environment.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
+  ]
 }

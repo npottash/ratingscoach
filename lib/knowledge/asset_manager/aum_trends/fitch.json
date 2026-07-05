@@ -1,8 +1,33 @@
 {
   "real_questions": [
-    "What impact, if any, are recent AI rollouts and high interest rates having on your ability to fundraise?"
+    "What impact, if any, are recent AI rollouts and high interest rates having on your ability to fundraise?",
+    {
+      "text": "Redemption requests are elevated across the industry — what are you seeing in your funds, and in non-traded structures specifically?",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "Alt manager earnings stayed strong through Q1 2026 despite choppy markets; private credit concerns are mostly isolated to software/tech exposures (BDCs especially) with little impact on overall results. The strain point agencies watch: elevated redemption requests, driven by AI disruption risk in software companies and broader private credit concerns. Expect probes on earnings growth, realizations, and redemption requests in non-traded BDCs specifically.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Fitch's current focus for traditional investment managers: valuation declines, weak flows, and fee pressure.",
+      "sub_types": [
+        "Traditional — Active Equity & Fixed Income"
+      ]
+    }
+  ]
 }
