@@ -5,6 +5,13 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "Your leverage is running against your target debt-to-tangible-equity ratio — walk us through the parent's capacity and commitment to inject capital if you exceed it.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -12,6 +19,13 @@
       "text": "Preparing for a single-quarter shock — Fitch's BDC stress construct is a sustained four-quarter drawdown of maximum redemptions and valuation declines at the same time.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Treating the leverage conversation as standalone — Fitch's captive framework assumes a hypothetical parent capital injection back to target when actual leverage exceeds it, so the credibility and capacity of parent support IS the conversation.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
       ]
     }
   ],
@@ -21,7 +35,22 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "Speaks to parent support capacity and credibility alongside standalone leverage, knowing Fitch's model assumes the injection.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
     }
   ],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "Fitch's captive finance framework sets a credit-profile target leverage ratio (debt-to-tangible-equity) per captive, calibrated to asset quality and the funding/liquidity profile. When actual leverage exceeds target, Fitch assumes the parent injects a hypothetical amount of capital to bring leverage back to target.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
+  ]
 }

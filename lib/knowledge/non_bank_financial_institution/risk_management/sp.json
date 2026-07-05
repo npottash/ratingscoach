@@ -7,13 +7,34 @@
     "Which of your borrowers face maturity walls, and how does borrower-level leverage look against debt service capacity?",
     "Private credit is less transparent and less regulated than bank lending — why shouldn't that concern us in your case?",
     "What is your second-order exposure through bank lending relationships to NBFIs?",
-    "How is the rise of private credit competition affecting your underwriting standards and pricing?"
+    "How is the rise of private credit competition affecting your underwriting standards and pricing?",
+    {
+      "text": "If rates ease materially and your parent re-emphasizes incentive programs, what growth guardrails keep underwriting standards from slipping?",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
   ],
   "common_pitfalls": [
-    "Disputing that a private credit risk exists instead of mapping it to the mitigant in your structure — the agencies' risk list is settled; the meeting is about your answer to each item."
+    "Disputing that a private credit risk exists instead of mapping it to the mitigant in your structure — the agencies' risk list is settled; the meeting is about your answer to each item.",
+    {
+      "text": "Chasing market share through parent incentive programs — agencies pressure-test captive portfolio growth to confirm stability and credit quality are prioritized over volume.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
   ],
   "strong_answer_markers": [
-    "Maps each private credit risk the agency raises to the specific mitigant in the structure — secured position, equity cushion, coverage ratio — rather than disputing that the risk exists."
+    "Maps each private credit risk the agency raises to the specific mitigant in the structure — secured position, equity cushion, coverage ratio — rather than disputing that the risk exists.",
+    {
+      "text": "Articulates specific growth guardrails — underwriting standards that hold even when the parent pushes volume through incentives.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
   ],
   "agency_intel": [
     "The private credit risk probe list — treat as the checklist of expected questions for any private credit lender or investor: outsized growth; lack of through-the-cycle track record; deterioration in lending terms; rising borrower credit risk; higher loan concentration; competition pressuring spreads; borrower maturity walls; climbing borrower-level leverage; less transparency and regulation versus bank lending; banks lending to NBFIs creating second-order exposure; and insurers among the largest private credit investors, creating policyholder downside. Have a prepared answer for each.",

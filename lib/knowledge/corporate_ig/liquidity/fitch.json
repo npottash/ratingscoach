@@ -1,6 +1,33 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "Walk us through your maturity ladder over the next five years and your demonstrated access to capital markets — recent deals, banking relationships.",
+      "sub_types": [
+        "Real Estate"
+      ]
+    },
+    {
+      "text": "What is your office exposure, and what is your plan for that segment?",
+      "sub_types": [
+        "Real Estate"
+      ]
+    }
+  ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "strong_answer_markers": [
+    {
+      "text": "Walks in with the maturity ladder, demonstrated market access (recent transactions, banking relationships), and — if office-exposed — a direct answer on that segment.",
+      "sub_types": [
+        "Real Estate"
+      ]
+    }
+  ],
+  "agency_intel": [
+    {
+      "text": "REIT refinancing risk: five-year maturities for US and Canadian equity REITs have climbed modestly. Most REITs are investment grade with good capital markets access, which mitigates the risk — but agencies will certainly ask about upcoming maturities and market access. Office REITs remain the largest pocket of weakness.",
+      "sub_types": [
+        "Real Estate"
+      ]
+    }
+  ]
 }

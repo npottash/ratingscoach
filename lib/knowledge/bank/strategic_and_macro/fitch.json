@@ -30,10 +30,17 @@
     "What are your emerging risks?",
     "What is your exposure to crypto, digital assets, or stablecoin?",
     "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?",
-    "Can you simplify how this segment of the business actually works?"
+    "Can you simplify how this segment of the business actually works?",
+    "If rates rise sharply beyond forecasts, walk us through the net effect — the NIM benefit against the asset-quality and growth cost.",
+    "How sensitive is your balance sheet to a material asset price correction and credit spread widening from here?"
   ],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "common_pitfalls": [
+    "Answering the rate-scenario question one-sided — citing the NIM benefit of higher rates without the asset-quality and growth-prospects cost, or vice versa."
+  ],
+  "strong_answer_markers": [
+    "On rate scenarios, addresses both sides of the move — the NIM benefit and the asset-quality/growth cost — with the net effect quantified.",
+    "Has a view on sensitivity to a spread-widening / asset-repricing event, not just a rates scenario."
+  ],
   "agency_intel": [
     "For existing Fitch ratings on mid-range banks (roughly $50bn through Category 2), focus meetings on educating the analysts around asset quality, the forward strength of capital, and the liquidity position — Fitch has been less constructive than its reputation suggests in this size range.",
     {
@@ -44,6 +51,9 @@
     },
     "Fitch analysts tend to be less deep technically, so Fitch penalizes complexity more readily than the other agencies — keep explanations clean and simple. Fitch also over-indexes on risks outside the core business (crypto, digital assets, stablecoin), where S&P and Moody's stay focused on core risks. Prepare for the tangential questions.",
     "Moody's published a stress analysis of specific US banking credit risks — rate-policy predictability, a long-Treasury spike, CRE re-emergence, an equity-market crash (via wealth/investment-management revenue share), consumer defaults, and deregulation combined with shadow-bank deterioration and deposit runoff. The other agencies are expected to focus on the same list through 2026 — prepare an exposure answer for each.",
-    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals."
+    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals.",
+    "For large European banks: agencies are focused on monetary policy tightening — rates rising sharply beyond forecasts would support NIM but reduce growth prospects and could affect asset quality. An asset price correction combined with rising growth risks hits especially hard under durable energy-price and inflation pressure. Expect each agency to ask a version of this.",
+    "For global banks: agencies watch for geopolitical or domestic events — elections included — that could weigh on operating environments and refinancing conditions. All agencies are focused on late-cycle dynamics: heightened asset prices and tight credit spreads raise the risk of a material price correction weighing on bank balance sheets.",
+    "Fitch is specifically focused on monetary policy tightening and the scenario of rates rising sharply."
   ]
 }

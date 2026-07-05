@@ -13,13 +13,19 @@
     "Is it different for personal, student, auto, or other types of loans?",
     "How do you see the deregulation opportunity from the new administration's looser environment?",
     "What are your emerging risks?",
-    "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?"
+    "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?",
+    "If rates rise sharply beyond forecasts, walk us through the net effect — the NIM benefit against the asset-quality and growth cost.",
+    "How sensitive is your balance sheet to a material asset price correction and credit spread widening from here?"
   ],
   "common_pitfalls": [
     "Fintech and retail-focused banks consistently fail to address customer-graduation risk — successful customers outgrow the platform and move to traditional institutions.",
-    "Issuers premise 2026 plans on the current regulatory framework even though changes may come. S&P pushes on contingency if requirements tighten or loosen unexpectedly under the Trump administration."
+    "Issuers premise 2026 plans on the current regulatory framework even though changes may come. S&P pushes on contingency if requirements tighten or loosen unexpectedly under the Trump administration.",
+    "Answering the rate-scenario question one-sided — citing the NIM benefit of higher rates without the asset-quality and growth-prospects cost, or vice versa."
   ],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    "On rate scenarios, addresses both sides of the move — the NIM benefit and the asset-quality/growth cost — with the net effect quantified.",
+    "Has a view on sensitivity to a spread-widening / asset-repricing event, not just a rates scenario."
+  ],
   "agency_intel": [
     "For retail and fintech-style banks, S&P drills into product roadmap, acquisition channel concentration, and competitive positioning relative to both traditional banks and fintech peers.",
     "AI-stock concentration is a 2026 S&P watch item. Exposure to companies riding elevated AI valuations is flagged for correction risk; affects fee, trading, and asset-quality channels.",
@@ -28,6 +34,8 @@
     "Below-trend US economic growth is a 2026 base-case concern. Threatens asset quality and weighs on business activity.",
     "S&P's methodology builds up from individual sub-components (the building blocks that move the anchor) rather than a grid scorecard, which makes it far more peer-benchmark-driven than the other agencies. Expect S&P to ask who your direct peers are, then run the relative comparison itself off your metrics — so the benchmarking happens behind the scenes.",
     "Moody's published a stress analysis of specific US banking credit risks — rate-policy predictability, a long-Treasury spike, CRE re-emergence, an equity-market crash (via wealth/investment-management revenue share), consumer defaults, and deregulation combined with shadow-bank deterioration and deposit runoff. The other agencies are expected to focus on the same list through 2026 — prepare an exposure answer for each.",
-    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals."
+    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals.",
+    "For large European banks: agencies are focused on monetary policy tightening — rates rising sharply beyond forecasts would support NIM but reduce growth prospects and could affect asset quality. An asset price correction combined with rising growth risks hits especially hard under durable energy-price and inflation pressure. Expect each agency to ask a version of this.",
+    "For global banks: agencies watch for geopolitical or domestic events — elections included — that could weigh on operating environments and refinancing conditions. All agencies are focused on late-cycle dynamics: heightened asset prices and tight credit spreads raise the risk of a material price correction weighing on bank balance sheets."
   ]
 }

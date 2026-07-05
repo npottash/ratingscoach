@@ -7,15 +7,37 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "Show us your delinquency trend by vintage, and your residual value assumptions against the used-vehicle price outlook.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
     }
   ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    {
+      "text": "Has the delinquency trend by vintage and residual value assumptions ready, benchmarked against the used-vehicle price outlook.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
+  ],
   "agency_intel": [
     {
       "text": "Fitch's BDC focus list: managing AI disruption risk in software/tech borrowers, higher-than-expected interest rates, heightened redemptions, and the rise of private credit pressuring underwriting competition and regulation. The AI disruption angle is newer — prepare for it explicitly.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "North American captive finance companies face near-term asset quality and profitability pressure as consumer credit weakens and elevated used vehicle values moderate. Delinquencies remain elevated — agencies want to see delinquencies contained and used vehicle values supportive.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
       ]
     }
   ]

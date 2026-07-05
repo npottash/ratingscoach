@@ -1,10 +1,54 @@
 {
   "real_questions": [
-    "For each fund finance structure you use — rated note feeders, continuation vehicles, CFOs, NAV loans, subscription facilities — defend the LTV and advance-rate discipline."
+    "For each fund finance structure you use — rated note feeders, continuation vehicles, CFOs, NAV loans, subscription facilities — defend the LTV and advance-rate discipline.",
+    {
+      "text": "What minimum fixed charge coverage are you required to maintain under agreements with your parent, and what is your cushion against it?",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "What are dividend distributions as a percentage of net income, and what retention policy protects your liquidity buffer?",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
   ],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "common_pitfalls": [
+    {
+      "text": "Paying too much up to the parent — agencies flag high dividend payout ratios that leave the captive without retained earnings to support a liquidity buffer.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
+  ],
+  "strong_answer_markers": [
+    {
+      "text": "Frames an ILC bank charter as funding diversification plus regulatory discipline — agencies view the charter, including its added regulation, as a credit positive.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
+  ],
   "agency_intel": [
-    "Fund finance structural risks agencies raise, by structure: rated note feeders — LTVs, advance rates, portfolio concentration. Continuation vehicle financing — LTV, advance rates, concentration, volatile/risky underlying assets, cash sweep holidays. CFOs — volatile/risky underlying assets increasing. NAV loans — loan-to-value and advance rates are the biggest risk. Subscription facilities — tranching into subclasses is an increasing risk, along with LTVs. Issuers active in any of these should expect structure-specific questions."
+    "Fund finance structural risks agencies raise, by structure: rated note feeders — LTVs, advance rates, portfolio concentration. Continuation vehicle financing — LTV, advance rates, concentration, volatile/risky underlying assets, cash sweep holidays. CFOs — volatile/risky underlying assets increasing. NAV loans — loan-to-value and advance rates are the biggest risk. Subscription facilities — tranching into subclasses is an increasing risk, along with LTVs. Issuers active in any of these should expect structure-specific questions.",
+    {
+      "text": "Agencies view ILC bank charters for captives as a credit positive: low-cost funding access, further funding diversification, and the added regulation is read as increasing credit strength rather than as a burden.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "Agencies are focused on declining fixed charge coverage at captives (know your covenant level and cushion) and on dividend distributions as a share of net income — the concern is over-distributing to the parent instead of retaining a liquidity buffer.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
   ]
 }

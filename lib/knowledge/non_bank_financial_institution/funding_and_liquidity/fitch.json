@@ -6,6 +6,20 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "What minimum fixed charge coverage are you required to maintain under agreements with your parent, and what is your cushion against it?",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "What are dividend distributions as a percentage of net income, and what retention policy protects your liquidity buffer?",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -13,6 +27,13 @@
       "text": "Leaning on asset sales as the redemption answer — Fitch wants the bridge from portfolio cash flow generation to redemption capacity.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Paying too much up to the parent — agencies flag high dividend payout ratios that leave the captive without retained earnings to support a liquidity buffer.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
       ]
     }
   ],
@@ -22,6 +43,13 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "Frames an ILC bank charter as funding diversification plus regulatory discipline — agencies view the charter, including its added regulation, as a credit positive.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
     }
   ],
   "agency_intel": [
@@ -30,6 +58,20 @@
       "text": "Fitch's primary BDC focus is liquidity levels. Their view: portfolio cash flows will be key to managing leverage and liquidity if quarterly redemptions stay elevated beyond 2026.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Agencies view ILC bank charters for captives as a credit positive: low-cost funding access, further funding diversification, and the added regulation is read as increasing credit strength rather than as a burden.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "Agencies are focused on declining fixed charge coverage at captives (know your covenant level and cushion) and on dividend distributions as a share of net income — the concern is over-distributing to the parent instead of retaining a liquidity buffer.",
+      "sub_types": [
+        "Finance Co — Auto Lender",
+        "Finance Co — Commercial / Equipment Lender"
       ]
     }
   ]

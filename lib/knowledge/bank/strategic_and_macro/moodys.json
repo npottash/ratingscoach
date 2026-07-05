@@ -49,10 +49,17 @@
       ]
     },
     "If equity markets corrected sharply, what share of your net revenues — wealth and investment management in particular — is exposed?",
-    "Can you simplify how this segment of the business actually works?"
+    "Can you simplify how this segment of the business actually works?",
+    "If rates rise sharply beyond forecasts, walk us through the net effect — the NIM benefit against the asset-quality and growth cost.",
+    "How sensitive is your balance sheet to a material asset price correction and credit spread widening from here?"
   ],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "common_pitfalls": [
+    "Answering the rate-scenario question one-sided — citing the NIM benefit of higher rates without the asset-quality and growth-prospects cost, or vice versa."
+  ],
+  "strong_answer_markers": [
+    "On rate scenarios, addresses both sides of the move — the NIM benefit and the asset-quality/growth cost — with the net effect quantified.",
+    "Has a view on sensitivity to a spread-widening / asset-repricing event, not just a rates scenario."
+  ],
   "agency_intel": [
     {
       "text": "Moody's specifically tracks the fintech-to-full-bank transition. Expect questions on where the issuer is in that evolution, what regulator feedback they're absorbing, peer benchmarks they're following, and talent inflows they're bringing in.",
@@ -61,6 +68,8 @@
       ]
     },
     "Moody's stressed specific credit risks in the US banking sector and these are the focus areas through 2026: interest-rate policy and its predictability; a spike in medium- to long-term Treasury rates; CRE risks re-emerging; a stock-market crash — specifically wealth and investment management exposure, measured as segment net revenues as a share of total net revenues; consumer defaults and delinquencies; and the combination of significant deregulation, shadow-bank credit deterioration, and deposit runoff risks. Have a ready answer on exposure to each.",
-    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals."
+    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals.",
+    "For large European banks: agencies are focused on monetary policy tightening — rates rising sharply beyond forecasts would support NIM but reduce growth prospects and could affect asset quality. An asset price correction combined with rising growth risks hits especially hard under durable energy-price and inflation pressure. Expect each agency to ask a version of this.",
+    "For global banks: agencies watch for geopolitical or domestic events — elections included — that could weigh on operating environments and refinancing conditions. All agencies are focused on late-cycle dynamics: heightened asset prices and tight credit spreads raise the risk of a material price correction weighing on bank balance sheets."
   ]
 }
