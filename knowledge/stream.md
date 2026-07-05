@@ -281,3 +281,107 @@ Moody's ran an analysis stressing specific credit risks within the US banking se
 Tags: historical-patterns · US-banks · credit-standards · SLOOS · C&I · CRE · NDFI
 
 On credit standard tightening in the US banking sector: based on the senior loan officer opinion survey (SLOOS) released in Q1 2026, there has been credit standard tightening in both C&I and CRE lending, and lending to non-depository financial institutions (NDFIs) continues to be restrained. This is useful context in a meeting two ways: as evidence of sector-wide discipline when explaining your own underwriting posture, and as the backdrop for agency questions about whether your growth in any of these categories is running against the tightening trend — which would draw scrutiny.
+
+## 2026-07-05 — Life & health insurance: private credit, reinsurance, regional dynamics (v3)
+
+### Insurance / Asset risk — private credit regulatory attention (NAIC reporting)
+
+Tags: insurance · life · private-credit · asset-risk · regulation · NAIC
+
+A main focus in the life insurance sector is rising portfolio risk from investments in private credit. Regulators are getting more involved — which is a credit positive — but the underlying risks remain. Regulators are proposing changes to reporting on private placements held by insurers, which would allow insurers to identify all debt securities as either public or private. For an insurer heading into an agency meeting, the regulatory attention cuts both ways: it validates the concern while giving well-prepared issuers a framework to demonstrate discipline.
+
+### Insurance / Asset risk — NAIC RBC solvency standards
+
+Tags: insurance · life · RBC · NAIC · solvency-standards · regulation
+
+The NAIC is rolling out new solvency standards and risk-based capital principles. These clarify the use of RBC, outline expectations for future updates, and reinforce RBC's role as a regulatory tool rather than a company management metric. The aim is to increase transparency in the methodology and future changes, improve consistency across insurance RBC formulas, and manage emerging risks. In a meeting, expect agencies to distinguish between an insurer's regulatory RBC position and its internal capital management framework — leaning on RBC as your management metric is now explicitly out of step with the regulatory intent.
+
+### Insurance / Asset risk — agency focus shifted from earnings/capital to the asset side
+
+Tags: insurance · life · earnings · capital · asset-risk · agency-view
+
+The broad agency view on life and health insurers globally: earnings and capital are resilient and working well. The focus has shifted to rising asset risk — mainly driven by growing allocations to private credit, which is harder to value and sell than public stocks or bonds, exposing insurers to valuation and default risk, especially in the US. Issuers should expect the meeting to spend far less time on earnings and capital adequacy and far more time on the asset side of the balance sheet.
+
+### Insurance / Asset risk — US private credit concentration
+
+Tags: insurance · life · private-credit · concentration · US · allocation
+
+US life insurers are leading the charge into private credit, with over one-third of their combined investment portfolios in the asset class. The allocation spans non-bank lending to middle-market companies, real estate firms, infrastructure projects, and asset-based finance — reflecting both the decline in traditional bank lending and insurers' own search for yield during the low-rate era. This heightens concentration risk, including large single exposures and lower-quality privately rated securities. This is something agencies will dig in on and want answers to: expect probes on single-name concentration, the credit quality distribution of privately rated holdings, and the growth trajectory.
+
+### Insurance / Asset risk — valuation opacity and impairment asymmetry
+
+Tags: insurance · life · private-credit · valuation · default-risk · opacity
+
+The valuation and credit quality of private credit assets can be opaque because they are not traded on public exchanges. Increased exposure makes insurers vulnerable to a significant rise in defaults from current low levels. Concentration risk is intensifying, which creates liquidity stress, and a credit quality gap is widening — in a downside scenario, impairment rates in the private credit segment could exceed those of the liquid portfolio. A strong answer acknowledges the impairment asymmetry directly and quantifies the downside scenario rather than pointing to currently low default rates.
+
+### Insurance / Asset risk — newer structures: ABF, fund finance, complexity penalty
+
+Tags: insurance · life · private-credit · newer-structures · ABF · fund-finance
+
+There is rapid expansion in newer private asset structures: non-US mid-market lending, asset-based finance, and fund finance. The shift toward asset-based lending is increasing structural complexity, with asset-backed securities representing a large portion of purchases. Portfolios are migrating toward more structurally complex and less transparent instruments, introducing exposures that are harder to model and value. Agencies will want detail on the structural complexity and will likely ding issuers increasing exposure to complex structures even if the underlying risk profile is not overly aggressive — the opacity itself is the penalty.
+
+### Insurance / Asset risk — PIK exposure as an early warning signal
+
+Tags: insurance · life · PIK · early-warning · cash-flow
+
+Payment-in-kind (PIK) exposure in insurer private credit portfolios is small but growing. PIK generally serves as an early warning signal of tightening cash-flow coverage among borrowers. Insurers with substantial PIK exposure could be flagged as showing early warning signs of portfolio issues. Expect agencies to probe PIK exposure, particularly the forward growth in that exposure — have the trend line ready, not just the current level.
+
+### Insurance / Asset risk — residential whole loans, prepayment/extension, ALM
+
+Tags: insurance · life · residential · whole-loans · prepayment · ALM
+
+US life insurers show increased appetite for residential-backed asset growth, through both direct lending and private credit structures. The exposure remains insignificant today, but continued growth would introduce additional risks. Insurers buying whole loan pools or securitized structures need to consider loan quality, servicing, deal structure and collateral, and loan prepayment and extension risk. Agencies should be expected to ask about the asset-liability mix, because ALM becomes more difficult when prepayment accelerates in lower-rate environments or slows in higher-rate environments. Be ready to speak to prepayment/extension modeling, not just credit quality.
+
+### Insurance / Asset risk — interconnectivity and contagion
+
+Tags: insurance · life · interconnectivity · contagion · systemic-risk
+
+There is renewed focus on interconnectivity risk: deep ties between private credit funds and traditional financial institutions could heighten contagion risk in a downturn. Agencies will be concerned about insurers' exposure to banks and exposure across different types of financial institutions — interconnectivity itself can be framed as a credit negative. Issuers should be able to map their counterparty web: which banks, which funds, which sponsors, and where the correlated exposures sit.
+
+### Insurance / Reinsurance — asset-intensive reinsurance, counterparty and offshore
+
+Tags: insurance · life · asset-intensive-reinsurance · counterparty-risk · offshore
+
+To manage capital-intensive products, life insurers are increasingly opting for asset-intensive reinsurance, where the reinsurer assumes both the insurance liabilities and the associated investment assets from the cedent. This boosts the primary insurer's profit margins and frees capital to reinvest or fund buybacks. The trade: the cedent exchanges direct investment risk for counterparty risk — which can reduce overall risk provided the reinsurer's credit quality is strong. However, the growing volume of affiliated and private capital-backed transactions has heightened concerns around counterparty exposure, governance and transparency, and liquidity and systemic risk. A separate US-specific concern: the use of offshore reinsurance may weaken capital adequacy. Expect agencies to probe the credit quality of reinsurance counterparties, the affiliated/unaffiliated mix, and the offshore component.
+
+### Insurance / Regional — China: guaranteed products under falling rates
+
+Tags: insurance · life · China · interest-rates · guaranteed-products
+
+In China, life insurers' profitability is under pressure because interest rates have fallen steeply in recent years, just as exposure to popular savings policies with high guaranteed returns has increased — making insurers highly sensitive to rate changes. Falling rates and market volatility exacerbate the risks from guaranteed-return savings products. For Chinese life insurers, the spread compression between guaranteed liabilities and achievable investment yields is the central meeting topic.
+
+### Insurance / Regional — Japan: surrender risk and M&A capital drag
+
+Tags: insurance · life · Japan · surrender-risk · rates · M&A
+
+In Japan, where rates are rising, more customers may surrender savings policies in favor of higher-yielding alternatives — surrender risk is the rate-driven concern, the mirror image of China's problem. Separately, agencies expect international M&A by Japanese life insurers will likely limit capital growth. Japanese issuers should be prepared for both: the surrender/lapse sensitivity of the in-force book, and the capital trajectory implications of overseas acquisition appetite.
+
+### Insurance / Regional — Asia-Pacific: FX mismatch, ICS vs Solvency II divergence
+
+Tags: insurance · life · Asia-Pacific · FX · capital-standards · ICS
+
+In Asia Pacific, foreign exchange swings are a risk for insurers with large currency mismatches — expect questions on hedging and the size of the mismatch. Additionally, the new global insurance capital standards (ICS) will raise capital requirements in Asia Pacific, while Europe's Solvency II regime will have the opposite effect. Issuers on either side of that divergence should be ready to explain the transition impact on their reported capital position.
+
+### Insurance / Regional — UK: private credit trajectory, PRT and annuities
+
+Tags: insurance · life · UK · private-credit · annuities · PRT · capital-reform
+
+UK insurers have smaller private credit exposure than US peers, but it's rising — because the illiquidity, long duration, and high yields of private assets match well with UK life insurers' annuity liabilities, which have grown alongside pension risk transfer (PRT) demand. Additionally, UK insurers' exposure to riskier sub-investment-grade assets may increase on the back of recent reforms to the capital regime. The UK conversation is about trajectory and the liability match rationale, not current levels.
+
+### Insurance / Regional — Europe, Japan, Korea, UAE: the growth-trajectory probe
+
+Tags: insurance · life · Europe · Japan · Korea · UAE · private-credit · growth-trajectory
+
+For European insurers, private credit allocation is much more modest, reflecting their more liquid liabilities — it's generally less of a concern for the UK and Europe given the small exposure. For Japan, Hong Kong, Korea, and the UAE, allocations are low but interest is increasing. For all of these regions, agencies will pressure-test the forward expectation: what is the anticipated growth in the asset class over the next few years, what concentrations will develop, and in which regions will the growth occur. The probe is about the plan, not the current book.
+
+### Insurance / Outlook — the three tripwires (2026)
+
+Tags: insurance · life · downside-triggers · agency-focus · 2026
+
+What agencies are focused on globally in life and health insurance that could slow sector growth or turn the credit view: a substantial increase in regulatory scrutiny, more stress on financial markets, or signs of deterioration in asset quality. These are the three tripwires — issuers should understand that evidence on any of them shifts the meeting tone from confirmatory to defensive.
+
+### Insurance / Outlook — M&A and earnings pressure (alternatives, group disability)
+
+Tags: insurance · life · M&A · earnings-pressure · group-disability
+
+There is increasing concern around large-scale M&A reshaping the life insurance sector, and around lower net income driven by lower returns on alternative investments and weaker results in group disability. Issuers with alternatives-heavy portfolios or meaningful group disability books should be ready to explain recent earnings drivers and whether the weakness is cyclical or structural.

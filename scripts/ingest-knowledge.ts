@@ -43,6 +43,48 @@ function chunkText(text: string, size: number): string[] {
   return out
 }
 
+/**
+ * Chunk markdown on section boundaries (## / ### headings) so each chunk is
+ * one self-contained topic with its heading — corpus notes are authored one
+ * topic per section for standalone retrieval. Fixed-size word windows cut
+ * across sections and blend topics, which measurably degrades vector search.
+ * Tiny sections (bare headers) merge forward; oversize ones fall back to
+ * word-window splitting. Files without headings degrade to word windows.
+ */
+function chunkMarkdownSections(text: string, size: number): string[] {
+  const lines = text.split('\n')
+  const sections: string[] = []
+  let cur: string[] = []
+  for (const line of lines) {
+    if (/^##+ /.test(line) && cur.length > 0) {
+      sections.push(cur.join('\n').trim())
+      cur = [line]
+    } else {
+      cur.push(line)
+    }
+  }
+  if (cur.length > 0) sections.push(cur.join('\n').trim())
+
+  const out: string[] = []
+  let carry = ''
+  for (const s of sections) {
+    const combined = carry ? `${carry}\n\n${s}` : s
+    const words = combined.split(/\s+/).filter(Boolean)
+    if (words.length < 40) {
+      carry = combined
+      continue
+    }
+    carry = ''
+    if (words.length <= size) {
+      out.push(combined)
+    } else {
+      out.push(...chunkText(combined, size))
+    }
+  }
+  if (carry) out.push(carry)
+  return out.filter((s) => s.length > 0)
+}
+
 async function* walk(dir: string): AsyncGenerator<string> {
   let entries
   try {
@@ -120,7 +162,9 @@ async function main() {
     }
 
     const text = await readFile(path, 'utf8')
-    const chunks = chunkText(text, CHUNK_WORDS)
+    const chunks = /\.md$/i.test(path)
+      ? chunkMarkdownSections(text, CHUNK_WORDS)
+      : chunkText(text, CHUNK_WORDS)
     if (chunks.length === 0) {
       console.log(`empty  ${source}`)
       continue
