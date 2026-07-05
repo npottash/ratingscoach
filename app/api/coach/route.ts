@@ -22,7 +22,7 @@ type CoachTurn = { role: 'user' | 'assistant'; content: string }
 
 type FactorResult = {
   factor: string
-  flags: Array<'strong' | 'weak' | 'critical_gap' | 'none'>
+  flags: Array<'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'>
   turns: Array<{ role: 'user' | 'assistant'; content: string; factor: string }>
 }
 

@@ -18,7 +18,7 @@ export type SimulationSession = {
   agency: Agency[]
 }
 
-type Flag = 'strong' | 'weak' | 'critical_gap' | 'none'
+type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
 
 type Turn = {
   role: 'user' | 'assistant'
@@ -253,6 +253,7 @@ function SimulationChat({
           },
           current_factor: factor,
           is_first_turn: isFirstTurn,
+          is_first_factor: factor === factors[0],
         }),
       })
       if (!res.ok) {
@@ -892,8 +893,12 @@ function FlagPill({ flag }: { flag: Flag }) {
       label: 'Strong',
       cls: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     },
+    adequate: {
+      label: 'Adequate',
+      cls: 'bg-slate-50 text-slate-600 border-slate-200',
+    },
     weak: {
-      label: 'Weak',
+      label: 'Needs sharpening',
       cls: 'bg-amber-50 text-amber-700 border-amber-200',
     },
     critical_gap: {

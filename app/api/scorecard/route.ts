@@ -16,7 +16,7 @@ const MODEL = 'claude-sonnet-4-6'
 const EMBED_MODEL = 'text-embedding-3-small'
 const RAG_TOP_K = 6
 
-type Flag = 'strong' | 'weak' | 'critical_gap' | 'none'
+type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
 
 type Turn = { role: 'user' | 'assistant'; content: string; factor: string }
 

@@ -14,6 +14,11 @@ import type { Agency } from '@/lib/types'
 
 const MODEL = 'claude-sonnet-4-6'
 const MAX_TOKENS = 1024
+// Server-enforced pacing: steer the analyst to wrap up a factor once the
+// issuer has given this many answers, and force-complete it at the hard cap
+// so a session can never stall inside one factor.
+const FACTOR_ANSWER_TARGET = 3
+const FACTOR_ANSWER_MAX = 5
 
 type ChatTurn = {
   role: 'user' | 'assistant'
@@ -36,11 +41,12 @@ type SimulateBody = {
   session_context: SessionContext
   current_factor: string
   is_first_turn: boolean
+  is_first_factor?: boolean
 }
 
 type ToolResponse = {
   message: string
-  previous_answer_flag: 'strong' | 'weak' | 'critical_gap' | 'none'
+  previous_answer_flag: 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
   factor_complete: boolean
 }
 
@@ -59,9 +65,9 @@ const tools: Anthropic.Tool[] = [
         },
         previous_answer_flag: {
           type: 'string',
-          enum: ['strong', 'weak', 'critical_gap', 'none'],
+          enum: ['strong', 'adequate', 'weak', 'critical_gap', 'none'],
           description:
-            "Quality assessment of the user's most recent answer. 'strong' = clear, evidence-backed, addresses the question. 'weak' = vague, evasive, or missing key detail. 'critical_gap' = exposes a material credit concern or shows the issuer is unprepared. 'none' = use only on the very first turn when there is no prior answer.",
+            "Quality assessment of the user's most recent answer. 'strong' = specific, evidence-backed, and well-reasoned — it strengthens the credit story. 'adequate' = answers the question with reasonable substance; the normal grade for a prepared issuer. 'weak' = genuinely vague, evasive, or unsupported. 'critical_gap' = exposes a material credit concern or shows the issuer is unprepared. 'none' = use only on the very first turn when there is no prior answer.",
         },
         factor_complete: {
           type: 'boolean',
@@ -207,7 +213,7 @@ RULES
 - Stay conversational. You are in a real meeting, not an oral exam.
 - Probe weaknesses and missing detail through curious questions, not confrontation. Do not coach, summarize, or feed answers.
 - After 2-3 exchanges on this factor, set factor_complete=true. When you set factor_complete=true, your message must be a brief one or two sentence CLOSING acknowledgment of the topic — NOT a new question. Example: "Thanks, that gives me a clear picture of how you're thinking about funding." The simulation will introduce the next topic in the next turn.
-- Flag the issuer's previous answer honestly. "weak" = vague, evasive, or shallow. "critical_gap" = the answer exposed a material credit concern or showed the issuer is unprepared. "strong" = a clear, specific, well-reasoned answer that strengthens the story. Use "none" only on the very first turn.
+- Flag the issuer's previous answer honestly, on a four-point scale. "strong" = specific, evidence-backed, well-reasoned — it strengthens the story. "adequate" = answers the question with reasonable substance; this is the NORMAL grade for a prepared issuer. "weak" = genuinely vague, evasive, or unsupported. "critical_gap" = exposed a material credit concern or real unpreparedness. For a well-prepared issuer most answers should land adequate or strong — weak is the exception, not the default. Use "none" only on the very first turn.
 - Respond ONLY by calling the 'respond' tool.`
 }
 
@@ -300,10 +306,36 @@ export async function POST(request: Request) {
     ? [
         {
           role: 'user',
-          content: `Begin probing ${body.current_factor}. Open with a brief transition sentence acknowledging you're moving to this topic (e.g., "Let's turn to ${body.current_factor}." or "Moving on to ${body.current_factor}."), then ask your first question.`,
+          content: body.is_first_factor
+            ? `This is the opening of the meeting. Greet the issuer briefly and warmly — thank them for meeting with you and for providing their credit story (e.g., "Thank you for meeting with us today and for sharing your credit story — let's dive into a few areas we'd like to learn more about."), then ask your first question on ${body.current_factor}.`
+            : `Begin probing ${body.current_factor}. Open with a brief transition sentence acknowledging you're moving to this topic (e.g., "Let's turn to ${body.current_factor}." or "Moving on to ${body.current_factor}."), then ask your first question.`,
         },
       ]
     : body.history.map((t) => ({ role: t.role, content: t.content }))
+
+  // The prompt alone doesn't reliably end a factor — a skeptical analyst
+  // always has one more question. Count the issuer's answers and steer the
+  // model to close once the target is reached.
+  const answerCount = body.is_first_turn
+    ? 0
+    : body.history.filter((t) => t.role === 'user').length
+
+  // Cache the main system prompt — it's stable across turns within a single
+  // factor and the narrative is the bulk of the tokens. The pacing directive
+  // goes in a separate block so it doesn't bust the cache.
+  const system: Anthropic.TextBlockParam[] = [
+    {
+      type: 'text',
+      text: systemPrompt,
+      cache_control: { type: 'ephemeral' },
+    },
+  ]
+  if (answerCount >= FACTOR_ANSWER_TARGET) {
+    system.push({
+      type: 'text',
+      text: `The issuer has now given ${answerCount} answers on this factor. You MUST set factor_complete=true this turn: flag the previous answer as usual and give a brief one or two sentence closing acknowledgment — NOT a new question.`,
+    })
+  }
 
   try {
     const response = await client.messages.create({
@@ -311,15 +343,7 @@ export async function POST(request: Request) {
       max_tokens: MAX_TOKENS,
       tools,
       tool_choice: { type: 'tool', name: 'respond' },
-      // Cache the system prompt — it's stable across turns within a single
-      // factor and the narrative is the bulk of the tokens.
-      system: [
-        {
-          type: 'text',
-          text: systemPrompt,
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
+      system,
       messages,
     })
 
@@ -332,6 +356,11 @@ export async function POST(request: Request) {
     }
 
     const result = toolBlock.input as ToolResponse
+    // Hard backstop: never let a factor run past the cap even if the model
+    // ignores the pacing directive.
+    if (answerCount >= FACTOR_ANSWER_MAX) {
+      result.factor_complete = true
+    }
     return NextResponse.json(result)
   } catch (err) {
     console.error(

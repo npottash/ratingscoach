@@ -21,7 +21,7 @@ export type ScorecardSession = {
   critical_gaps: number
 }
 
-type Flag = 'strong' | 'weak' | 'critical_gap' | 'none'
+type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
 
 type Turn = { role: 'user' | 'assistant'; content: string; factor: string }
 
@@ -342,7 +342,7 @@ export function Scorecard({
               }
               accent
             />
-            <Stat label="Weak answers" value={String(totalWeakFlags)} />
+            <Stat label="Needs sharpening" value={String(totalWeakFlags)} />
             <Stat label="Critical gaps" value={String(totalCriticalFlags)} />
           </div>
         </div>
@@ -711,9 +711,10 @@ function Stat({
 
 function FactorFlagSummary({ flags }: { flags: Flag[] }) {
   const strong = flags.filter((f) => f === 'strong').length
+  const adequate = flags.filter((f) => f === 'adequate').length
   const weak = flags.filter((f) => f === 'weak').length
   const crit = flags.filter((f) => f === 'critical_gap').length
-  if (strong + weak + crit === 0) {
+  if (strong + adequate + weak + crit === 0) {
     return <span className="text-xs text-muted">No flags</span>
   }
   return (
@@ -723,9 +724,14 @@ function FactorFlagSummary({ flags }: { flags: Flag[] }) {
           {strong} strong
         </span>
       )}
+      {adequate > 0 && (
+        <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-medium text-slate-600">
+          {adequate} adequate
+        </span>
+      )}
       {weak > 0 && (
         <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 font-medium text-amber-700">
-          {weak} weak
+          {weak} to sharpen
         </span>
       )}
       {crit > 0 && (
