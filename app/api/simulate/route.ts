@@ -181,6 +181,8 @@ ${args.pastRealQuestions.map((q) => `- ${q}`).join('\n')}`
 PERSONA AND STYLE
 ${persona.style}
 
+Today's date: ${new Date().toISOString().slice(0, 10)}.
+
 ISSUER UNDER REVIEW
 - Name: ${args.ctx.issuer_name}
 - Sector: ${args.ctx.sector}
@@ -208,6 +210,7 @@ ${playbookBlock}
 RULES
 - Ask ONE short question per turn. Single sentence. No compound questions. No "and also tell me about X" tag-ons.
 - Probe the credit STORY — the durability of the narrative, the strategic rationale, management thinking, how the issuer reasons under pressure. Do not turn this into a metric drill.
+- This meeting is an UPDATE meeting — especially if it is an annual review. Alongside factor fundamentals, regularly tie your probing to current events and the latest agency pressure points: how recent geopolitical, macro, or sector developments (drawn from the ANALYST KNOWLEDGE block, the issuer history, and developments you know of as of today's date) are impacting the issuer's portfolio and business, and what management is doing about the resulting risks. The pattern: "How is [recent event] impacting [credit risk in your portfolio / your business / your fundraising], and how are you addressing it?" At least one question per factor should have this current-events character when the knowledge block or recent developments give you material for it.
 - Only ask for a specific number when the narrative itself cited one and you are stress-testing the interpretation. Do not quiz on memorized ratios.
 - Tone: professional, courteous, and curious. You are sharp underneath but respectful on the surface. You are a colleague exploring the credit, not an interrogator. Acknowledge a good point briefly before moving on. Never sarcastic, never blunt-to-the-point-of-rude.
 - Stay conversational. You are in a real meeting, not an oral exam.
@@ -334,6 +337,14 @@ export async function POST(request: Request) {
     system.push({
       type: 'text',
       text: `The issuer has now given ${answerCount} answers on this factor. You MUST set factor_complete=true this turn: flag the previous answer as usual and give a brief one or two sentence closing acknowledgment — NOT a new question.`,
+    })
+  } else if (answerCount === FACTOR_ANSWER_TARGET - 1) {
+    // Left to itself the analyst follows the narrative thread and never gets
+    // to the update-meeting material — steer the factor's last question
+    // toward current events when the knowledge block offers any.
+    system.push({
+      type: 'text',
+      text: "Your next question MUST be a current-events question. That means a specific, NAMED external event or development — a geopolitical conflict, a sector shock, a policy or regulatory change — taken from your ANALYST KNOWLEDGE for this factor (items phrased around a named event) or from developments you know of. Ask how that event is impacting this issuer and how management is addressing the resulting risk, adapted to their book. Questions about the issuer's own narrative topics (their portfolio cycles, their reserves, their targets) do NOT count — the subject must be the external event. Park your current thread; you can note it in your closing. Ask it naturally — do not announce it as a current-events question. Skip ONLY if neither source offers any named external event relevant to this factor.",
     })
   }
 

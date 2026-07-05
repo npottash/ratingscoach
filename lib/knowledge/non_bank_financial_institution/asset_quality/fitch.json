@@ -1,5 +1,8 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "How is the Iran–US war impacting credit risk within your portfolio, and how are you addressing it?",
+    "Do you have credit risk exposure to the AI-driven SaaS defaults and valuation decreases, and are you holding more capital as a result of recent pressures in that space?"
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
   "agency_intel": []
