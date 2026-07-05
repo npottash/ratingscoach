@@ -31,6 +31,12 @@ type FactorResult = {
   turns: Turn[]
 }
 
+type AdvocacyBasis =
+  | 'narrative_gap'
+  | 'peer_benchmarking'
+  | 'performance_trajectory'
+  | 'methodology'
+
 type ScorecardOutput = {
   factor_analyses: Array<{
     factor: string
@@ -40,6 +46,18 @@ type ScorecardOutput = {
   }>
   committee_memo: string
   priority_actions: string[]
+  // Optional: cached outputs generated before this field existed lack it.
+  advocacy_points?: Array<{
+    basis: AdvocacyBasis
+    point: string
+  }>
+}
+
+const ADVOCACY_BASIS_LABELS: Record<AdvocacyBasis, string> = {
+  narrative_gap: 'Narrative gap',
+  peer_benchmarking: 'Peer benchmarking',
+  performance_trajectory: 'Trajectory',
+  methodology: 'Methodology',
 }
 
 export function Scorecard({
@@ -177,6 +195,8 @@ export function Scorecard({
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             results: parsed,
+            narrative:
+              sessionStorage.getItem(`narrative:${session.id}`) ?? undefined,
             session_context: {
               issuer_name: session.issuer_name,
               sector: session.sector,
@@ -334,6 +354,13 @@ export function Scorecard({
         </div>
       )}
 
+      {!output && !error && (
+        <div className="mt-6 rounded-md border border-border bg-surface px-4 py-3 text-sm text-muted">
+          Generating your scorecard — this typically takes about a minute. Keep
+          this tab open.
+        </div>
+      )}
+
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_380px]">
         {/* LEFT: per-factor breakdown */}
         <section>
@@ -381,6 +408,44 @@ export function Scorecard({
               )
             })}
           </div>
+
+          {(!output || (output.advocacy_points?.length ?? 0) > 0) && (
+            <div className="mt-8">
+              <h2 className="text-lg font-semibold">
+                Narrative gaps &amp; advocacy points
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                Credit-positive themes missing from your narrative, and
+                arguments for a better ratings outcome worth raising with{' '}
+                {agency}.
+              </p>
+              <div className="mt-4 rounded-lg border border-border bg-white p-5">
+                <ul className="space-y-4 text-sm">
+                  {output?.advocacy_points?.length
+                    ? output.advocacy_points.slice(0, 6).map((p, i) => (
+                        <li key={i} className="flex flex-col gap-1">
+                          <span
+                            className={[
+                              'self-start rounded-full border px-2 py-0.5 text-xs font-medium',
+                              p.basis === 'narrative_gap'
+                                ? 'border-amber-200 bg-amber-50 text-amber-700'
+                                : 'border-brand/30 bg-brand/5 text-brand',
+                            ].join(' ')}
+                          >
+                            {ADVOCACY_BASIS_LABELS[p.basis] ?? p.basis}
+                          </span>
+                          <span className="text-foreground">{p.point}</span>
+                        </li>
+                      ))
+                    : [0, 1, 2, 3].map((i) => (
+                        <li key={i}>
+                          <Skeleton />
+                        </li>
+                      ))}
+                </ul>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* RIGHT: committee memo + priority actions */}
