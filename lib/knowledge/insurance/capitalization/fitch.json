@@ -7,7 +7,16 @@
         "Reinsurance — Life",
         "Multi-line / Diversified"
       ]
-    }
+    },
+    {
+      "text": "How much of your reinsurance is offshore, and how do you respond to the concern that offshore structures weaken capital adequacy?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    "How does your internal capital framework differ from regulatory RBC, given the NAIC's position that RBC is a regulatory tool rather than a management metric?"
   ],
   "common_pitfalls": [
     "Leaning on RBC as the company's internal capital-management metric. The NAIC's new solvency standards explicitly reinforce RBC as a regulatory tool rather than a management metric — expect agencies to distinguish your regulatory RBC position from your internal capital framework."

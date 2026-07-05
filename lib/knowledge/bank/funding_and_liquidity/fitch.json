@@ -1,7 +1,11 @@
 {
   "real_questions": [
     "What contingent liquidity access do you have?",
-    "How concentrated is your deposit base, and what share is insured versus uninsured?"
+    "How concentrated is your deposit base, and what share is insured versus uninsured?",
+    "What percentage of your deposits are insured, and what level of uninsured deposits are you unwilling to go below?",
+    "What are your deposit beta assumptions if rates rise, and how do they compare to the last cycle?",
+    "If discount window capacity becomes includable in liquidity ratios, do you intend to run with less liquidity as a result?",
+    "How is your securities portfolio constructed, and how liquid are those assets under stress?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],

@@ -33,7 +33,31 @@
       ]
     },
     "How is the Iran–US war impacting credit risk within your portfolio, and how are you addressing it?",
-    "Do you have credit risk exposure to the AI-driven SaaS defaults and valuation decreases, and are you holding more capital as a result of recent pressures in that space?"
+    "Do you have credit risk exposure to the AI-driven SaaS defaults and valuation decreases, and are you holding more capital as a result of recent pressures in that space?",
+    {
+      "text": "In a downside scenario, how would impairment rates in your private credit book compare to your liquid portfolio?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "Your portfolio is migrating toward more structurally complex instruments — walk us through the ABF and structured exposure and how you model it.",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    },
+    {
+      "text": "What is your Level 3 asset concentration, and what is the valuation governance around those positions?",
+      "sub_types": [
+        "Life Insurance",
+        "Reinsurance — Life",
+        "Multi-line / Diversified"
+      ]
+    }
   ],
   "common_pitfalls": [
     {

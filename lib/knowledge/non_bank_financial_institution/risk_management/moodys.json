@@ -1,5 +1,14 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    "Your growth has been outsized — why should we be comfortable with the pace?",
+    "Many lenders in this market lack a through-the-cycle track record — what is yours, and how do you compensate where it's short?",
+    "We're seeing deterioration in lending terms across the market — how have your terms moved?",
+    "How concentrated are your portfolios by borrower and sector?",
+    "Which of your borrowers face maturity walls, and how does borrower-level leverage look against debt service capacity?",
+    "Private credit is less transparent and less regulated than bank lending — why shouldn't that concern us in your case?",
+    "What is your second-order exposure through bank lending relationships to NBFIs?",
+    "How is the rise of private credit competition affecting your underwriting standards and pricing?"
+  ],
   "common_pitfalls": [
     "Disputing that a private credit risk exists instead of mapping it to the mitigant in your structure — the agencies' risk list is settled; the meeting is about your answer to each item."
   ],

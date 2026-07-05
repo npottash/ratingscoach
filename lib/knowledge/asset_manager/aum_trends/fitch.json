@@ -9,6 +9,12 @@
         "Alternative — Real Estate",
         "Alternative — Infrastructure"
       ]
+    },
+    {
+      "text": "How would valuation declines and weak flows move through your earnings?",
+      "sub_types": [
+        "Traditional — Active Equity & Fixed Income"
+      ]
     }
   ],
   "common_pitfalls": [],

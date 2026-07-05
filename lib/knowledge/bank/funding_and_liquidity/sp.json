@@ -8,7 +8,10 @@
     "Typically when banks try to build direct deposit franchises, they end up with high-net-worth customers attracted to elevated rates who leave once rates come down — is that the case with your bank?",
     "What contingent liquidity access do you have?",
     "What percentage of your deposits are insured, and what level of uninsured deposits are you willing to operate below?",
-    "What are your deposit beta assumptions, how do they compare to prior cycles, and what's the downstream effect on NII and AOCI?"
+    "What are your deposit beta assumptions, how do they compare to prior cycles, and what's the downstream effect on NII and AOCI?",
+    "How sticky are your deposits, and how concentrated is the deposit base?",
+    "If discount window capacity becomes includable in liquidity ratios, do you intend to run with less liquidity as a result?",
+    "How is your securities portfolio constructed, and how liquid are those assets under stress?"
   ],
   "common_pitfalls": [
     "Issuers overstate held-for-sale loans as a liquidity source. S&P treats them as not truly liquid in stress.",

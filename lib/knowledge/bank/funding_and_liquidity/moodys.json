@@ -7,7 +7,9 @@
     "How do you hedge interest rate risk?",
     "What percentage of your deposits are insured, and what level of uninsured deposits are you willing to operate below?",
     "How concentrated is your deposit base, and how sticky are those deposits through a cycle?",
-    "What are your deposit beta assumptions, and how do they flow through to NII and AOCI?"
+    "What are your deposit beta assumptions, and how do they flow through to NII and AOCI?",
+    "If discount window capacity becomes includable in liquidity ratios, do you intend to run with less liquidity as a result?",
+    "How is your securities portfolio constructed, and how liquid are those assets under stress?"
   ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
