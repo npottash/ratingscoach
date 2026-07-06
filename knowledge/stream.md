@@ -497,3 +497,311 @@ Agencies view ILC bank charters for captives as a credit positive: the charter i
 Tags: nbfi · captive-finance · fixed-charge-coverage · dividends · liquidity
 
 On the liquidity and coverage side for captives, agencies are focused on declining fixed charge coverage. Some captives are required to maintain minimum fixed charge coverage ratios under agreements with their parent — know your covenant level and your cushion against it. Agencies are also focused on dividend distributions as a percentage of net income: the concern is captives paying too much up to the parent rather than retaining earnings to support a liquidity buffer. Expect the dividend payout ratio question, and be ready to show the retention policy that protects the buffer.
+
+## 2026-07-05 — NBFI sub-sector build-out: BDCs, consumer finance, leasing, asset managers, market infrastructure, fintech, wealth, hedge funds (v6)
+
+### NBFI / BDC — where reviews open: fund performance and delinquencies first
+
+Tags: nbfi · bdc · meeting-opening · private-credit · delinquencies
+
+Where BDC reviews open right now: given all the noise in the industry, the immediate focus is the news around private credit — and therefore the performance of the fund and delinquencies within the fund. That's top of mind and it's what agencies want to hear about first. A BDC should plan its opening around fund performance and delinquency trends rather than saving them for Q&A.
+
+### NBFI / BDC — dual leverage view: agency metrics first, regulatory coverage layered on
+
+Tags: nbfi · bdc · leverage · regulatory-asset-coverage · agency-metrics
+
+On the regulatory asset coverage ratio versus the agencies' own leverage view: agencies take a dual approach. They primarily focus on their own leverage metrics first, then layer the regulatory coverage ratio on top. Each agency has its own view of leverage and deploys that first — similar to how agencies view bank capital, where they run their own evaluation of capital but also hold an expectation for where the issuer should run relative to regulatory requirements. Prep implication: know both numbers and the bridge between them.
+
+### NBFI / BDC — concentration probing: top-10 lists and industry limits
+
+Tags: nbfi · bdc · concentration · top-10 · industry-limits
+
+How agencies probe BDC concentration: for portfolio company concentration, they look at the top-10 exposure list — lots of top-10 lists — and check whether any single exposure among the top 10 is outsized, which indicates too much concentration in a specific company. For industry concentration, the rough danger zone is one industry exceeding roughly 25–40% of the overall pie. A good answer walks the top-10 list confidently with no outliers; a weak one has to explain an outsized single name.
+
+### NBFI / BDC — non-accruals, PIK income, and red-flag language
+
+Tags: nbfi · bdc · non-accruals · PIK-income · red-flag-language
+
+Non-accruals and PIK income as quality signals: PIK income is broadly viewed as negative, and agencies track exposure to PIK and PIK income as an indicator of lower quality creeping into the portfolio. Non-accruals are a sign of relative weakness — agencies don't like elevated levels trending in the wrong direction. The language that raises red flags: anything that concedes levels are going up and then makes an excuse for why — especially in this industry given current sensitivity around credit quality. Any signal that asset quality is starting to break raises flags. The key is in the numbers: show that everything is running smoothly and that non-accruals are low. If they aren't, lead with the specific workout plan, not the excuse.
+
+### NBFI / BDC — unsecured funding in the capital stack
+
+Tags: nbfi · bdc · unsecured-funding · capital-stack · market-access
+
+The unsecured versus secured funding conversation for BDCs: agencies generally want to see a good amount of unsecured in the capital stack. It demonstrates funding diversification and shows creditors believe in the business, and it means the assets are not encumbered — encumbrance puts pressure on bondholders. Unsecured is greatly important, and showing continued access to public markets is very helpful. Expect agencies to ask directly: how confident are you in access to the unsecured markets, and in continued access in more difficult funding environments?
+
+### NBFI / BDC — the manager relationship as credit support
+
+Tags: nbfi · bdc · manager-relationship · sponsor-support
+
+The advisor/manager relationship is very important to BDC ratings. Even if the BDC itself isn't performing that well, a strong manager — good name, rated highly, well known, with the ability to step in during times of need to fill redemption requests or invest in the fund — can be incredibly beneficial to the BDC's credit profile. Frame the manager relationship in support-capacity terms: what the manager has done and can do for the vehicle.
+
+### NBFI / BDC — dividend coverage, NII, and per-agency anchors
+
+Tags: nbfi · bdc · dividend-coverage · NII · agency-anchors
+
+Dividend coverage and NII are strong signals of BDC health — expect to be asked about both. Agency anchor differences: Fitch in particular likes to see strong NII and dividend metrics. Moody's is much more focused on asset quality. S&P is much more focused on leverage as the anchor to a strong rating. Asset quality matters to all three, but knowing which anchor your lead agency uses should shape which metrics you lead with.
+
+### NBFI / BDC — GFC-severity stress testing
+
+Tags: nbfi · bdc · stress-testing · downturn-scenario · Fitch · Moody's
+
+How agencies stress a BDC's credit book: primarily through the lens of a financial-crisis-style default scenario, typically including stressed losses across the portfolio similar to the financial crisis experience. Fitch and Moody's are the most well known for running the more severe stress tests. A BDC should pre-run a GFC-severity loss scenario and be ready to present the results rather than react to the agency's version.
+
+### NBFI / Consumer finance — what drives the rating: exposure quality and balance sheet model
+
+Tags: nbfi · consumer-finance · credit-performance · FICO · balance-sheet-model
+
+What drives a specialty consumer finance rating: several factors, but most importantly credit performance and credit exposure. Who are you exposed to? What's the general FICO profile of your consumer exposure? And what do you do with that exposure — kept on balance sheet, sold to investors, warehoused? The biggest risks across agencies — most importantly for S&P and Moody's: the quality of the exposure (subprime versus prime, and how far down the credit spectrum you're willing to go) and what the underwriting standards look like. For non-bank, off-balance-sheet-focused lenders, the anchor is a leverage metric; for on-balance-sheet lenders, agencies look at tangible capital — how much buffer exists against losses.
+
+### NBFI / Consumer finance — underwriting governance and reserve adequacy
+
+Tags: nbfi · consumer-finance · underwriting · governance · reserves
+
+On loss curves and charge-offs, agencies probe the process behind the numbers: what are the underwriting standards, what do the risk management functions look like, and is credit approved by one person or by various committees? Governance of underwriting matters as much as the loss numbers themselves. On reserve adequacy, agencies want to understand the accounting convention in use and what historical losses look like.
+
+### NBFI / Consumer finance — funding diversification under stress and off-take reliability
+
+Tags: nbfi · consumer-finance · funding-diversity · stress · off-take
+
+Agencies put a lot of weight on funding diversification for consumer lenders. Using warehouse lines and deposits and ABS and unsecured together is viewed very favorably. Moody's and Fitch want to see tremendous diversification in funding sources; S&P is more focused on reliance — the concentration in any one source. The stress question is central: in a stressed market, will those funding sources still be there? The realistic view: unsecured probably goes away in stress because lower credit quality can't fund in those markets; ABS gets stress-tested for resilience. For the growing model of selling risk off balance sheet to investors for a fee, agencies will want to know how reliable that source is, what contracts are in place, what the fees look like if credit quality deteriorates, and whether those off-take providers will still be there.
+
+### NBFI / Consumer finance — growth discipline: Moody's hard line, S&P/Fitch nuance
+
+Tags: nbfi · consumer-finance · growth · Moody's · infrastructure
+
+On fast growth: Moody's, by and large, doesn't want to see fast-growing lenders — full stop. Fitch and S&P are more nuanced: they ask whether growth is responsible or whether it's hurting the company because underwriting standards aren't being maintained. Growth without infrastructure that supports it is a red flag. A fast-growing lender needs to show a risk management framework commensurate with the growth, appropriate infrastructure being built, and funding sources that aren't fickle — not growth at all costs, but growth done in a mature, responsible way.
+
+### NBFI / Consumer finance — BNPL, new models, and the opacity principle
+
+Tags: nbfi · consumer-finance · BNPL · opacity-principle · new-models
+
+Agencies are getting more comfortable with buy-now-pay-later and newer consumer models. But the governing principle — and this applies across every sector: where there is opacity and complexity, and agencies have a hard time understanding the business model or where the risks come from, it will always hurt the company. Newer models need to be presented clean, straightforward, and nimble, with all attendant risks addressed. The company should be upfront and forward-leaning about what risks it has, what it plans to do about them, and how it will mitigate them.
+
+### NBFI / Leasing — encumbrance emphasis over asset quality
+
+Tags: nbfi · leasing · encumbrance · asset-quality
+
+Rating a leasing company versus a lender: similar but distinct. For a leasing company, more emphasis is placed on encumbrance versus unencumbrance of assets, and there's less focus on asset quality given where leasing companies mostly operate. Lead with the encumbered/unencumbered split.
+
+### NBFI / Leasing — residual value realization over diversification
+
+Tags: nbfi · leasing · residual-value · asset-mix
+
+Many leasing companies make money selling assets at end of lease, so the risk of assets not holding residual value directly hurts performance and earnings. Agencies want to ascertain how comfortable the company is in realizing residual value. A greater asset mix helps, but for leasing companies asset diversification is not strictly necessary — the residual value realization story matters more than diversification for its own sake.
+
+### NBFI / Leasing — captive enterprise linkage and ILC charters
+
+Tags: nbfi · leasing · captives · enterprise-linkage · ILC
+
+Captive finance arms are evaluated in conjunction with the whole enterprise, but the captive is also evaluated on its own merit from an asset quality and capitalization perspective. The linkage runs both ways: weakness in the overall enterprise impacts the captive, and weakness in the captive reflects negatively on the whole enterprise — it's all interlinked. Many captives are now looking at ILC (industrial loan company) charters; to the extent they can acquire one, it's viewed as a large credit positive — a question worth asking of any captive business.
+
+### NBFI / Asset managers — the agency fee-credit framework (performance fees)
+
+Tags: nbfi · asset-managers · fee-credit · S&P · Moody's · Fitch · KBRA · performance-fees
+
+How each agency treats performance fees in earnings quality — the quantitative framework: Fitch discounts performance fees completely, giving only ancillary credit — management fees only. S&P gives 50% credit for five-year historical performance fees. Moody's gives 75% credit for performance fees and investment income — the most generous of the big three. KBRA gives 100% credit for performance fees and has no size bias, meaning KBRA can rate smaller asset managers investment grade or even in the A category. Rating strategy implication: the choice of agency materially changes how an alternatives manager's earnings profile scores, and a manager with heavy performance-fee income should understand this map before selecting agencies.
+
+### NBFI / Asset managers — agency market-share dynamics (Moody's constructive posture)
+
+Tags: nbfi · asset-managers · agency-competition · Moody's · market-share
+
+Alternative asset manager ratings have primarily been dominated by S&P and Fitch. Moody's is trying to gain market share in the space, and Moody's ratings have been observably more constructive on a relative basis as a result. Moody's looks at leverage but also AUM retention and size. This competitive dynamic is itself strategic intelligence: an alternatives manager seeking a first or second rating should factor in where each agency sits in the market-share contest.
+
+### NBFI / Asset managers — fee-based model: cash flow leverage against management fees
+
+Tags: nbfi · asset-managers · fee-leverage · rating-drivers
+
+For a fee-based asset manager with little balance sheet risk, the rating is driven by cash flow leverage against those fee earnings. Management fees are gold — the highest-quality earnings in the framework. Performance fees get partial credit depending on the agency (see the fee-credit framework). The core metric conversation is debt against the durable fee stream.
+
+### NBFI / Asset managers — AUM flows and the S&P size ceiling
+
+Tags: nbfi · asset-managers · AUM · size-bias · S&P
+
+On AUM stickiness and flows: agencies look for growth in AUM over time and positive AUM flows. S&P and Moody's are more focused on overall size — and S&P in particular is restricted by AUM size on getting to a higher rating. A smaller manager should understand the S&P size ceiling before engaging them (and note KBRA's absence of size bias as the alternative).
+
+### NBFI / Asset managers — GP commitments and co-investment in leverage
+
+Tags: nbfi · asset-managers · co-investment · GP-commitments · leverage-treatment
+
+GP balance-sheet commitments and co-investment obligations are evaluated case by case. Typically Fitch and Moody's do not include them in leverage. S&P is a gray area — typically excluded if not material, but they can have an impact to the extent there's recourse or other structural elements. Know your co-investment recourse profile before the S&P meeting specifically.
+
+### NBFI / Asset managers — key-person risk mitigation
+
+Tags: nbfi · asset-managers · key-person-risk · mitigants
+
+Key-person risk shows up primarily with hedge funds and smaller funds where individuals manage the fund on a regular basis. The credible mitigation: show there are pipelines and others involved in decision-making, and that the key person is not actually critical to continuation of the business — that if they left, it wouldn't change much in the management and risk management of the business.
+
+### NBFI / Asset managers — private credit GPs, permanent capital, and sector contagion
+
+Tags: nbfi · asset-managers · private-credit-GP · permanent-capital · contagion
+
+A private credit GP that's also raising permanent capital vehicles will typically be affected by broader private credit noise. If risk issues play through into the funds, that can impact the creditworthiness of the GP itself. The permanent capital story is strong, but it doesn't insulate the GP from sector-level private credit concerns.
+
+### NBFI / Asset managers — insurance acquisitions as capital source
+
+Tags: nbfi · asset-managers · insurance-acquisition · capital-source
+
+Where asset managers have acquired insurance companies, they use the insurance company capital to invest in and seed their funds. This can create issues — especially if there are private credit concerns, since the policyholder exposure question follows. Alternatively, it provides a great source of capital for the asset manager. Expect agencies to probe both sides: the capital benefit and the policyholder-risk optics.
+
+### NBFI / Asset managers — asset-light preference (weakest at Moody's)
+
+Tags: nbfi · asset-managers · capital-light · Moody's
+
+Agencies prefer the asset-light model, and it typically leads to a higher rating as you move from balance-sheet-heavy to pure fee-based. One nuance: Moody's is the least likely to give credit for the asset-light business model — the preference is real but weakest there.
+
+### NBFI / Market infrastructure — what makes exchanges and clearinghouses A-category credits
+
+Tags: nbfi · market-infrastructure · exchanges · clearinghouses · rating-drivers · stablecoin
+
+What makes exchanges and clearinghouses high-rated credits: most are highly regulated, and the clearinghouse function provides a strong fee income stream that is incredibly resilient from a credit perspective — an enhancement to ratings. Most rated entities in the space sit in the A category. The emerging threat: technologies such as stablecoin and other digital asset payment networks are currently the main forces that could threaten these ratings. An exchange or network should expect the disruption question and have a strategic answer.
+
+### NBFI / Market infrastructure — S&P operational risk assessment
+
+Tags: nbfi · market-infrastructure · operational-risk · S&P
+
+S&P in particular incorporates operational risk evaluation as part of its assessment of exchanges and clearinghouses. However, it's not a significant risk area in practice and does not generally put pressure on ratings. Prepare the operational resilience material, but don't expect it to be the battleground.
+
+### NBFI / Market infrastructure — CCP regulatory capital and the default fund moat
+
+Tags: nbfi · market-infrastructure · CCP · regulatory-capital · default-fund
+
+Regulatory capital is incredibly important for CCPs and market infrastructure entities — it provides a moat that supports higher ratings and is generally viewed as providing strong credit protection. The default-fund and capital waterfall framework is a credit strength to be presented affirmatively.
+
+### NBFI / Market infrastructure — competitive moat, volumes, PFOF, digital-asset watch
+
+Tags: nbfi · market-infrastructure · competitive-moat · volumes · PFOF
+
+On competitive moat and volume sensitivity: there's been some conversation around PFOF (payment for order flow), but these companies typically have an incredibly strong competitive moat and continue to post increasingly strong volumes. The watch item: changes in digital assets or stablecoin could pressure exchanges' ability to control the market. Frame volumes as structural, and have a digital-asset strategy answer ready.
+
+### NBFI / Fintech — the four-element barrier to investment grade
+
+Tags: nbfi · fintech · track-record · investment-grade-barrier
+
+A fintech lender with a short track record and no through-cycle data will have trouble getting an investment-grade rating: no credit history, no performance data, no audited financials, and no track record of strong performance. The realistic path is building those four elements over time — a fintech should calibrate its ratings ambition and timeline accordingly.
+
+### NBFI / Crypto-adjacent — the distinct question set (Fitch most aggressive)
+
+Tags: nbfi · crypto · Fitch · interconnectivity · AML-KYC · concentration
+
+For crypto-adjacent NBFIs, all the agencies will push, but Fitch has typically been the most aggressive in asking crypto questions even where the company is only minimally involved. The distinct question set versus a traditional lender: interconnectivity with other crypto businesses; AML and KYC issues that need to be addressed; and concentration risk associated with exposure to other crypto businesses, given it's a small ecosystem. A crypto-adjacent issuer should have all three answers prepared regardless of how small the exposure is.
+
+### NBFI / Wealth managers — rating drivers: fee income, M&A appetite, leverage path
+
+Tags: nbfi · wealth-managers · rating-drivers · M&A-appetite · leverage-path
+
+What drives a wealth manager rating: run-rate fee income is a significant driver, along with revenue and leverage. A particularly strong driver in practice is M&A appetite — this is important for agencies. They focus on organic versus inorganic growth: what's the forward plan, and what's the leverage path, given growth typically only comes through inorganic sources for these businesses? Walk in with the forward M&A plan and the leverage trajectory attached to it.
+
+### NBFI / Wealth managers — fee quality and revenue durability
+
+Tags: nbfi · wealth-managers · fee-quality · revenue-durability
+
+Revenue obtained from fee income is stronger from a credit perspective than transactional or market-risk-sensitive fees. Within the revenue mix conversation, lead with the recurring fee-based share and its stability.
+
+### NBFI / Wealth managers — the roll-up rating ceiling
+
+Tags: nbfi · wealth-managers · roll-up · rating-ceiling · Schwab-Ameriprise
+
+The roll-up strategy itself becomes the rating constraint: because RIA aggregators need to use leverage to acquire businesses or advisor books, the model limits how high ratings can go. Higher ratings in the space have only been successful where either there is a bank embedded within the business — Charles Schwab and Ameriprise being the examples — or where the aggregator is acquired by a much larger sponsor. A leveraged roll-up should understand its structural rating ceiling going in.
+
+### NBFI / Wealth managers — AUM retention and fee-generating assets
+
+Tags: nbfi · wealth-managers · AUM-retention · fee-generating-assets
+
+On attrition and asset stickiness: agencies look at AUM retention rates, and they give more rating power to fee-generating businesses than custody-only assets. Present retention by fee-generating cohort.
+
+### NBFI / Wealth managers — inorganic-only growth caps ratings at high yield
+
+Tags: nbfi · wealth-managers · inorganic-growth · high-yield-ceiling
+
+If a wealth manager is using debt leverage to grow inorganically and can only grow through acquisitions, that's typically viewed as a credit negative and will likely limit ratings to the high-yield universe. In reality these businesses need to grow both organically and inorganically — the credible story shows both engines.
+
+### NBFI / Wealth managers — integration risk (Moody's hardest line)
+
+Tags: nbfi · wealth-managers · integration-risk · Moody's
+
+Integration risk across dozens of acquired RIAs — systems, compliance, brand — is typically a credit negative. Moody's in particular always has a problem with integration risk, across industries and broadly speaking. All the agencies want to see some level of demonstrated integration from M&A before they allow the benefits of that M&A to play through into ratings. Show integration milestones achieved, not just deals closed.
+
+### NBFI / Wealth managers — the embedded bank funding advantage
+
+Tags: nbfi · wealth-managers · embedded-bank · funding-advantage
+
+For wealth managers with a bank or lending arm (private banks, wirehouses with securities-based lending), the credit conversation changes favorably: access to cheap funding, plus the ability to couple wealth management services with a strong balance sheet that supports clients. The embedded bank is the structural answer to the roll-up rating ceiling.
+
+### NBFI / Wealth managers — PE ownership: the read depends on the owner
+
+Tags: nbfi · wealth-managers · PE-ownership · sovereign-wealth · dividend-recap
+
+PE ownership of RIA aggregators: the read depends entirely on who the owner is. A sovereign wealth fund owner — for example Mubadala owning Corient — can be viewed as a credit positive: they support the business, infuse equity, allow leverage but also provide financial-strength support. Private sponsor ownership is a credit negative: more leverage appetite and dividend recap risk. Same structure, opposite credit read, driven by owner identity.
+
+### NBFI / Wealth managers — management tells: the leverage commitment test
+
+Tags: nbfi · wealth-managers · management-tells · leverage-commitment
+
+Strong versus weak wealth manager management teams in a meeting: strong managers lean in on organic growth and the ability to generate strong earnings from multiple diversified sources through organic growth. The tell of a weak team: planning to use a lot of leverage, or unwillingness to commit to leverage levels. The leverage commitment question is effectively a management quality test.
+
+### NBFI / Hedge funds — ManCo versus fund: two rating frameworks
+
+Tags: nbfi · hedge-funds · manco-vs-fund · Citadel · dual-rating
+
+Agencies can rate both the fund manager (ManCo) and the hedge fund itself — Citadel is the example, rated investment grade at both the management company and hedge fund level. The analytical distinction: at the ManCo level, agencies evaluate the fee income produced by the funds (typically a 2% management fee, or 1% management and 20% performance — the standard structures). The funds themselves are evaluated on a market risk basis: agencies look at a value-at-risk divided by NAV leverage-type metric, the investments of the fund, fair market value, quality, liquidity quality, and performance. Know which entity is being rated and keep the meeting anchored to the right framework.
+
+### NBFI / Hedge funds — ManCo rating drivers: fee leverage
+
+Tags: nbfi · hedge-funds · manco-drivers · fee-leverage
+
+What drives a hedge fund ManCo rating: agencies look at the management fee stream and leverage based on that cash flow. AUM growth and fund performance are also key drivers. The core equation is debt against durable management fee cash flow — performance fee treatment follows the agency fee-credit framework.
+
+### NBFI / Hedge funds — redemption terms: the 5%-per-quarter benchmark
+
+Tags: nbfi · hedge-funds · redemption-terms · lock-ups · 5-percent-quarterly
+
+Redemption risk is very important for hedge fund managers and fund-level ratings. The fund's ability to lock up capital is incredibly important — so capital doesn't leave the day performance turns sour. The benchmark: typically 5% per quarter can be withdrawn; anything looser than that is treated negatively from a credit perspective. Know your redemption terms against that 5%-per-quarter benchmark.
+
+### NBFI / Hedge funds — LP concentration (secondary concern)
+
+Tags: nbfi · hedge-funds · LP-concentration · employee-ownership
+
+LP concentration is not typically a primary credit evaluation point for hedge funds. It can be viewed negatively, but these funds typically have a combination of employee ownership and LP capital, which blunts the concern. Don't over-prepare here relative to redemption terms and fee durability.
+
+### NBFI / Hedge funds — permanent capital framing
+
+Tags: nbfi · hedge-funds · permanent-capital · redemption-framing
+
+The shift toward permanent or long-dated capital (drawdown funds, permanent capital vehicles, insurance-linked) should be framed by the manager in exactly one way: as having little redemption risk. That's the credit-relevant attribute.
+
+### NBFI / Hedge funds — key person and succession
+
+Tags: nbfi · hedge-funds · key-person · succession
+
+For key-person risk at hedge funds: the goal is to move away from founder dependence — show that the founder has limited impact on day-to-day decision-making of the fund and that there's a strong contingency plan. The rating-relevant demonstration is that departure wouldn't materially change management or risk management.
+
+### NBFI / Hedge funds — strategy diversification framing
+
+Tags: nbfi · hedge-funds · strategy-diversification · framing
+
+Both diversified platforms and single-strategy platforms have been successful in obtaining ratings. What matters is framing the risks of the fund correctly: identify the liquidity of the investments, the leverage of the fund, and — for a multi-strat — the performance and contribution by each strategy. Single-strategy isn't disqualifying; unexplained risk is.
+
+### NBFI / Hedge funds — ManCo balance sheet and use of proceeds
+
+Tags: nbfi · hedge-funds · manco-balance-sheet · use-of-proceeds
+
+The ManCo's own balance sheet (GP commitments, co-investment, seed capital) is of limited importance in the rating — the main focus is on cash flow and the attributes of the funds. Related: agencies typically won't look at fund-level leverage for the ManCo rating, just cash flow leverage at the ManCo. What they will scrutinize: the use of proceeds for any debt issuance. Have the use-of-proceeds story tight.
+
+### NBFI / Hedge funds — operational risk maturity benchmark
+
+Tags: nbfi · hedge-funds · operational-risk · risk-management-maturity
+
+Operational risk and the quality of the non-investment side are very important for alternatives firms. The funds that have been successful in ratings have incredibly mature and developed risk management functions — similar to those of a large investment bank or market maker. That's the benchmark to present against.
+
+### NBFI / Hedge funds — multi-strat pass-through fees as credit uplift
+
+Tags: nbfi · hedge-funds · multi-strat · pass-through-fees · pod-shops
+
+For the multi-strategy platform model specifically: risk management is incredibly important, along with how agencies view leverage at the management company. The pass-through fee structures are incredibly credit friendly and can provide uplift to a rating — a multi-strat with pass-through economics should present that structure prominently.
+
+### NBFI / Hedge funds — the drawdown-year story: diversification plus fee floor
+
+Tags: nbfi · hedge-funds · drawdown-story · fee-floor
+
+A credible earnings-through-a-drawdown story for a ManCo whose fees fall in a bad year: the story is better if it's diversified, so the fund can point to other strategies performing well. Additionally, if there's a fee floor, that provides a strong credit story even during down years. Diversification plus fee floor is the two-part answer to the bad-year question.

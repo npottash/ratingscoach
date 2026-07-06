@@ -1,8 +1,42 @@
 {
   "real_questions": [],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    {
+      "text": "Opens with fund performance and delinquency trends rather than saving them for Q&A — given industry noise around private credit, that is what agencies want to hear about first.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Frames the manager/advisor relationship in support-capacity terms: what the manager has done and can do for the vehicle (filling redemptions, investing in the fund).",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    }
+  ],
   "agency_intel": [
-    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals."
+    "Agency meetings — annual reviews especially — are update meetings: expect the agenda to be driven by recent events and the agencies' latest pressure points, with questions of the form \"how is [recent event] impacting your portfolio/business, and how are you addressing it?\" Come with a prepared current-events readout, not just factor fundamentals.",
+    {
+      "text": "BDC reviews currently open on the private credit noise — fund performance and delinquencies are top of mind and come first.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "The advisor/manager relationship is very important to BDC ratings: a strong, well-rated, well-known manager with the ability to step in during times of need can be incredibly beneficial to the BDC's credit profile even when the BDC itself is underperforming.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    "For fintech lenders: a short track record blocks investment grade — no credit history, no through-cycle performance data, no audited financials, no track record of strong performance. The realistic path is building those four elements over time; calibrate the ratings ambition and timeline accordingly.",
+    "The opacity principle (applies across every sector): where there is opacity and complexity and agencies have a hard time understanding the business model or where risks come from, it always hurts the company. Newer models must be presented clean and straightforward, upfront and forward-leaning on risks and mitigation.",
+    "For exchanges and clearinghouses: the competitive moat is typically incredibly strong with structurally growing volumes (PFOF conversation notwithstanding). The watch item is digital assets/stablecoin pressuring the ability to control the market — frame volumes as structural and have a digital-asset strategy answer ready.",
+    {
+      "text": "Captive finance arms are evaluated with the whole enterprise AND on their own asset quality and capitalization — the linkage runs both ways: enterprise weakness impacts the captive, and captive weakness reflects on the enterprise.",
+      "sub_types": [
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    }
   ]
 }

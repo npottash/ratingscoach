@@ -14,6 +14,27 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "How confident are you in access to the unsecured markets — including continued access in more difficult funding environments?",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "In a stressed market, which of your funding sources are still there — and for off-take/forward-flow arrangements, what contracts are in place and will those buyers still be there if credit quality deteriorates?",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Walk us through the encumbered versus unencumbered split of the asset base.",
+      "sub_types": [
+        "Finance Co — Commercial / Equipment Lender"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -48,6 +69,36 @@
       "sub_types": [
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "Agencies want a good amount of unsecured in a BDC's capital stack: it demonstrates funding diversification, shows creditors believe in the business, and leaves assets unencumbered — encumbrance pressures bondholders. Demonstrated public-market access is very helpful.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Funding diversification carries heavy weight for consumer lenders — warehouse + deposits + ABS + unsecured together is viewed very favorably. Realistic stress view: unsecured likely goes away in stress for lower credit quality; ABS gets stress-tested for resilience.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "For leasing companies, more emphasis falls on encumbrance versus unencumbrance of assets, and less on asset quality — lead with the encumbered/unencumbered split.",
+      "sub_types": [
+        "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "S&P's funding lens for consumer lenders is reliance — concentration in any single funding source — more than sheer breadth of diversification.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
       ]
     }
   ]

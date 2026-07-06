@@ -24,6 +24,15 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Growing without infrastructure that supports it — a risk management framework not commensurate with growth is a red flag across agencies.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
   "strong_answer_markers": [
@@ -34,10 +43,30 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Shows growth done in a mature, responsible way: a risk framework commensurate with the growth, infrastructure being built, and funding sources that aren't fickle.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
   "agency_intel": [
     "The private credit risk probe list — treat as the checklist of expected questions for any private credit lender or investor: outsized growth; lack of through-the-cycle track record; deterioration in lending terms; rising borrower credit risk; higher loan concentration; competition pressuring spreads; borrower maturity walls; climbing borrower-level leverage; less transparency and regulation versus bank lending; banks lending to NBFIs creating second-order exposure; and insurers among the largest private credit investors, creating policyholder downside. Have a prepared answer for each.",
-    "The mitigant answer key agencies look for against the private credit risk list: secured lending with meaningful equity cushions; alignment of interests; declining base rates supporting borrower debt service; limited liquidity transformation; solid asset coverage and low leverage; small market size limiting systemic impact; banks' private credit exposure low relative to equity; strong capital buffers; diversification; strong underwriting; and regulatory oversight matched with limited redemption risk."
+    "The mitigant answer key agencies look for against the private credit risk list: secured lending with meaningful equity cushions; alignment of interests; declining base rates supporting borrower debt service; limited liquidity transformation; solid asset coverage and low leverage; small market size limiting systemic impact; banks' private credit exposure low relative to equity; strong capital buffers; diversification; strong underwriting; and regulatory oversight matched with limited redemption risk.",
+    "For crypto-adjacent NBFIs, the distinct question set beyond a traditional lender: interconnectivity with other crypto businesses, AML/KYC, and concentration risk within a small ecosystem. Have all three answers prepared regardless of how small the exposure is.",
+    {
+      "text": "On fast growth this agency is more nuanced than Moody's: the question is whether growth is responsible — whether underwriting standards are being maintained through it.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    "Fitch is the most aggressive on crypto questions, even where the company is only minimally involved."
   ]
 }

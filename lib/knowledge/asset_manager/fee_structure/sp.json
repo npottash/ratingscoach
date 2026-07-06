@@ -1,6 +1,69 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "If fees fall in a bad year, walk us through earnings — which strategies hold up, and is there a fee floor?",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    }
+  ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
-  "agency_intel": []
+  "strong_answer_markers": [
+    {
+      "text": "Anchors the earnings conversation on the durable management fee stream — management fees are the highest-quality earnings in every agency framework — with debt sized against that stream.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Answers the drawdown-year question with the two-part story: strategy diversification plus a fee floor.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    },
+    {
+      "text": "For a multi-strat with pass-through economics, presents the pass-through fee structure prominently — it is incredibly credit friendly and can provide rating uplift.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    },
+    {
+      "text": "Leads the revenue-mix conversation with the recurring fee-based share and its stability — fee income is stronger credit than transactional or market-sensitive revenue.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    }
+  ],
+  "agency_intel": [
+    {
+      "text": "The agency fee-credit map for performance fees: Fitch discounts them completely (management fees only, ancillary credit); S&P gives 50% credit on a five-year history; Moody's gives 75% credit for performance fees and investment income — most generous of the big three; KBRA gives 100% credit and has no size bias, so KBRA can rate smaller managers investment grade or even A-category. Agency selection materially changes how a performance-fee-heavy earnings profile scores.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "For a fee-based manager with little balance sheet risk, the rating is cash flow leverage against fee earnings; for a hedge fund ManCo, the same equation — debt against durable management fee cash flow (2%, or 1-and-20 standard structures), with AUM growth and fund performance as key drivers.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "S&P gives 50% credit for five-year historical performance fees in earnings quality.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    }
+  ]
 }

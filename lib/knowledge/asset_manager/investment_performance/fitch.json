@@ -39,6 +39,12 @@
         "Alternative — Real Estate",
         "Alternative — Infrastructure"
       ]
+    },
+    {
+      "text": "For fund-level ratings, speaks the fund framework fluently: VaR/NAV-style leverage, fair value and liquidity quality of investments, and performance — by strategy for a multi-strat.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
     }
   ],
   "agency_intel": [

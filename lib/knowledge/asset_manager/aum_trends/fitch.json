@@ -15,10 +15,36 @@
       "sub_types": [
         "Traditional — Active Equity & Fixed Income"
       ]
+    },
+    {
+      "text": "What are your redemption terms against the 5%-per-quarter benchmark, and how much of your capital is locked up or permanent?",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    },
+    {
+      "text": "What are your AUM retention rates, split by fee-generating versus custody-only assets?",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
     }
   ],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "common_pitfalls": [
+    {
+      "text": "Redemption terms looser than the ~5%-per-quarter benchmark — treated negatively from a credit perspective.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    }
+  ],
+  "strong_answer_markers": [
+    {
+      "text": "Frames permanent and long-dated capital (drawdown funds, permanent vehicles, insurance-linked) in exactly one way: little redemption risk.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    }
+  ],
   "agency_intel": [
     {
       "text": "Alt manager earnings stayed strong through Q1 2026 despite choppy markets; private credit concerns are mostly isolated to software/tech exposures (BDCs especially) with little impact on overall results. The strain point agencies watch: elevated redemption requests, driven by AI disruption risk in software companies and broader private credit concerns. Expect probes on earnings growth, realizations, and redemption requests in non-traded BDCs specifically.",
@@ -33,6 +59,18 @@
       "text": "Fitch's current focus for traditional investment managers: valuation declines, weak flows, and fee pressure.",
       "sub_types": [
         "Traditional — Active Equity & Fixed Income"
+      ]
+    },
+    {
+      "text": "The fund's ability to lock up capital is critical — so capital doesn't leave the day performance turns. Benchmark: ~5% per quarter withdrawable; looser is a negative. LP concentration is secondary — employee ownership plus LP capital blunts it; don't over-prepare it relative to redemption terms and fee durability.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    },
+    {
+      "text": "Agencies give more rating power to fee-generating assets than custody-only assets — present retention by fee-generating cohort.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
       ]
     }
   ]

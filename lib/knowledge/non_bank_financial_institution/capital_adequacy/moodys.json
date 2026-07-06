@@ -1,6 +1,30 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "Walk us through your leverage on our metrics and against the regulatory asset coverage ratio — and the bridge between the two.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    }
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [],
-  "agency_intel": []
+  "agency_intel": [
+    {
+      "text": "On BDC leverage, agencies take a dual approach: their own leverage metrics first, with the regulatory asset coverage ratio layered on top — similar to how they run their own bank capital evaluation against regulatory expectations. Know both numbers and the bridge.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "For consumer/specialty lenders: the capital anchor depends on the model — off-balance-sheet-focused lenders are anchored on a leverage metric; on-balance-sheet lenders on tangible capital as the buffer against losses.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    "For CCPs and market infrastructure entities: regulatory capital provides a moat that supports higher ratings and strong credit protection — present the default-fund and capital waterfall framework affirmatively, as a credit strength."
+  ]
 }

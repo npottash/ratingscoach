@@ -8,9 +8,46 @@
         "Alternative — Real Estate",
         "Alternative — Infrastructure"
       ]
+    },
+    {
+      "text": "What is the forward M&A plan — organic versus inorganic growth — and the leverage path attached to it?",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "What leverage levels is management willing to commit to?",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "What is the use of proceeds for this debt issuance?",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
     }
   ],
-  "common_pitfalls": [],
+  "common_pitfalls": [
+    {
+      "text": "Unwillingness to commit to leverage levels, or leaning on leverage as the growth engine — agencies read this as the tell of a weak management team.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "Growing only through leveraged acquisitions — inorganic-only growth typically caps ratings in the high-yield universe. The credible story shows both engines, organic and inorganic.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "Closing deals without demonstrated integration — all agencies want integration milestones achieved before M&A benefits play through into ratings.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    }
+  ],
   "strong_answer_markers": [
     {
       "text": "Maps each private credit risk the agency raises to the specific mitigant in the structure — secured position, equity cushion, coverage ratio — rather than disputing that the risk exists.",
@@ -19,6 +56,24 @@
         "Alternative — Hedge Fund (Multi-strategy / Diversified)",
         "Alternative — Real Estate",
         "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Leans in on organic growth and diversified earnings sources; commits to explicit leverage levels — the leverage commitment question is effectively a management quality test.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "On key-person risk: shows decision-making pipelines and demonstrates the founder's departure would not materially change management or risk management of the business.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    },
+    {
+      "text": "Presents a risk management function at the maturity of a large investment bank or market maker — the benchmark successful rated alternatives firms have set.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
       ]
     }
   ],
@@ -49,6 +104,66 @@
         "Alternative — Hedge Fund (Multi-strategy / Diversified)",
         "Alternative — Real Estate",
         "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "The roll-up model is itself the rating constraint: RIA aggregators lever to acquire, which caps ratings. Higher ratings have only come with a bank embedded in the business (Charles Schwab, Ameriprise) or acquisition by a much larger sponsor. The embedded bank — cheap funding plus balance sheet coupled to wealth services — is the structural answer to the ceiling.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "PE ownership reads entirely off owner identity: a sovereign wealth owner (e.g., Mubadala/Corient) can be a credit positive — equity infusion and financial-strength support; a private sponsor is a credit negative — leverage appetite and dividend recap risk.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    },
+    {
+      "text": "Agencies rate both ManCos and funds (Citadel: investment grade at both levels). ManCo framework: fee income and cash flow leverage — fund-level leverage is not looked through; funds are rated on market risk (VaR/NAV-type leverage, fair value, liquidity quality, performance). Keep the meeting anchored to the right entity's framework. The ManCo's own balance sheet (GP commitments, co-invest, seed) is of limited importance; use of proceeds on any issuance is scrutinized.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
+      ]
+    },
+    {
+      "text": "GP commitments and co-investment: Fitch and Moody's typically exclude them from leverage; S&P is a gray area — excluded if not material, but recourse or structural elements can bring them in. Know your co-investment recourse profile before the S&P meeting specifically.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "A private credit GP raising permanent capital vehicles is still exposed to sector-level private credit noise — fund-level risk issues can impact GP creditworthiness; permanent capital does not insulate it.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Managers that acquired insurance companies get probed on both sides: the capital source benefit (insurance capital seeding funds) and the policyholder-exposure optics, especially amid private credit concerns.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Agencies prefer the asset-light model — ratings typically improve moving from balance-sheet-heavy to pure fee-based.",
+      "sub_types": [
+        "Alternative — Private Equity / Credit",
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)",
+        "Alternative — Real Estate",
+        "Alternative — Infrastructure"
+      ]
+    },
+    {
+      "text": "Single-strategy platforms are ratable — what matters is framing fund risks correctly: investment liquidity, fund leverage, and (for multi-strats) performance and contribution by strategy. Unexplained risk is the disqualifier, not strategy count.",
+      "sub_types": [
+        "Alternative — Hedge Fund (Multi-strategy / Diversified)"
       ]
     }
   ]

@@ -14,15 +14,64 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Walk us through your top-10 exposure list — are any single names outsized, and what is your largest industry concentration?",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "What is your PIK income and non-accrual trend over the last four quarters?",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "What is the FICO profile of your consumer exposure, how far down the credit spectrum are you willing to go, and what happens to that exposure — held on balance sheet, sold, or warehoused?",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Is credit approved by one person or by committees — walk us through the underwriting governance behind the loss numbers.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
-  "common_pitfalls": [],
+  "common_pitfalls": [
+    {
+      "text": "Conceding that non-accruals or PIK are rising and following with an excuse — in this industry, with current sensitivity around credit quality, that language raises red flags. If levels are elevated, lead with the specific workout plan.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    }
+  ],
   "strong_answer_markers": [
     {
       "text": "Has the delinquency trend by vintage and residual value assumptions ready, benchmarked against the used-vehicle price outlook.",
       "sub_types": [
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "Walks the top-10 list confidently with no outliers; where non-accruals are elevated, leads with the workout plan, not the excuse.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Has a GFC-severity loss scenario pre-run on the portfolio and presents the results rather than reacting to the agency's version.",
+      "sub_types": [
+        "Business Development Company (BDC)"
       ]
     }
   ],
@@ -32,6 +81,39 @@
       "sub_types": [
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "BDC concentration probing: agencies check the top-10 exposure list for outsized single names, and treat one industry exceeding roughly 25-40% of the pie as the danger zone.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "PIK income is broadly viewed as negative — tracked as an indicator of lower quality creeping into the portfolio. Non-accruals trending up are a sign of relative weakness.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Agencies stress a BDC's credit book primarily through a financial-crisis-style default scenario with GFC-like stressed losses. Fitch and Moody's are known for the most severe stress tests.",
+      "sub_types": [
+        "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "For consumer/specialty finance, the rating turns most on credit performance and exposure quality — subprime vs prime, how far down the spectrum, and underwriting standards. S&P and Moody's weight this hardest. On reserves, agencies want the accounting convention in use and the historical loss picture.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Moody's BDC anchor: asset quality — lead with portfolio quality metrics for Moody's.",
+      "sub_types": [
+        "Business Development Company (BDC)"
       ]
     }
   ]
