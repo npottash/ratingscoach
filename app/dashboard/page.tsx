@@ -14,6 +14,8 @@ type SessionRow = {
   overall_score: number | null
   status: string
   created_at: string
+  // Present on runs completed after scorecard persistence shipped.
+  scorecard_output?: unknown
 }
 
 export default async function DashboardPage() {
@@ -25,12 +27,11 @@ export default async function DashboardPage() {
   // safe to render in any code path.
   if (!user) redirect('/login')
 
-  // RLS scopes to the requesting user automatically.
+  // RLS scopes to the requesting user automatically. select('*') so the page
+  // tolerates the scorecard_output column not having been migrated yet.
   const { data: sessionsRaw } = await supabase
     .from('sessions')
-    .select(
-      'id, issuer_name, agency, meeting_date, overall_score, status, created_at'
-    )
+    .select('*')
     .order('created_at', { ascending: false })
 
   const sessions: SessionRow[] = sessionsRaw ?? []
@@ -237,12 +238,23 @@ function SessionAction({ session }: { session: SessionRow }) {
   ) {
     const agency = encodeURIComponent(session.agency[0])
     return (
-      <Link
-        href={`/scorecard?session_id=${session.id}&agency=${agency}`}
-        className="font-medium text-brand hover:text-brand-hover"
-      >
-        View scorecard
-      </Link>
+      <span className="inline-flex items-center gap-3">
+        <Link
+          href={`/scorecard?session_id=${session.id}&agency=${agency}`}
+          className="font-medium text-brand hover:text-brand-hover"
+        >
+          View scorecard
+        </Link>
+        {session.scorecard_output != null && (
+          <Link
+            href={`/scorecard?session_id=${session.id}&agency=${agency}&print=1`}
+            className="font-medium text-brand hover:text-brand-hover"
+            title="Open the scorecard and print / save as PDF"
+          >
+            PDF
+          </Link>
+        )}
+      </span>
     )
   }
   if (session.status === 'intake') {

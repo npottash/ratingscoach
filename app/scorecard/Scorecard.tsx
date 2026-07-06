@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { PERSONAS } from '@/lib/personas'
+import { createClient } from '@/lib/supabase/client'
 import { saveRealQuestions } from './actions'
 import type { Agency } from '@/lib/types'
 
@@ -21,6 +22,9 @@ export type ScorecardSession = {
   overall_score: number | null
   factors_flagged: number
   critical_gaps: number
+  // Persisted scorecard for completed runs. Optional: rows created before
+  // the migration (or before this feature) won't have it.
+  scorecard_output?: ScorecardOutput | null
 }
 
 type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
@@ -65,9 +69,11 @@ const ADVOCACY_BASIS_LABELS: Record<AdvocacyBasis, string> = {
 export function Scorecard({
   session,
   agency,
+  autoPrint = false,
 }: {
   session: ScorecardSession
   agency: Agency
+  autoPrint?: boolean
 }) {
   const persona = PERSONAS[agency]
 
@@ -174,12 +180,33 @@ export function Scorecard({
   }, [session.id, session.agency])
 
   useEffect(() => {
+    // Persist the generated scorecard (derived work product only — never the
+    // narrative or transcript) so the dashboard can re-render and export it
+    // later. Best-effort: failure just means no archived copy.
+    const persist = async (out: ScorecardOutput) => {
+      try {
+        const supabase = createClient()
+        await supabase
+          .from('sessions')
+          .update({ scorecard_output: out })
+          .eq('id', session.id)
+      } catch {
+        // Non-fatal (e.g. column not migrated yet, or offline).
+      }
+    }
+
     const parsed = readJson<FactorResult[] | null>(
       `results:${session.id}:${agency}`,
       null
     )
     if (!parsed) {
-      setMissing(true)
+      // No live transcript in this tab — fall back to the archived scorecard
+      // if one was saved for this run.
+      if (session.scorecard_output) {
+        setOutput(session.scorecard_output)
+      } else {
+        setMissing(true)
+      }
       return
     }
     setResults(parsed)
@@ -190,6 +217,7 @@ export function Scorecard({
     const cached = readJson<ScorecardOutput | null>(cacheKey, null)
     if (cached) {
       setOutput(cached)
+      if (!session.scorecard_output) void persist(cached)
       return
     }
 
@@ -222,6 +250,7 @@ export function Scorecard({
         }
         const out = (await res.json()) as ScorecardOutput
         setOutput(out)
+        void persist(out)
         try {
           sessionStorage.setItem(cacheKey, JSON.stringify(out))
         } catch {
@@ -237,8 +266,19 @@ export function Scorecard({
     session.sector,
     session.current_rating,
     session.outlook,
+    session.scorecard_output,
     agency,
   ])
+
+  // Dashboard "PDF" link lands here with ?print=1 — open the print dialog
+  // once the scorecard content is on screen.
+  const printedRef = useRef(false)
+  useEffect(() => {
+    if (!autoPrint || !output || printedRef.current) return
+    printedRef.current = true
+    const t = setTimeout(() => window.print(), 500)
+    return () => clearTimeout(t)
+  }, [autoPrint, output])
 
   const totalWeakFlags = results
     ? results.reduce(
@@ -266,10 +306,11 @@ export function Scorecard({
           <p className="mx-auto mt-3 max-w-lg text-muted">
             {hasSummary ? (
               <>
-                By design, the full transcript and factor-by-factor breakdown
-                live only in the browser tab where you ran the simulation — we
-                never store them. The summary below is what we keep. Re-run the
-                simulation to regenerate the full detail.
+                This run predates saved scorecards, so its full detail lived
+                only in the browser tab where the simulation ran. The summary
+                below is what we keep. Newly completed sessions save their
+                scorecard automatically for later viewing and PDF export —
+                re-run the simulation to generate one.
               </>
             ) : (
               <>
@@ -338,6 +379,12 @@ export function Scorecard({
             <p className="mt-1 text-sm text-muted">
               Simulated by {persona.name} — {persona.role} ({agency})
             </p>
+            {!results && output && (
+              <p className="mt-1 text-xs text-muted">
+                Saved scorecard — per-answer grades from the live run are not
+                retained.
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-3 gap-6">
@@ -350,7 +397,10 @@ export function Scorecard({
               }
               accent
             />
-            <Stat label="Needs sharpening" value={String(totalWeakFlags)} />
+            <Stat
+              label="Needs sharpening"
+              value={results ? String(totalWeakFlags) : '—'}
+            />
             <Stat label="Critical gaps" value={String(totalCriticalFlags)} />
           </div>
         </div>
@@ -374,18 +424,28 @@ export function Scorecard({
         <section>
           <h2 className="text-lg font-semibold">Factor-by-factor breakdown</h2>
           <div className="mt-4 flex flex-col gap-4">
-            {results?.map((r) => {
-              const analysis = output?.factor_analyses.find(
-                (a) => a.factor === r.factor
-              )
+            {(results
+              ? results.map((r) => ({
+                  factor: r.factor,
+                  flags: r.flags as Flag[] | null,
+                  analysis: output?.factor_analyses.find(
+                    (a) => a.factor === r.factor
+                  ),
+                }))
+              : (output?.factor_analyses ?? []).map((a) => ({
+                  factor: a.factor,
+                  flags: null,
+                  analysis: a as ScorecardOutput['factor_analyses'][number] | undefined,
+                }))
+            ).map(({ factor, flags, analysis }) => {
               return (
                 <article
-                  key={r.factor}
+                  key={factor}
                   className="rounded-lg border border-border bg-white p-5"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">{r.factor}</h3>
-                    <FactorFlagSummary flags={r.flags} />
+                    <h3 className="font-semibold">{factor}</h3>
+                    {flags && <FactorFlagSummary flags={flags} />}
                   </div>
 
                   <dl className="mt-4 space-y-3 text-sm">

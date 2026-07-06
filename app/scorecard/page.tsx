@@ -10,18 +10,18 @@ const VALID_AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
 export default async function ScorecardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id?: string; agency?: string }>
+  searchParams: Promise<{ session_id?: string; agency?: string; print?: string }>
 }) {
-  const { session_id, agency } = await searchParams
+  const { session_id, agency, print } = await searchParams
   if (!session_id) redirect('/intake')
   if (!agency || !VALID_AGENCIES.includes(agency as Agency)) redirect('/intake')
 
   const supabase = await createClient()
+  // select('*') so the page tolerates the scorecard_output column not having
+  // been migrated yet — the field simply comes back undefined.
   const { data: session } = await supabase
     .from('sessions')
-    .select(
-      'id, issuer_name, ticker, sector, industry, sub_type, current_rating, outlook, agency, meeting_type, meeting_date, overall_score, factors_flagged, critical_gaps'
-    )
+    .select('*')
     .eq('id', session_id)
     .single<ScorecardSession>()
 
@@ -31,7 +31,11 @@ export default async function ScorecardPage({
     <>
       <PageHeader />
       <StepIndicator current={4} sessionId={session.id} agency={agency} />
-      <Scorecard session={session} agency={agency as Agency} />
+      <Scorecard
+        session={session}
+        agency={agency as Agency}
+        autoPrint={print === '1'}
+      />
     </>
   )
 }

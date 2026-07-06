@@ -27,15 +27,16 @@ export default function PrivacyPage() {
         <p className="font-medium text-foreground">In short</p>
         <ul className="mt-2 space-y-1.5 text-muted">
           <li>
-            We store your account, your session metadata, and any real-meeting
-            questions you choose to log.
+            We store your account, your session metadata, the generated
+            scorecard for each completed run, and any real-meeting questions
+            you choose to log.
           </li>
           <li>
             We do <span className="font-medium text-foreground">not</span> store
-            your prepared narrative, your simulation transcript, or any
-            financial inputs you provide during a session — those live only in
-            your browser for the duration of the session and are discarded when
-            you navigate away.
+            your prepared narrative or your simulation transcript — those live
+            only in your browser for the duration of the session and are
+            discarded when you navigate away. The scorecard you keep may
+            summarize points from the session.
           </li>
           <li>
             See our{' '}
@@ -91,6 +92,14 @@ export default function PrivacyPage() {
               readiness score, the count of factors flagged, the count of
               critical gaps, and the session status.
             </li>
+            <li>
+              The generated scorecard for a completed run (the factor
+              analyses, committee memo, priority actions, and advocacy
+              points), so you can revisit and export it from your dashboard.
+              Because the scorecard summarizes the simulation, it may
+              reference specifics you said during the session. Deleting the
+              session deletes the stored scorecard with it.
+            </li>
           </ul>
         </Subsection>
         <Subsection title="Real-meeting questions (optional)">
@@ -119,7 +128,8 @@ export default function PrivacyPage() {
           </li>
           <li>
             Any specific financial inputs you mention while answering
-            simulation questions.
+            simulation questions (except where the generated scorecard you
+            keep summarizes them — see above).
           </li>
         </ul>
         <p>
