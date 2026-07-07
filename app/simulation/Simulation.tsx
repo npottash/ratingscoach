@@ -50,9 +50,15 @@ function getInitials(name: string): string {
   return parts[0].slice(0, 2).toUpperCase()
 }
 
-export function Simulation({ session }: { session: SimulationSession }) {
+export function Simulation({
+  session,
+  agencyOverride,
+}: {
+  session: SimulationSession
+  agencyOverride?: Agency
+}) {
   const [agency, setAgency] = useState<Agency | null>(
-    session.agency.length === 1 ? session.agency[0] : null
+    agencyOverride ?? (session.agency.length === 1 ? session.agency[0] : null)
   )
 
   if (!agency) {
@@ -488,11 +494,16 @@ function SimulationChat({
       }
 
       // Point the scorecard at the new row and re-key its detailed results.
+      // The narrative is re-keyed too, so "Run this session against another
+      // agency" from the scorecard finds it under the new row's id.
       setScorecardSessionId(inserted.id)
       sessionStorage.setItem(
         `results:${inserted.id}:${agency}`,
         JSON.stringify(finalResults)
       )
+      if (narrative) {
+        sessionStorage.setItem(`narrative:${inserted.id}`, narrative)
+      }
 
       // Remove the setup row once every selected agency has been run — but
       // never delete a row that carries a completed run's score.

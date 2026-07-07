@@ -59,6 +59,8 @@ type ScorecardOutput = {
   }>
 }
 
+const AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
+
 const ADVOCACY_BASIS_LABELS: Record<AdvocacyBasis, string> = {
   narrative_gap: 'Narrative gap',
   peer_benchmarking: 'Peer benchmarking',
@@ -77,83 +79,10 @@ export function Scorecard({
 }) {
   const persona = PERSONAS[agency]
 
-  type CoachMessage = { role: 'user' | 'assistant'; content: string }
-  const [coachMessages, setCoachMessages] = useState<CoachMessage[]>([])
-  const [coachInput, setCoachInput] = useState('')
-  const [coachLoading, setCoachLoading] = useState(false)
-  const [coachError, setCoachError] = useState<string | null>(null)
-  const coachScrollRef = useRef<HTMLDivElement>(null)
-
   const [results, setResults] = useState<FactorResult[] | null>(null)
   const [output, setOutput] = useState<ScorecardOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [missing, setMissing] = useState(false)
-  const [remainingAgencies, setRemainingAgencies] = useState<Agency[]>([])
-
-  // Autoscroll the coach chat as new messages arrive
-  useEffect(() => {
-    coachScrollRef.current?.scrollTo({
-      top: coachScrollRef.current.scrollHeight,
-      behavior: 'smooth',
-    })
-  }, [coachMessages, coachLoading])
-
-  async function handleAskCoach(e: React.FormEvent) {
-    e.preventDefault()
-    const question = coachInput.trim()
-    if (!question || coachLoading) return
-    setCoachInput('')
-    setCoachError(null)
-
-    const nextMessages: CoachMessage[] = [
-      ...coachMessages,
-      { role: 'user', content: question },
-    ]
-    setCoachMessages(nextMessages)
-    setCoachLoading(true)
-
-    try {
-      const res = await fetch('/api/coach', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question,
-          history: coachMessages,
-          session_context: {
-            issuer_name: session.issuer_name,
-            sector: session.sector,
-            industry: session.industry,
-            sub_type: session.sub_type,
-            current_rating: session.current_rating,
-            outlook: session.outlook,
-            agency,
-            ticker: session.ticker,
-            meeting_type: session.meeting_type,
-            meeting_date: session.meeting_date,
-          },
-          session_results: results ?? [],
-        }),
-      })
-      if (!res.ok) {
-        const { error: msg } = await res.json().catch(() => ({ error: '' }))
-        throw new Error(msg || `Request failed (${res.status})`)
-      }
-      const { answer } = (await res.json()) as { answer: string }
-      setCoachMessages([...nextMessages, { role: 'assistant', content: answer }])
-    } catch (err) {
-      setCoachError(err instanceof Error ? err.message : 'Coach call failed')
-    } finally {
-      setCoachLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    const completed = readJson<Agency[]>(
-      `completed_agencies:${session.id}`,
-      []
-    )
-    setRemainingAgencies(session.agency.filter((a) => !completed.includes(a)))
-  }, [session.id, session.agency])
 
   useEffect(() => {
     // Persist the generated scorecard (derived work product only — never the
@@ -558,31 +487,21 @@ export function Scorecard({
               >
                 Book advisory session
               </Link>
+              {AGENCIES.filter((a) => a !== agency).map((a) => (
+                <Link
+                  key={a}
+                  href={`/simulation?session_id=${session.id}&agency=${encodeURIComponent(a)}`}
+                  className="rounded-md border border-border bg-white px-4 py-2 text-center text-sm font-medium hover:border-brand hover:text-brand"
+                >
+                  Run this session against {a}
+                </Link>
+              ))}
             </div>
             <p className="mt-2 text-xs text-muted">
               Export opens your browser&apos;s print dialog — choose “Save as
               PDF”. Generated locally; nothing is uploaded.
             </p>
           </section>
-
-          {remainingAgencies.length > 0 && (
-            <section className="rounded-lg border border-border bg-white p-5 print:hidden">
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-                Run another agency
-              </h2>
-              <div className="mt-3 flex flex-col gap-2">
-                {remainingAgencies.map((a) => (
-                  <Link
-                    key={a}
-                    href={`/simulation?session_id=${session.id}`}
-                    className="rounded-md border border-border bg-white px-4 py-2 text-sm font-medium hover:border-brand hover:text-brand"
-                  >
-                    Simulate {a}
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
 
           {/* Feedback capture lives on the return visit (dashboard → saved
               scorecard), after the real meeting has actually happened — not
@@ -597,73 +516,6 @@ export function Scorecard({
         </aside>
       </div>
 
-      {/* Ask the AI Ratings Coach */}
-      <section className="mt-10 overflow-hidden rounded-lg border border-border bg-white print:hidden">
-        <header className="border-b border-border bg-surface px-5 py-4">
-          <h2 className="text-lg font-semibold tracking-tight">
-            Ask the AI Ratings Coach
-          </h2>
-          <p className="mt-0.5 text-sm text-muted">
-            Ask anything about this session — why a factor was flagged, how to
-            prep an answer, what an analyst is likely to push back on. Draws on
-            the simulation transcript, your proprietary knowledge overlay, and
-            advisor notes.
-          </p>
-        </header>
-
-        <div
-          ref={coachScrollRef}
-          className="flex max-h-[480px] flex-col gap-3 overflow-y-auto px-5 py-5"
-        >
-          {coachMessages.length === 0 && !coachLoading && (
-            <div className="text-sm text-muted">
-              <p>Try asking:</p>
-              <ul className="mt-2 list-inside list-disc space-y-1">
-                <li>Why was my Funding and Liquidity answer flagged?</li>
-                <li>
-                  What's the strongest framing for our capital trajectory given
-                  the outlook?
-                </li>
-                <li>
-                  What is {agency} most likely to come back to on follow-up?
-                </li>
-              </ul>
-            </div>
-          )}
-
-          {coachMessages.map((m, i) => (
-            <CoachBubble key={i} role={m.role} content={m.content} />
-          ))}
-
-          {coachLoading && (
-            <p className="text-xs text-muted">Coach is thinking…</p>
-          )}
-
-          {coachError && (
-            <p className="text-sm text-red-600">{coachError}</p>
-          )}
-        </div>
-
-        <form
-          onSubmit={handleAskCoach}
-          className="flex gap-2 border-t border-border px-5 py-4"
-        >
-          <input
-            value={coachInput}
-            onChange={(e) => setCoachInput(e.target.value)}
-            placeholder="Ask the coach…"
-            disabled={coachLoading}
-            className="flex-1 rounded-md border border-border bg-white px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-          />
-          <button
-            type="submit"
-            disabled={coachLoading || !coachInput.trim()}
-            className="rounded-md bg-brand px-5 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
-          >
-            Ask
-          </button>
-        </form>
-      </section>
     </main>
   )
 }
@@ -750,35 +602,6 @@ function RealQuestionsCard({
         </button>
       </form>
     </section>
-  )
-}
-
-function CoachBubble({
-  role,
-  content,
-}: {
-  role: 'user' | 'assistant'
-  content: string
-}) {
-  const isUser = role === 'user'
-  return (
-    <div className={['flex', isUser ? 'justify-end' : 'justify-start'].join(' ')}>
-      <div
-        className={[
-          'max-w-[85%] rounded-lg px-4 py-2.5 text-sm leading-relaxed',
-          isUser
-            ? 'bg-brand text-white'
-            : 'border border-border bg-surface text-foreground',
-        ].join(' ')}
-      >
-        {!isUser && (
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">
-            Coach
-          </p>
-        )}
-        <p className="whitespace-pre-wrap">{content}</p>
-      </div>
-    </div>
   )
 }
 

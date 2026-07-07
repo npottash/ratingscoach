@@ -53,7 +53,6 @@ export async function requestAdvisory(
 
   return {
     status: 'success',
-    message:
-      "Request received. A senior advisor will reach out to schedule within one business day.",
+    message: 'Request received. A senior advisor will reach out shortly to schedule.',
   }
 }

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 }
 
 const VALUE_POINTS = [
-  'A senior advisor reviews your prepared narrative and simulation results.',
+  'A senior advisor works through your credit story and simulation takeaways with you — you bring the materials you want reviewed.',
   'Agency-specific coaching for S&P, Moody’s, or Fitch — methodology, likely pushback, and framing.',
   'A tailored prep plan for the weeks leading into the meeting.',
 ]
@@ -42,7 +42,12 @@ export default function AdvisoryPage() {
           ))}
         </ul>
 
-        <div className="mt-10 rounded-lg border border-border bg-white p-6">
+        <p className="mt-6 text-sm text-muted">
+          Advisory sessions are a separate, paid engagement — pricing is
+          confirmed with you before anything is scheduled.
+        </p>
+
+        <div className="mt-6 rounded-lg border border-border bg-white p-6">
           <AdvisoryForm />
         </div>
 
