@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin'
 import { PageHeader } from '@/components/PageHeader'
 import { FACTORS_BY_SECTOR } from '@/lib/factors'
 import { getKnowledge, type KnowledgeItem } from '@/lib/knowledge'
@@ -47,12 +48,6 @@ type RealQuestionRow = {
   sector: string
   question_text: string
   created_at: string
-}
-
-function isAdmin(email: string | undefined): boolean {
-  const admin = process.env.ADMIN_EMAIL
-  if (!admin || !email) return false
-  return admin.trim().toLowerCase() === email.trim().toLowerCase()
 }
 
 function itemText(it: KnowledgeItem): string {

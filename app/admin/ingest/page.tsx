@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin'
 import { PageHeader } from '@/components/PageHeader'
 import { IngestForm } from './IngestForm'
 
@@ -10,12 +11,6 @@ type RecentRow = {
   agency: string | null
   sector: string | null
   created_at: string
-}
-
-function isAdmin(email: string | undefined): boolean {
-  const admin = process.env.ADMIN_EMAIL
-  if (!admin || !email) return false
-  return admin.trim().toLowerCase() === email.trim().toLowerCase()
 }
 
 export default async function AdminIngestPage() {

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { isAdmin } from '@/lib/admin'
 import { PageHeader } from '@/components/PageHeader'
 import { signOut } from './actions'
 import { DeleteSessionButton } from './DeleteSessionButton'
@@ -64,12 +65,33 @@ export default async function DashboardPage() {
             </form>
           </div>
         </div>
-        <Link
-          href="/intake"
-          className="rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
-        >
-          New session
-        </Link>
+        <div className="flex items-center gap-4">
+          {isAdmin(user.email) && (
+            <span className="flex items-center gap-3 text-sm text-muted">
+              <span className="text-xs font-semibold uppercase tracking-wide">
+                Admin
+              </span>
+              <Link
+                href="/admin/browse"
+                className="text-brand hover:text-brand-hover"
+              >
+                Browse
+              </Link>
+              <Link
+                href="/admin/ingest"
+                className="text-brand hover:text-brand-hover"
+              >
+                Ingest
+              </Link>
+            </span>
+          )}
+          <Link
+            href="/intake"
+            className="rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
+          >
+            New session
+          </Link>
+        </div>
       </header>
 
       <section className="mt-10">
