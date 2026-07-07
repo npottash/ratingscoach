@@ -5,10 +5,43 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "What are your leverage targets — clearly and specifically?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "As the balance sheet grows and capital levels decline, how does capitalization remain a credit strength?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "How does your MSR position and underwriting compare to how banks hold capital against the same exposures?",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    {
+      "text": "Commits to a capitalization floor alongside the growth plan.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Knows how its MSR and underwriting posture stacks up against bank equivalents — the S&P frame is the bank cross-comparison.",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    }
+  ],
   "agency_intel": [
     {
       "text": "On BDC leverage, agencies take a dual approach: their own leverage metrics first, with the regulatory asset coverage ratio layered on top — similar to how they run their own bank capital evaluation against regulatory expectations. Know both numbers and the bridge.",
@@ -30,6 +63,12 @@
       "text": "S&P's BDC anchor: leverage — S&P is much more focused on leverage as the anchor to a strong rating.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "S&P cross-compares non-bank mortgage companies with bank treatment: MSR risk positions and underwriting standards versus how banks underwrite and hold capital for the same exposures.",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
       ]
     }
   ]

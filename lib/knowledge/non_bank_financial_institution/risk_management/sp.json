@@ -14,6 +14,15 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Walk us through your operational risk framework and loss history.",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -32,6 +41,15 @@
         "Finance Co — Credit Card Lender",
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Treating operational risk as an appendix — with S&P it is both a qualitative rating ceiling and a quantitative RAC drag (operational risk charges hit the risk-adjusted capital ratio). Present the framework as a first-order topic.",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
       ]
     }
   ],
@@ -67,6 +85,15 @@
         "Finance Co — Mortgage Lender"
       ]
     },
-    "For exchanges and clearinghouses: S&P incorporates an operational risk evaluation in its assessment, but in practice it is not a significant pressure point on ratings — prepare the resilience material without expecting it to be the battleground."
+    "For exchanges and clearinghouses: S&P incorporates an operational risk evaluation in its assessment, but in practice it is not a significant pressure point on ratings — prepare the resilience material without expecting it to be the battleground.",
+    {
+      "text": "S&P frequently limits upward ratings momentum for securities firms and market makers on operational risk exposure. S&P also examines client-activity market/liquidity risks, broker capitalization and balance sheet risk, the leverage ratio, and the RAC ratio (which operational risk charges directly impact).",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
+    }
   ]
 }

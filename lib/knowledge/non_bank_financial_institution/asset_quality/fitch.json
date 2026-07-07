@@ -44,6 +44,29 @@
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
       ]
+    },
+    {
+      "text": "Walk us through problem loan trends and the migration of loans rated 5.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Break down your collateral mix — office and multifamily specifically.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "What are your through-the-cycle loss expectations, and how do underwriting discipline and reserve coverage support them?",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -72,6 +95,13 @@
       "text": "Has a GFC-severity loss scenario pre-run on the portfolio and presents the results rather than reacting to the agency's version.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Leads with the problem-loan trend and rated-5 migration as the asset quality exhibits.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
       ]
     }
   ],
@@ -109,6 +139,22 @@
     },
     {
       "text": "For consumer/specialty finance, the rating turns most on credit performance and exposure quality — subprime vs prime, how far down the spectrum, and underwriting standards. S&P and Moody's weight this hardest. On reserves, agencies want the accounting convention in use and the historical loss picture.",
+      "sub_types": [
+        "Finance Co — Consumer Lender",
+        "Finance Co — Credit Card Lender",
+        "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "For CRE non-bank lenders, agencies want loan loss provisions staying low — shown through declining problem loans and broadly stable loans rated 5 (the weakest internal rating). Office and multifamily are the largest collateral types and get named probes.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Fitch's consumer-lender anchor: through-the-cycle loss expectations, underwriting discipline, and reserve coverage — bring cycle-tested loss curves and the reserve philosophy.",
       "sub_types": [
         "Finance Co — Consumer Lender",
         "Finance Co — Credit Card Lender",

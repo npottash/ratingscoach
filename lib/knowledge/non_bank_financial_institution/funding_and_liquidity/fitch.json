@@ -41,6 +41,20 @@
       "sub_types": [
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Your secured debt reliance is increasing — where does the funding mix go from here?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Walk us through your refinancing wall — what matures, when, and how are you preparing?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -123,6 +137,20 @@
         "Finance Co — Credit Card Lender",
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Funding and liquidity for CRE non-bank lenders has weakened modestly as secured debt reliance rises — agencies are watching the secured/unsecured trajectory closely.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Fitch's CRE-lender anchor is refinancing risk — the upcoming maturity wall and the preparation for it.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
       ]
     }
   ]

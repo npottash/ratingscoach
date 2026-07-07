@@ -14,6 +14,12 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Show us stress performance across housing cycles — what is your risk appetite through the cycle?",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -50,6 +56,12 @@
         "Finance Co — Consumer Lender",
         "Finance Co — Credit Card Lender",
         "Finance Co — Auto Lender",
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Has performance-by-vintage across prior housing cycles ready — the Fitch conversation is through-the-cycle.",
+      "sub_types": [
         "Finance Co — Mortgage Lender"
       ]
     }

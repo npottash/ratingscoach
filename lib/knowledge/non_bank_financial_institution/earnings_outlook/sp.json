@@ -11,10 +11,50 @@
       "sub_types": [
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "How does demand for your products hold up in volatile trading environments?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "What is the growth trajectory in data and retail-oriented offerings?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "Will oil market volatility lead to higher fee revenue in energy products — and in equity options and rate products on your platform?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "What is happening with origination and refinance volumes — can you continue to originate and grow the business?",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "How do you plan to maintain high trading volumes in quieter markets?",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
     }
   ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    {
+      "text": "Knows volume and fee sensitivity to commodity volatility by product line.",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    }
+  ],
   "agency_intel": [
     {
       "text": "Dividend coverage and NII are strong signals of BDC health — expect both. Anchors differ by agency; know which anchor your lead agency uses and lead with those metrics.",
@@ -28,6 +68,12 @@
         "Finance Co — Commercial / Equipment Lender"
       ]
     },
-    "For exchanges and clearinghouses: the clearing fee stream is incredibly resilient from a credit perspective and most rated entities sit in the A category. The emerging threat is stablecoin and digital-asset payment networks — expect the disruption question and have a strategic answer."
+    "For exchanges and clearinghouses: the clearing fee stream is incredibly resilient from a credit perspective and most rated entities sit in the A category. The emerging threat is stablecoin and digital-asset payment networks — expect the disruption question and have a strategic answer.",
+    {
+      "text": "For non-bank mortgage finance, the volume outlook is the opening conversation — agencies want assurance the company can continue to originate and grow.",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    }
   ]
 }

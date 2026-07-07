@@ -18,6 +18,19 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "What are your leverage targets — clearly and specifically?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "As the balance sheet grows and capital levels decline, how does capitalization remain a credit strength?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -47,6 +60,13 @@
       "sub_types": [
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "Commits to a capitalization floor alongside the growth plan.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
       ]
     }
   ],

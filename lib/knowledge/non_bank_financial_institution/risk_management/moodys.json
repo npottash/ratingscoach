@@ -14,6 +14,30 @@
         "Finance Co — Auto Lender",
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "What is your concentration of credit exposure to financing counterparties in a market downturn?",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
+    },
+    {
+      "text": "What are the proceeds of your recent debt issuance funding — and does it change your trading risk profile?",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
+    },
+    {
+      "text": "Are you planning to pursue riskier strategies or grow into less mature markets — and how does risk management scale with that?",
+      "sub_types": [
+        "Securities Firm — Market Maker"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -32,6 +56,15 @@
         "Finance Co — Credit Card Lender",
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Raising debt without a tight use-of-proceeds story — Moody's pairs counterparty concentration questions with the concern that increased issuance incentivizes riskier trading strategies.",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
       ]
     }
   ],
@@ -52,6 +85,12 @@
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
       ]
+    },
+    {
+      "text": "Attaches a risk-management-maturity story to any growth into new markets or strategies.",
+      "sub_types": [
+        "Securities Firm — Market Maker"
+      ]
     }
   ],
   "agency_intel": [
@@ -65,6 +104,21 @@
         "Finance Co — Credit Card Lender",
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Moody's is notably positive on securities firms and market makers; the framework's downside risks are competition and regulatory/market-structure uncertainty. Articulated risks: business cyclicality, sensitivity of valuations/activity/fees to sentiment downturns, counterparty concentration in downturns, and debt issuance incentivizing riskier trading.",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
+    },
+    {
+      "text": "For market makers, Moody's watches for erosion of liquidity or risk management practices — riskier strategies or growth into less mature markets can mean trading losses and lower ratings.",
+      "sub_types": [
+        "Securities Firm — Market Maker"
       ]
     }
   ]

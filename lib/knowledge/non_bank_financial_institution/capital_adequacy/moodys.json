@@ -5,10 +5,56 @@
       "sub_types": [
         "Business Development Company (BDC)"
       ]
+    },
+    {
+      "text": "What are your leverage targets — clearly and specifically?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "As the balance sheet grows and capital levels decline, how does capitalization remain a credit strength?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "What is your TCE to tangible managed assets versus peers?",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "What is your MSR-to-TCE ratio — and how does it look after a 15% MSR haircut?",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
-  "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "common_pitfalls": [
+    {
+      "text": "Carrying large intangibles into the Moody's capital conversation — TCE/TMA is the metric, and heavy intangibles can score very weak on capital.",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    }
+  ],
+  "strong_answer_markers": [
+    {
+      "text": "Commits to a capitalization floor alongside the growth plan.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Knows TCE/TMA versus peers and MSR/TCE with the 15% haircut applied before the meeting.",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    }
+  ],
   "agency_intel": [
     {
       "text": "On BDC leverage, agencies take a dual approach: their own leverage metrics first, with the regulatory asset coverage ratio layered on top — similar to how they run their own bank capital evaluation against regulatory expectations. Know both numbers and the bridge.",
@@ -25,6 +71,19 @@
         "Finance Co — Mortgage Lender"
       ]
     },
-    "For CCPs and market infrastructure entities: regulatory capital provides a moat that supports higher ratings and strong credit protection — present the default-fund and capital waterfall framework affirmatively, as a credit strength."
+    "For CCPs and market infrastructure entities: regulatory capital provides a moat that supports higher ratings and strong credit protection — present the default-fund and capital waterfall framework affirmatively, as a credit strength.",
+    {
+      "text": "Moody's evaluates CRE lender leverage on debt-to-equity — viewed as broadly stable across the group but actively monitored.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Moody's non-bank mortgage framework: origination volume, quality concentrations, funding reliability. Capital is TCE to tangible managed assets versus peers; MSR/TCE measures capital quality (higher = weaker) with a 15% haircut applied to MSRs.",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
+    }
   ]
 }

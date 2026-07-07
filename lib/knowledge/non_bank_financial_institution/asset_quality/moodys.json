@@ -44,6 +44,27 @@
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
       ]
+    },
+    {
+      "text": "Walk us through problem loan trends and the migration of loans rated 5.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Break down your collateral mix — office and multifamily specifically.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "What are your top 10 loans by balance as a percentage of total loans?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -72,6 +93,13 @@
       "text": "Has a GFC-severity loss scenario pre-run on the portfolio and presents the results rather than reacting to the agency's version.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Leads with the problem-loan trend and rated-5 migration as the asset quality exhibits.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
       ]
     }
   ],
@@ -114,6 +142,20 @@
       "text": "Moody's BDC anchor: asset quality — lead with portfolio quality metrics for Moody's.",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "For CRE non-bank lenders, agencies want loan loss provisions staying low — shown through declining problem loans and broadly stable loans rated 5 (the weakest internal rating). Office and multifamily are the largest collateral types and get named probes.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Moody's CRE-lender anchor is large borrower concentration — measured as top 10 loans by balance over total loans. Have the concentration math ready.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
       ]
     }
   ]

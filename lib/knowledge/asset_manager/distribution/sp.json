@@ -1,6 +1,20 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "How aggressive is your expansion into alternative investment offerings, and could it damage or undermine client confidence?",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    }
+  ],
   "common_pitfalls": [],
-  "strong_answer_markers": [],
+  "strong_answer_markers": [
+    {
+      "text": "Explains the guardrails on distributing alternative products to retail clients — suitability, liquidity terms, concentration limits.",
+      "sub_types": [
+        "Wealth Management / Private Bank"
+      ]
+    }
+  ],
   "agency_intel": []
 }

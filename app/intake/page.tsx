@@ -100,6 +100,8 @@ const SUB_TYPES_BY_SECTOR: Record<string, readonly string[]> = {
     'Finance Co — Commercial / Equipment Lender',
     'Business Development Company (BDC)',
     'Mortgage REIT',
+    'CRE / Commercial Real Estate Lender',
+    'Exchange / Clearinghouse',
     'Securities Firm — Broker-Dealer',
     'Securities Firm — Market Maker',
     'Securities Firm — Prime Broker',

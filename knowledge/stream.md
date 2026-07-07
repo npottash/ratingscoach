@@ -805,3 +805,107 @@ For the multi-strategy platform model specifically: risk management is incredibl
 Tags: nbfi · hedge-funds · drawdown-story · fee-floor
 
 A credible earnings-through-a-drawdown story for a ManCo whose fees fall in a bad year: the story is better if it's diversified, so the fund can point to other strategies performing well. Additionally, if there's a fee floor, that provides a strong credit story even during down years. Diversification plus fee floor is the two-part answer to the bad-year question.
+
+## 2026-07-05 — Wealth/asset manager questions, exchanges, CRE lenders, mortgage finance, securities firms, market makers (v7)
+
+### NBFI / Wealth & asset managers — live meeting questions (growth, AI, retention)
+
+Tags: nbfi · wealth-managers · asset-managers · meeting-questions · growth
+
+Questions that can come up in asset and wealth manager meetings — capture these as direct probes: Does competition make it more difficult to source deals in other geographies, and how intense is the competition? How do you staff up and get comfortable that you can execute as you grow organically? What happens to investment in existing businesses as you grow? What were your most recent or upcoming issuances used to fund? How do you build a projected inorganic forecast? How will AI impact your business and your capital expenditures? How are you appealing to the younger generation? What's your client retention plan?
+
+### NBFI / Wealth managers — Moody's on expenses, margins, acquisition aggressiveness
+
+Tags: nbfi · wealth-managers · Moody's · expenses · margins · acquisition-aggressiveness
+
+Agencies — particularly Moody's — will question higher expenses putting pressure on margins. They'll also want to know how aggressive the acquisition strategy is: will it lead to significantly worse leverage and coverage metrics? And how aggressive is the expansion into alternative investment offerings — could it damage or undermine client confidence? A wealth manager should be ready to defend the expense trajectory, quantify the leverage impact of the M&A pipeline, and explain the guardrails on alts distribution to retail clients.
+
+### NBFI / Exchange operators — diversification, durability, leverage targets
+
+Tags: nbfi · market-infrastructure · exchanges · diversification · revenue-durability
+
+For exchange operators, agencies want to see a platform of diversified and complementary products and services — diversification in offerings is incredibly important. They want to see demand for products even during volatile trading environments, growth in data and retail-oriented offerings to enhance revenue durability over time, and clear, articulated leverage targets. The exchange narrative should lead with product diversification, the volatility-resilience of demand, the data/retail growth story, and a stated leverage target.
+
+### NBFI / Exchange operators — 2026 oil volatility and fee revenue
+
+Tags: nbfi · market-infrastructure · exchanges · 2026 · oil-volatility · fee-revenue
+
+A timely exchange question for 2026: will volatility in oil markets lead to higher fee revenue in energy products on commodity exchanges, and in equity options and interest rate products on other exchanges? Exchanges should be prepared to speak to volume and fee sensitivity to commodity volatility by product line.
+
+### NBFI / CRE non-bank lenders — provisions, problem loans, rated-5 migration
+
+Tags: nbfi · cre-lenders · loan-loss-provisions · problem-loans · rated-5
+
+For commercial real estate non-bank lenders, agencies are focused on loan loss provisions continuing to remain low — reflected through a continued decline in problem loans and broadly stable levels of loans rated 5 (the weakest internal risk rating category). Have the problem-loan trend and the rated-5 migration ready as the lead asset quality exhibits.
+
+### NBFI / CRE non-bank lenders — secured reliance and the capitalization floor
+
+Tags: nbfi · cre-lenders · funding · secured-reliance · capitalization
+
+Funding and liquidity for CRE non-bank lenders has weakened modestly as secured debt reliance increases — something agencies are keeping a close eye on. Separately, agencies need to ensure capitalization remains a credit strength even as balance sheets grow and capital levels decline. The two-part funding/capital story: explain the secured/unsecured trajectory and commit to the capitalization floor.
+
+### NBFI / CRE non-bank lenders — the agency anchor map
+
+Tags: nbfi · cre-lenders · agency-anchors · Moody's · Fitch · S&P
+
+The agency anchor map for CRE non-bank lenders: Moody's is focused on large borrower concentration and its impact on asset risk — they measure it as top 10 loans by balance divided by total loans. Fitch is more focused on refinancing risk — the upcoming refinancing wall and how lenders are preparing for it. S&P is more focused on the lending cyclicality of CRE. Prep should be weighted by lead agency: concentration math for Moody's, maturity wall plan for Fitch, through-cycle discipline for S&P.
+
+### NBFI / CRE non-bank lenders — collateral types and leverage
+
+Tags: nbfi · cre-lenders · collateral · office · multifamily · leverage
+
+Agencies focus on collateral type for CRE lenders, with office and multifamily the largest collateral types — expect collateral-type-level questions on both. On leverage, Moody's evaluates debt-to-equity and views it as broadly stable across the group, but is continuing to monitor levels.
+
+### NBFI / Non-bank mortgage finance — origination and refinance volumes first
+
+Tags: nbfi · mortgage-finance · origination · refinance-volumes
+
+For non-bank mortgage finance companies, agencies will ask what is happening with origination volumes and refinance volumes — they want assurance these companies can continue to originate and grow the business. The volume outlook is the opening conversation.
+
+### NBFI / Non-bank mortgage finance — S&P's bank cross-comparison and MSRs
+
+Tags: nbfi · mortgage-finance · S&P · bank-comparison · MSR
+
+S&P's distinctive angle on non-bank mortgage companies: they cross-compare with how banks are treated. They look at the MSR risk position and underwriting standards and frequently compare against how banks are underwriting and holding capital for the same positions. A non-bank mortgage issuer should know how its MSR and underwriting posture stacks up against bank equivalents, because that's the S&P frame.
+
+### NBFI / Non-bank mortgage finance — Fitch's through-the-cycle risk appetite
+
+Tags: nbfi · mortgage-finance · Fitch · risk-appetite · housing-cycles
+
+Fitch's angle on non-bank mortgage finance: evaluates risk appetite, focused on stress performance across housing cycles. The Fitch conversation is a through-the-cycle one — have performance-by-vintage across prior housing cycles ready.
+
+### NBFI / Non-bank mortgage finance — Moody's TCE/TMA and the 15% MSR haircut
+
+Tags: nbfi · mortgage-finance · Moody's · TCE-TMA · MSR-haircut · capital-quality
+
+Moody's framework for non-bank mortgage finance — the quantitative detail: Moody's narrows in on origination volume, quality concentrations, and reliability of funding. Capital metric: TCE to TMA (tangible common equity to tangible managed assets), compared across peer sets — companies with large intangibles can score very weak on capital. Moody's also looks at MSRs to tangible common equity: a higher ratio displays weaker quality of capital, and Moody's applies a 15% haircut to MSRs when assessing quality of capital. They also assess whether there's enough liquidity to support higher originations and meet debt maturities. Know your TCE/TMA versus peers and your MSR/TCE with the 15% haircut applied before the Moody's meeting.
+
+### NBFI / Consumer lenders — the S&P vs Fitch anchor split
+
+Tags: nbfi · consumer-finance · S&P · Fitch · agency-anchors
+
+The agency split for consumer lenders: S&P focuses on diversification benefits within consumer lenders and credit loss volatility. Fitch focuses on through-the-cycle loss expectations, underwriting discipline, and reserve coverage. Weight the prep accordingly — volatility-dampening diversification story for S&P; cycle-tested loss curves and reserve philosophy for Fitch.
+
+### NBFI / Securities firms — Moody's posture, cyclicality, counterparty concentration
+
+Tags: nbfi · securities-firms · Moody's · cyclicality · downside-risks
+
+Moody's is notably positive on securities firms and market makers. The downside risks in their framework: competition, and an uncertain regulatory environment and market structure. The risks Moody's articulates: cyclicality in the business, and sensitivity to market sentiment downturns pressuring asset valuations, activity levels, and fee revenue. Moody's will also ask about concentration of credit exposures to financing counterparties in market downturns — coupled with concern that increased debt issuance incentivizes riskier trading strategies. Have the counterparty concentration answer and the use-of-proceeds discipline story ready together.
+
+### NBFI / Securities firms — fair-game meeting questions
+
+Tags: nbfi · securities-firms · meeting-questions · regulation · volumes · diversification
+
+Fair-game questions for securities firms: How are you preparing for potential changes in regulation that could disadvantage you? How do you plan to maintain high trading volumes in quieter markets? Are you diversified — or planning to diversify — outside of trading businesses?
+
+### NBFI / Securities firms — S&P's operational risk ceiling and RAC drag
+
+Tags: nbfi · securities-firms · S&P · operational-risk · RAC · rating-ceiling
+
+S&P's angle on securities firms: very focused on operational risk, and frequently limits upward ratings momentum because these businesses are exposed to operational risk events. S&P looks at market and liquidity risks related to client activity, focuses on capitalization for securities firm brokers and balance sheet risk, and examines the leverage ratio and the risk-adjusted capital ratio — which is itself impacted by operational risk charges. The strategic takeaway: with S&P, operational risk is both a qualitative ceiling and a quantitative RAC drag — present the operational risk framework as a first-order topic, not an appendix.
+
+### NBFI / Market makers — Moody's watch items and the PFOF question
+
+Tags: nbfi · market-makers · Moody's · liquidity · risk-management · strategy-drift · PFOF
+
+For market makers, Moody's watches for erosion of the firm's liquidity or risk management practices. Planning to pursue riskier strategies or growing into less mature markets could lead to trading losses and lower ratings. Expect Moody's to probe: how are you managing regulatory changes that restrict business activity, and what new technologies are you developing to stay at the forefront versus competitors? Growth into new markets needs a risk-management-maturity story attached. S&P applies the same operational risk ceiling to market makers as to securities firms. And a question all agencies will ask market makers: payment for order flow (PFOF) regulation — the path forward and the plan to address its impact on the business. Every market maker should walk in with a PFOF regulatory scenario answer.

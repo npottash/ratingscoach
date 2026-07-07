@@ -35,6 +35,19 @@
       "sub_types": [
         "Finance Co — Commercial / Equipment Lender"
       ]
+    },
+    {
+      "text": "Your secured debt reliance is increasing — where does the funding mix go from here?",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
+      ]
+    },
+    {
+      "text": "Do you have enough liquidity to support higher originations and meet debt maturities simultaneously?",
+      "sub_types": [
+        "Finance Co — Mortgage Lender"
+      ]
     }
   ],
   "common_pitfalls": [
@@ -99,6 +112,13 @@
         "Finance Co — Credit Card Lender",
         "Finance Co — Auto Lender",
         "Finance Co — Mortgage Lender"
+      ]
+    },
+    {
+      "text": "Funding and liquidity for CRE non-bank lenders has weakened modestly as secured debt reliance rises — agencies are watching the secured/unsecured trajectory closely.",
+      "sub_types": [
+        "CRE / Commercial Real Estate Lender",
+        "Mortgage REIT"
       ]
     }
   ]

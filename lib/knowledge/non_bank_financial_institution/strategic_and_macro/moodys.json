@@ -1,5 +1,48 @@
 {
-  "real_questions": [],
+  "real_questions": [
+    {
+      "text": "How diversified and complementary is your product and service platform?",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "How are you preparing for potential changes in regulation that could disadvantage you?",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
+    },
+    {
+      "text": "Are you diversified — or planning to diversify — outside of trading businesses?",
+      "sub_types": [
+        "Securities Firm — Broker-Dealer",
+        "Securities Firm — Market Maker",
+        "Securities Firm — Prime Broker",
+        "Independent Investment Bank"
+      ]
+    },
+    {
+      "text": "What is your plan for payment for order flow (PFOF) regulation and its impact on the business?",
+      "sub_types": [
+        "Securities Firm — Market Maker"
+      ]
+    },
+    {
+      "text": "How are you managing regulatory changes that restrict business activity?",
+      "sub_types": [
+        "Securities Firm — Market Maker"
+      ]
+    },
+    {
+      "text": "What new technologies are you developing to stay at the forefront versus competitors?",
+      "sub_types": [
+        "Securities Firm — Market Maker"
+      ]
+    }
+  ],
   "common_pitfalls": [],
   "strong_answer_markers": [
     {
@@ -12,6 +55,18 @@
       "text": "Frames the manager/advisor relationship in support-capacity terms: what the manager has done and can do for the vehicle (filling redemptions, investing in the fund).",
       "sub_types": [
         "Business Development Company (BDC)"
+      ]
+    },
+    {
+      "text": "Leads with product diversification, the volatility-resilience of demand, the data/retail growth story, and a stated leverage target.",
+      "sub_types": [
+        "Exchange / Clearinghouse"
+      ]
+    },
+    {
+      "text": "Walks in with a PFOF regulatory scenario answer — every agency asks market makers this.",
+      "sub_types": [
+        "Securities Firm — Market Maker"
       ]
     }
   ],
@@ -36,6 +91,12 @@
       "text": "Captive finance arms are evaluated with the whole enterprise AND on their own asset quality and capitalization — the linkage runs both ways: enterprise weakness impacts the captive, and captive weakness reflects on the enterprise.",
       "sub_types": [
         "Finance Co — Commercial / Equipment Lender"
+      ]
+    },
+    {
+      "text": "For exchange operators, diversification in offerings is the lead credit strength — agencies want demand that holds up in volatile trading environments, growth in data and retail-oriented offerings for revenue durability, and clearly articulated leverage targets.",
+      "sub_types": [
+        "Exchange / Clearinghouse"
       ]
     }
   ]
