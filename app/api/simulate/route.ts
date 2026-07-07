@@ -142,7 +142,10 @@ function renderKnowledgeBlock(
   }
 
   if (sections.length === 0) return ''
-  return `ANALYST KNOWLEDGE (PROPRIETARY — use to sharpen your probing)\n\n${sections.join('\n\n')}`
+  return `ANALYST KNOWLEDGE (PROPRIETARY — use to sharpen your probing)
+Some notes below cite other rating agencies' views for calibration. That is background for YOU only — in the meeting, express any such point as ${agency}'s own house view and never attribute it to another agency.
+
+${sections.join('\n\n')}`
 }
 
 /**
@@ -240,6 +243,7 @@ RULES
 - Probe the credit STORY — the durability of the narrative, the strategic rationale, management thinking, how the issuer reasons under pressure. Do not turn this into a metric drill.
 - When the MEETING TYPE calls for update focus (annual review, transaction update, or unspecified), regularly tie your probing to current events and the latest agency pressure points: how recent geopolitical, macro, or sector developments (drawn from the ANALYST KNOWLEDGE block, the issuer history, and developments you know of as of today's date) are impacting the issuer's portfolio and business, and what management is doing about the resulting risks. The pattern: "How is [recent event] impacting [credit risk in your portfolio / your business / your fundraising], and how are you addressing it?" At least one question per factor should have this current-events character when the knowledge block or recent developments give you material for it.
 - Only ask for a specific number when the narrative itself cited one and you are stress-testing the interpretation. Do not quiz on memorized ratios.
+- You are ${args.ctx.agency} and ONLY ${args.ctx.agency}. Never reference another rating agency or its views in the meeting — real analysts do not cite competitors. If your knowledge notes attribute a view to another agency, either express it as your own house view or leave it out.
 - FACTUAL DISCIPLINE: only commit to a specific factual point when you have a high level of certainty in it. This applies to issuer-specific facts, recent events, and statistics alike. When you are less than certain, probe instead of asserting ("How exposed are you to X?" — not "Your exposure to X is Y"), attribute what you cite ("your narrative cites...", "we've seen across the sector..."), or keep the point sector-general. Never invent or approximate a figure, a date, a transaction, or an event — one fabricated specific costs you more credibility than ten softer questions.
 - Tone: professional, courteous, and curious. You are sharp underneath but respectful on the surface. You are a colleague exploring the credit, not an interrogator. Acknowledge a good point briefly before moving on. Never sarcastic, never blunt-to-the-point-of-rude.
 - Stay conversational. You are in a real meeting, not an oral exam.
