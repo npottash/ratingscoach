@@ -1,12 +1,10 @@
 import Link from 'next/link'
 
-const AGENCIES = ['S&P', "Moody's", 'Fitch']
-
 const STEPS = [
   {
     n: 1,
     title: 'Intake',
-    body: 'Tell us the issuer, sector, agency, and current rating. Two minutes.',
+    body: 'Tell us the issuer, sector, agency, and the credit story.',
   },
   {
     n: 2,
@@ -16,7 +14,7 @@ const STEPS = [
   {
     n: 3,
     title: 'Scorecard',
-    body: 'Leave with a readiness score, a committee memo, and a prep list.',
+    body: 'Leave with tangible takeaways, a preparation plan, and tailored advocacy points.',
   },
 ]
 
@@ -58,10 +56,10 @@ export default function Home() {
             Walk into your rating agency meeting prepared.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-            The Ratings Coach simulates a real S&amp;P, Moody&apos;s, or Fitch analyst
-            meeting and pressure-tests your credit narrative before the real one.
-            Finish each session with a structured scorecard and a focused prep
-            list.
+            The Ratings Coach simulates an S&amp;P, Moody&apos;s, or Fitch credit
+            analyst meeting and pressure-tests your credit story before the
+            real one. Finish each session with a structured scorecard and a
+            focused prep list.
           </p>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link
@@ -82,20 +80,6 @@ export default function Home() {
           <p className="mt-10 text-sm text-muted">
             Built by senior credit ratings advisors.
           </p>
-
-          {/* Agency band */}
-          <div className="mt-4 flex items-center justify-center gap-3 text-sm font-medium tracking-wide text-foreground/70">
-            {AGENCIES.map((a, i) => (
-              <span key={a} className="flex items-center gap-3">
-                {i > 0 && (
-                  <span aria-hidden className="text-border">
-                    ·
-                  </span>
-                )}
-                {a}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 

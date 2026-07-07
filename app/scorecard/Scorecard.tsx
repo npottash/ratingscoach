@@ -723,8 +723,9 @@ function RealQuestionsCard({
         After your real meeting
       </h2>
       <p className="mt-2 text-sm text-muted">
-        Paste the actual questions {agency} asked, one per line. We use these
-        to calibrate your future simulations.
+        Let us know the actual questions {agency} asked or where they focused
+        their attention, one per line. We use these to calibrate your future
+        simulations.
       </p>
       <form onSubmit={handleSaveQs} className="mt-3 flex flex-col gap-2">
         <textarea
