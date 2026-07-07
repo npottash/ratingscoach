@@ -115,7 +115,7 @@ function SimulationChat({
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const seededRef = useRef(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
   // Web Speech API for talk-to-text. Works in Chrome / Safari / Edge.
   const [recording, setRecording] = useState(false)
@@ -216,6 +216,15 @@ function SimulationChat({
       inputRef.current?.focus()
     }
   }, [loading, completed, missingNarrative])
+
+  // Auto-grow the answer box with its content, up to a cap — issuer answers
+  // are typically multi-sentence.
+  useEffect(() => {
+    const el = inputRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${Math.min(el.scrollHeight, 200)}px`
+  }, [input])
 
   // Warn before browser refresh / tab close / address-bar nav while a
   // simulation is actively in progress. The wordmark link and the step
@@ -613,22 +622,30 @@ function SimulationChat({
 
           <form
             onSubmit={handleSend}
-            className="flex gap-2 border-t border-border px-5 py-4"
+            className="flex items-end gap-2 border-t border-border px-5 py-4"
           >
-            <input
+            <textarea
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                // Enter sends; Shift+Enter inserts a new line.
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  e.currentTarget.form?.requestSubmit()
+                }
+              }}
+              rows={3}
               placeholder={
                 completed
                   ? 'Session complete.'
                   : recording
                     ? 'Listening… speak your response.'
-                    : 'Type your response as the issuer…'
+                    : 'Type your response as the issuer… (Shift+Enter for a new line)'
               }
               disabled={loading || completed}
               autoFocus
-              className="flex-1 rounded-md border border-border bg-white px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+              className="max-h-[200px] flex-1 resize-none rounded-md border border-border bg-white px-3 py-2 text-sm leading-relaxed focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
             />
             {speechSupported && (
               <button
