@@ -89,10 +89,6 @@ export function Scorecard({
   const [error, setError] = useState<string | null>(null)
   const [missing, setMissing] = useState(false)
   const [remainingAgencies, setRemainingAgencies] = useState<Agency[]>([])
-  const [realQs, setRealQs] = useState('')
-  const [savedCount, setSavedCount] = useState<number | null>(null)
-  const [saveError, setSaveError] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
 
   // Autoscroll the coach chat as new messages arrive
   useEffect(() => {
@@ -148,26 +144,6 @@ export function Scorecard({
       setCoachError(err instanceof Error ? err.message : 'Coach call failed')
     } finally {
       setCoachLoading(false)
-    }
-  }
-
-  async function handleSaveQs(e: React.FormEvent) {
-    e.preventDefault()
-    setSaving(true)
-    setSaveError(null)
-    setSavedCount(null)
-    const res = await saveRealQuestions(
-      session.id,
-      agency,
-      session.sector,
-      realQs
-    )
-    setSaving(false)
-    if (res.error) {
-      setSaveError(res.error)
-    } else {
-      setSavedCount(res.saved ?? 0)
-      setRealQs('')
     }
   }
 
@@ -344,6 +320,14 @@ export function Scorecard({
             </div>
           </div>
         )}
+
+        <div className="mt-8">
+          <RealQuestionsCard
+            sessionId={session.id}
+            agency={agency}
+            sector={session.sector}
+          />
+        </div>
 
         <div className="mt-8 text-center">
           <Link
@@ -600,39 +584,16 @@ export function Scorecard({
             </section>
           )}
 
-          <section className="rounded-lg border border-border bg-white p-5 print:hidden">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-              After your real meeting
-            </h2>
-            <p className="mt-2 text-sm text-muted">
-              Paste the actual questions {agency} asked, one per line. We use
-              these to calibrate your future simulations.
-            </p>
-            <form onSubmit={handleSaveQs} className="mt-3 flex flex-col gap-2">
-              <textarea
-                value={realQs}
-                onChange={(e) => setRealQs(e.target.value)}
-                rows={5}
-                placeholder="One question per line…"
-                className="rounded-md border border-border bg-white px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
-              />
-              {saveError && (
-                <p className="text-sm text-red-600">{saveError}</p>
-              )}
-              {savedCount !== null && savedCount > 0 && (
-                <p className="text-sm text-emerald-700">
-                  Saved {savedCount} question{savedCount === 1 ? '' : 's'}.
-                </p>
-              )}
-              <button
-                type="submit"
-                disabled={saving || !realQs.trim()}
-                className="self-start rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
-              >
-                {saving ? 'Saving…' : 'Save questions'}
-              </button>
-            </form>
-          </section>
+          {/* Feedback capture lives on the return visit (dashboard → saved
+              scorecard), after the real meeting has actually happened — not
+              minutes after the simulation. */}
+          {!results && (
+            <RealQuestionsCard
+              sessionId={session.id}
+              agency={agency}
+              sector={session.sector}
+            />
+          )}
         </aside>
       </div>
 
@@ -720,6 +681,75 @@ function readJson<T>(key: string, fallback: T): T {
   } catch {
     return fallback
   }
+}
+
+/**
+ * "After your real meeting" feedback capture. Rendered on return visits
+ * (dashboard → saved scorecard), where the real meeting has plausibly
+ * happened — not on the fresh post-simulation view.
+ */
+function RealQuestionsCard({
+  sessionId,
+  agency,
+  sector,
+}: {
+  sessionId: string
+  agency: Agency
+  sector: string
+}) {
+  const [realQs, setRealQs] = useState('')
+  const [savedCount, setSavedCount] = useState<number | null>(null)
+  const [saveError, setSaveError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+
+  async function handleSaveQs(e: React.FormEvent) {
+    e.preventDefault()
+    setSaving(true)
+    setSaveError(null)
+    setSavedCount(null)
+    const res = await saveRealQuestions(sessionId, agency, sector, realQs)
+    setSaving(false)
+    if (res.error) {
+      setSaveError(res.error)
+    } else {
+      setSavedCount(res.saved ?? 0)
+      setRealQs('')
+    }
+  }
+
+  return (
+    <section className="rounded-lg border border-border bg-white p-5 print:hidden">
+      <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
+        After your real meeting
+      </h2>
+      <p className="mt-2 text-sm text-muted">
+        Paste the actual questions {agency} asked, one per line. We use these
+        to calibrate your future simulations.
+      </p>
+      <form onSubmit={handleSaveQs} className="mt-3 flex flex-col gap-2">
+        <textarea
+          value={realQs}
+          onChange={(e) => setRealQs(e.target.value)}
+          rows={5}
+          placeholder="One question per line…"
+          className="rounded-md border border-border bg-white px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+        />
+        {saveError && <p className="text-sm text-red-600">{saveError}</p>}
+        {savedCount !== null && savedCount > 0 && (
+          <p className="text-sm text-emerald-700">
+            Saved {savedCount} question{savedCount === 1 ? '' : 's'}.
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={saving || !realQs.trim()}
+          className="self-start rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
+        >
+          {saving ? 'Saving…' : 'Save questions'}
+        </button>
+      </form>
+    </section>
+  )
 }
 
 function CoachBubble({
