@@ -7,6 +7,9 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm text-muted">
         <p>&copy; {year} The Ratings Coach. All rights reserved.</p>
         <nav className="flex items-center gap-6">
+          <Link href="/contact" className="hover:text-foreground">
+            Contact
+          </Link>
           <Link href="/privacy" className="hover:text-foreground">
             Privacy
           </Link>

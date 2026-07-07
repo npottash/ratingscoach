@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = new Set([
   '/terms',
   '/security',
   '/advisory',
+  '/contact',
 ])
 
 export async function proxy(request: NextRequest) {
