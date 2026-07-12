@@ -64,6 +64,8 @@ type ScorecardOutput = {
 
 const AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
 
+type ViewId = 'factors' | 'advocacy' | 'memo' | 'next' | 'debrief'
+
 const ADVOCACY_BASIS_LABELS: Record<AdvocacyBasis, string> = {
   narrative_gap: 'Narrative gap',
   peer_benchmarking: 'Peer benchmarking',
@@ -86,6 +88,7 @@ export function Scorecard({
   const [output, setOutput] = useState<ScorecardOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [missing, setMissing] = useState(false)
+  const [view, setView] = useState<ViewId>('factors')
   const [briefing, setBriefing] = useState<BriefingOutput | null>(
     session.scorecard_output?.briefing ?? null
   )
@@ -269,6 +272,26 @@ export function Scorecard({
     .filter((r) => r.flags.some((f) => f === 'weak' || f === 'critical_gap'))
     .map((r) => r.factor)
 
+  // Sidebar table of contents. "After the meeting" only appears on the
+  // return visit (archived view), matching where those cards render.
+  const navItems: Array<{ id: ViewId; label: string; count?: number }> = [
+    {
+      id: 'factors',
+      label: 'Factor breakdown',
+      count: results?.length ?? output?.factor_analyses.length,
+    },
+    {
+      id: 'advocacy',
+      label: 'Gaps & advocacy',
+      count: output?.advocacy_points?.length,
+    },
+    { id: 'memo', label: 'Memo & priorities' },
+    { id: 'next', label: 'Next steps' },
+    ...(!results
+      ? [{ id: 'debrief' as ViewId, label: 'After the meeting' }]
+      : []),
+  ]
+
   if (missing) {
     const hasSummary = session.overall_score != null
     return (
@@ -404,9 +427,45 @@ export function Scorecard({
         </div>
       )}
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_380px]">
-        {/* LEFT: per-factor breakdown */}
-        <section>
+      <div className="mt-8 grid gap-8 lg:grid-cols-[210px_1fr]">
+        {/* Sidebar table of contents. All sections stay mounted (hidden when
+            inactive, visible in print) so Export to PDF captures everything. */}
+        <nav className="print:hidden lg:sticky lg:top-6 lg:self-start">
+          <ul className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
+            {navItems.map((item) => (
+              <li key={item.id} className="shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setView(item.id)}
+                  className={[
+                    'flex w-full items-center justify-between gap-2 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm font-medium',
+                    view === item.id
+                      ? 'bg-brand text-white'
+                      : 'text-foreground hover:bg-surface',
+                  ].join(' ')}
+                >
+                  <span>{item.label}</span>
+                  {item.count != null && (
+                    <span
+                      className={[
+                        'rounded-full px-1.5 text-xs',
+                        view === item.id
+                          ? 'bg-white/20 text-white'
+                          : 'bg-surface text-muted',
+                      ].join(' ')}
+                    >
+                      {item.count}
+                    </span>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="min-w-0">
+        {/* Per-factor breakdown */}
+        <section className={view === 'factors' ? 'block' : 'hidden print:block'}>
           <h2 className="text-lg font-semibold">Factor-by-factor breakdown</h2>
           <div className="mt-4 flex flex-col gap-4">
             {(results
@@ -462,86 +521,103 @@ export function Scorecard({
             })}
           </div>
 
-          {(!output || (output.advocacy_points?.length ?? 0) > 0) && (
-            <div className="mt-8">
-              <h2 className="text-lg font-semibold">
-                Narrative gaps &amp; advocacy points
-              </h2>
-              <p className="mt-1 text-sm text-muted">
-                Credit-positive themes missing from your narrative, and
-                arguments for a better ratings outcome worth raising with{' '}
-                {agency}.
-              </p>
-              <div className="mt-4 rounded-lg border border-border bg-white p-5">
-                <ul className="space-y-4 text-sm">
-                  {output?.advocacy_points?.length
-                    ? output.advocacy_points.slice(0, 6).map((p, i) => (
-                        <li key={i} className="flex flex-col gap-1">
-                          <span
-                            className={[
-                              'self-start rounded-full border px-2 py-0.5 text-xs font-medium',
-                              p.basis === 'narrative_gap'
-                                ? 'border-amber-200 bg-amber-50 text-amber-700'
-                                : 'border-brand/30 bg-brand/5 text-brand',
-                            ].join(' ')}
-                          >
-                            {ADVOCACY_BASIS_LABELS[p.basis] ?? p.basis}
-                          </span>
-                          <span className="text-foreground">{p.point}</span>
-                        </li>
-                      ))
-                    : [0, 1, 2, 3].map((i) => (
-                        <li key={i}>
-                          <Skeleton />
-                        </li>
-                      ))}
-                </ul>
-              </div>
-            </div>
-          )}
         </section>
 
-        {/* RIGHT: committee memo + priority actions */}
-        <aside className="flex flex-col gap-6">
-          <section className="rounded-lg border border-border bg-white p-5">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Draft committee memo
-            </h2>
-            <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
-              {output?.committee_memo ?? <Skeleton lines={4} />}
-            </p>
-          </section>
+        {/* Narrative gaps & advocacy points */}
+        <section
+          className={view === 'advocacy' ? 'block' : 'hidden print:mt-8 print:block'}
+        >
+          <h2 className="text-lg font-semibold">
+            Narrative gaps &amp; advocacy points
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            Credit-positive themes missing from your narrative, and arguments
+            for a better ratings outcome worth raising with {agency}.
+          </p>
+          <div className="mt-4 rounded-lg border border-border bg-white p-5">
+            {output && (output.advocacy_points?.length ?? 0) === 0 ? (
+              <p className="text-sm text-muted">
+                Advocacy points aren&apos;t available for this run — re-run the
+                simulation to generate them.
+              </p>
+            ) : (
+              <ul className="space-y-4 text-sm">
+                {output?.advocacy_points?.length
+                  ? output.advocacy_points.slice(0, 6).map((p, i) => (
+                      <li key={i} className="flex flex-col gap-1">
+                        <span
+                          className={[
+                            'self-start rounded-full border px-2 py-0.5 text-xs font-medium',
+                            p.basis === 'narrative_gap'
+                              ? 'border-amber-200 bg-amber-50 text-amber-700'
+                              : 'border-brand/30 bg-brand/5 text-brand',
+                          ].join(' ')}
+                        >
+                          {ADVOCACY_BASIS_LABELS[p.basis] ?? p.basis}
+                        </span>
+                        <span className="text-foreground">{p.point}</span>
+                      </li>
+                    ))
+                  : [0, 1, 2, 3].map((i) => (
+                      <li key={i}>
+                        <Skeleton />
+                      </li>
+                    ))}
+              </ul>
+            )}
+          </div>
+        </section>
 
-          <section className="rounded-lg border border-border bg-surface p-5">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Priority prep
-            </h2>
-            <ol className="mt-3 space-y-3 text-sm">
-              {output?.priority_actions?.length
-                ? output.priority_actions.slice(0, 3).map((a, i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">
-                        {i + 1}
-                      </span>
-                      <span>{a}</span>
-                    </li>
-                  ))
-                : [0, 1, 2].map((i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/20 text-xs font-semibold text-brand">
-                        {i + 1}
-                      </span>
-                      <Skeleton />
-                    </li>
-                  ))}
-            </ol>
-          </section>
+        {/* Committee memo + priority actions */}
+        <section
+          className={view === 'memo' ? 'block' : 'hidden print:mt-8 print:block'}
+        >
+          <h2 className="text-lg font-semibold">Memo &amp; priorities</h2>
+          <div className="mt-4 grid gap-6 lg:grid-cols-2">
+            <div className="rounded-lg border border-border bg-white p-5">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
+                Draft committee memo
+              </h3>
+              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
+                {output?.committee_memo ?? <Skeleton lines={4} />}
+              </p>
+            </div>
+            <div className="rounded-lg border border-border bg-surface p-5">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
+                Priority prep
+              </h3>
+              <ol className="mt-3 space-y-3 text-sm">
+                {output?.priority_actions?.length
+                  ? output.priority_actions.slice(0, 3).map((a, i) => (
+                      <li key={i} className="flex gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">
+                          {i + 1}
+                        </span>
+                        <span>{a}</span>
+                      </li>
+                    ))
+                  : [0, 1, 2].map((i) => (
+                      <li key={i} className="flex gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/20 text-xs font-semibold text-brand">
+                          {i + 1}
+                        </span>
+                        <Skeleton />
+                      </li>
+                    ))}
+              </ol>
+            </div>
+          </div>
+        </section>
 
-          <section className="rounded-lg border border-border bg-white p-5 print:hidden">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-              Next
-            </h2>
-            <div className="mt-3 flex flex-col gap-2">
+        {/* Next steps */}
+        <section
+          className={
+            (view === 'next' ? 'block' : 'hidden') + ' print:hidden'
+          }
+        >
+          <h2 className="text-lg font-semibold">Next steps</h2>
+          <div className="mt-4 max-w-md rounded-lg border border-border bg-white p-5">
+            <div className="flex flex-col gap-2">
               {briefing ? (
                 <Link
                   href={`/briefing?session_id=${session.id}`}
@@ -608,13 +684,20 @@ export function Scorecard({
               Export opens your browser&apos;s print dialog — choose “Save as
               PDF”. Generated locally; nothing is uploaded.
             </p>
-          </section>
+          </div>
+        </section>
 
-          {/* Feedback capture lives on the return visit (dashboard → saved
-              scorecard), after the real meeting has actually happened — not
-              minutes after the simulation. */}
-          {!results && (
-            <>
+        {/* Feedback capture lives on the return visit (dashboard → saved
+            scorecard), after the real meeting has actually happened — not
+            minutes after the simulation. */}
+        {!results && (
+          <section
+            className={
+              (view === 'debrief' ? 'block' : 'hidden') + ' print:hidden'
+            }
+          >
+            <h2 className="text-lg font-semibold">After the meeting</h2>
+            <div className="mt-4 flex max-w-2xl flex-col gap-6">
               <RealQuestionsCard
                 sessionId={session.id}
                 agency={agency}
@@ -624,9 +707,10 @@ export function Scorecard({
                 issuerName={session.issuer_name}
                 agency={agency}
               />
-            </>
-          )}
-        </aside>
+            </div>
+          </section>
+        )}
+        </div>
       </div>
 
     </main>
