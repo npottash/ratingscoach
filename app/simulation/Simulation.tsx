@@ -491,12 +491,18 @@ function SimulationChat({
         .single()
       if (!master) throw new Error('session row not found')
 
-      // Copy the setup row into a new per-run row (drop identity columns).
+      // Copy the setup row into a new per-run row (drop identity columns and
+      // any previous run's scorecard — this run generates its own).
       const {
         id: _id,
         created_at: _createdAt,
+        scorecard_output: _prevScorecard,
         ...copy
-      } = master as Record<string, unknown> & { id: string; created_at?: string }
+      } = master as Record<string, unknown> & {
+        id: string
+        created_at?: string
+        scorecard_output?: unknown
+      }
 
       const { data: inserted, error: insertErr } = await supabase
         .from('sessions')

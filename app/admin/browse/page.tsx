@@ -95,7 +95,12 @@ export default async function AdminBrowsePage({
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { persistSession: false } }
   )
-  const [{ data: chunksRaw }, { data: realQsRaw }] = await Promise.all([
+  const [
+    { data: chunksRaw },
+    { data: realQsRaw },
+    { data: advisoryRaw },
+    { data: feedbackRaw },
+  ] = await Promise.all([
     admin
       .from('knowledge_base')
       .select('id, category, content, agency, sector, created_at')
@@ -104,9 +109,32 @@ export default async function AdminBrowsePage({
       .from('real_questions')
       .select('id, agency, sector, question_text, created_at')
       .order('created_at', { ascending: false }),
+    admin
+      .from('advisory_requests')
+      .select('id, name, email, company, notes, created_at')
+      .order('created_at', { ascending: false }),
+    admin
+      .from('feedback')
+      .select('id, name, email, message, created_at')
+      .order('created_at', { ascending: false }),
   ])
   const allChunks: ChunkRow[] = chunksRaw ?? []
   const allRealQs: RealQuestionRow[] = realQsRaw ?? []
+  const advisory = (advisoryRaw ?? []) as Array<{
+    id: string
+    name: string
+    email: string
+    company: string | null
+    notes: string | null
+    created_at: string
+  }>
+  const feedback = (feedbackRaw ?? []) as Array<{
+    id: string
+    name: string | null
+    email: string
+    message: string
+    created_at: string
+  }>
 
   const keywords = sector ? (SECTOR_KEYWORDS[sector] ?? []) : []
   const chunks = allChunks.filter((c) => {
@@ -158,6 +186,82 @@ export default async function AdminBrowsePage({
             active={agency}
             hrefFor={(v) => browseHref({ sector: sector ?? undefined, agency: v ?? undefined })}
           />
+        </section>
+
+        {/* Inbox: advisory requests + feedback */}
+        <section id="inbox" className="mt-10">
+          <h2 className="text-xl font-semibold tracking-tight">
+            Inbox ({advisory.length + feedback.length})
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            Advisory requests and feedback submissions — nothing emails you
+            (yet), so this is where they land.
+          </p>
+          <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            <div className="overflow-hidden rounded-lg border border-border bg-white">
+              <div className="border-b border-border bg-surface px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted">
+                Advisory requests ({advisory.length})
+              </div>
+              <ul className="divide-y divide-border">
+                {advisory.map((r) => (
+                  <li key={r.id} className="px-5 py-3">
+                    <p className="text-xs text-muted">
+                      {new Date(r.created_at).toLocaleString()}
+                    </p>
+                    <p className="mt-0.5 text-sm font-medium">
+                      {r.name}{' '}
+                      <a
+                        href={`mailto:${r.email}`}
+                        className="font-normal text-brand hover:text-brand-hover"
+                      >
+                        {r.email}
+                      </a>
+                      {r.company && (
+                        <span className="text-muted"> · {r.company}</span>
+                      )}
+                    </p>
+                    {r.notes && (
+                      <p className="mt-1 text-sm text-foreground">{r.notes}</p>
+                    )}
+                  </li>
+                ))}
+                {advisory.length === 0 && (
+                  <li className="px-5 py-6 text-center text-sm text-muted">
+                    No advisory requests.
+                  </li>
+                )}
+              </ul>
+            </div>
+            <div className="overflow-hidden rounded-lg border border-border bg-white">
+              <div className="border-b border-border bg-surface px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted">
+                Feedback ({feedback.length})
+              </div>
+              <ul className="divide-y divide-border">
+                {feedback.map((r) => (
+                  <li key={r.id} className="px-5 py-3">
+                    <p className="text-xs text-muted">
+                      {new Date(r.created_at).toLocaleString()}
+                    </p>
+                    <p className="mt-0.5 text-sm font-medium">
+                      {r.name ?? '—'}{' '}
+                      <a
+                        href={`mailto:${r.email}`}
+                        className="font-normal text-brand hover:text-brand-hover"
+                      >
+                        {r.email}
+                      </a>
+                    </p>
+                    <p className="mt-1 text-sm text-foreground">{r.message}</p>
+                  </li>
+                ))}
+                {feedback.length === 0 && (
+                  <li className="px-5 py-6 text-center text-sm text-muted">
+                    No feedback yet.
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
         </section>
 
         {/* Overlay coverage matrix */}

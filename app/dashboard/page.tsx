@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
 import { isAdmin } from '@/lib/admin'
 import { PageHeader } from '@/components/PageHeader'
@@ -37,6 +38,27 @@ export default async function DashboardPage() {
 
   const sessions: SessionRow[] = sessionsRaw ?? []
 
+  // Admin-only: inbox count (advisory requests + feedback) for the nav badge.
+  let inboxCount = 0
+  if (isAdmin(user.email)) {
+    try {
+      const service = createServiceClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        { auth: { persistSession: false } }
+      )
+      const [a, f] = await Promise.all([
+        service
+          .from('advisory_requests')
+          .select('*', { count: 'exact', head: true }),
+        service.from('feedback').select('*', { count: 'exact', head: true }),
+      ])
+      inboxCount = (a.count ?? 0) + (f.count ?? 0)
+    } catch {
+      // Badge is best-effort; the inbox page still shows everything.
+    }
+  }
+
   return (
     <>
       <PageHeader />
@@ -71,6 +93,12 @@ export default async function DashboardPage() {
               <span className="text-xs font-semibold uppercase tracking-wide">
                 Admin
               </span>
+              <Link
+                href="/admin/browse#inbox"
+                className="text-brand hover:text-brand-hover"
+              >
+                Inbox{inboxCount > 0 ? ` (${inboxCount})` : ''}
+              </Link>
               <Link
                 href="/admin/browse"
                 className="text-brand hover:text-brand-hover"
