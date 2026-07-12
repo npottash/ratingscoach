@@ -377,13 +377,17 @@ function SessionAction({ session }: { session: SessionRow }) {
     session.agency.length > 0
   ) {
     const agency = encodeURIComponent(session.agency[0])
+    const hasBriefing =
+      session.scorecard_output != null &&
+      typeof session.scorecard_output === 'object' &&
+      'briefing' in (session.scorecard_output as Record<string, unknown>)
     return (
-      <span className="inline-flex items-center gap-3">
+      <span className="inline-flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
         <Link
           href={`/scorecard?session_id=${session.id}&agency=${agency}`}
           className="font-medium text-brand hover:text-brand-hover"
         >
-          View scorecard
+          Scorecard
         </Link>
         {session.scorecard_output != null && (
           <Link
@@ -394,6 +398,22 @@ function SessionAction({ session }: { session: SessionRow }) {
             PDF
           </Link>
         )}
+        {hasBriefing && (
+          <Link
+            href={`/briefing?session_id=${session.id}`}
+            className="font-medium text-brand hover:text-brand-hover"
+            title="Open the briefing book (print / save as PDF from there)"
+          >
+            Briefing
+          </Link>
+        )}
+        <Link
+          href={`/scorecard?session_id=${session.id}&agency=${agency}&view=debrief`}
+          className="font-medium text-brand hover:text-brand-hover"
+          title="Log the real questions asked and your commitments after the meeting"
+        >
+          Debrief
+        </Link>
       </span>
     )
   }

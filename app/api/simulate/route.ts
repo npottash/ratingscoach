@@ -341,15 +341,22 @@ export async function POST(request: Request) {
   // Open commitments management previously made to this agency for this
   // issuer — the analyst remembers and checks. Graceful if the table is
   // missing (pre-migration): data comes back null.
+  // select('*') so the query tolerates the kind column not being migrated.
   const { data: commitRows } = await supabase
     .from('commitments')
-    .select('commitment_text')
+    .select('*')
     .eq('agency', body.session_context.agency)
     .eq('issuer_name', body.session_context.issuer_name)
     .eq('status', 'open')
     .order('created_at', { ascending: false })
     .limit(15)
-  const commitments = (commitRows ?? []).map((r) => r.commitment_text)
+  const commitments = (
+    (commitRows ?? []) as Array<{ commitment_text: string; kind?: string }>
+  ).map((r) =>
+    r.kind === 'quantitative'
+      ? `[quantitative] ${r.commitment_text}`
+      : r.commitment_text
+  )
 
   const client = new Anthropic()
 

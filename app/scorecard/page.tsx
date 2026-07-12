@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { StepIndicator } from '@/components/StepIndicator'
 import { PageHeader } from '@/components/PageHeader'
 import { Scorecard, type ScorecardSession } from './Scorecard'
+import { isViewId } from './views'
 import type { Agency } from '@/lib/types'
 
 const VALID_AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
@@ -10,9 +11,14 @@ const VALID_AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
 export default async function ScorecardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ session_id?: string; agency?: string; print?: string }>
+  searchParams: Promise<{
+    session_id?: string
+    agency?: string
+    print?: string
+    view?: string
+  }>
 }) {
-  const { session_id, agency, print } = await searchParams
+  const { session_id, agency, print, view } = await searchParams
   if (!session_id) redirect('/intake')
   if (!agency || !VALID_AGENCIES.includes(agency as Agency)) redirect('/intake')
 
@@ -35,6 +41,7 @@ export default async function ScorecardPage({
         session={session}
         agency={agency as Agency}
         autoPrint={print === '1'}
+        initialView={isViewId(view) ? view : undefined}
       />
     </>
   )

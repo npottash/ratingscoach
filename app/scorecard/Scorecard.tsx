@@ -6,6 +6,7 @@ import { PERSONAS } from '@/lib/personas'
 import { createClient } from '@/lib/supabase/client'
 import { CommitmentsCard } from './CommitmentsCard'
 import { saveRealQuestions } from './actions'
+import type { ViewId } from './views'
 import type { Agency, BriefingOutput } from '@/lib/types'
 
 export type ScorecardSession = {
@@ -64,7 +65,6 @@ type ScorecardOutput = {
 
 const AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
 
-type ViewId = 'factors' | 'advocacy' | 'memo' | 'next' | 'debrief'
 
 const ADVOCACY_BASIS_LABELS: Record<AdvocacyBasis, string> = {
   narrative_gap: 'Narrative gap',
@@ -77,10 +77,12 @@ export function Scorecard({
   session,
   agency,
   autoPrint = false,
+  initialView,
 }: {
   session: ScorecardSession
   agency: Agency
   autoPrint?: boolean
+  initialView?: ViewId
 }) {
   const persona = PERSONAS[agency]
 
@@ -88,7 +90,8 @@ export function Scorecard({
   const [output, setOutput] = useState<ScorecardOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [missing, setMissing] = useState(false)
-  const [view, setView] = useState<ViewId>('factors')
+  const [view, setView] = useState<ViewId>(initialView ?? 'factors')
+  const [factorLayout, setFactorLayout] = useState<'cards' | 'table'>('cards')
   const [briefing, setBriefing] = useState<BriefingOutput | null>(
     session.scorecard_output?.briefing ?? null
   )
@@ -272,20 +275,41 @@ export function Scorecard({
     .filter((r) => r.flags.some((f) => f === 'weak' || f === 'critical_gap'))
     .map((r) => r.factor)
 
+  // One row per factor, usable by both the card and table layouts.
+  const factorRows = results
+    ? results.map((r) => ({
+        factor: r.factor,
+        flags: r.flags as Flag[] | null,
+        analysis: output?.factor_analyses.find((a) => a.factor === r.factor),
+      }))
+    : (output?.factor_analyses ?? []).map((a) => ({
+        factor: a.factor,
+        flags: null,
+        analysis: a as ScorecardOutput['factor_analyses'][number] | undefined,
+      }))
+
+  const gapPoints = (output?.advocacy_points ?? []).filter(
+    (p) => p.basis === 'narrative_gap'
+  )
+  const advocacyOnlyPoints = (output?.advocacy_points ?? []).filter(
+    (p) => p.basis !== 'narrative_gap'
+  )
+
   // Sidebar table of contents. "After the meeting" only appears on the
   // return visit (archived view), matching where those cards render.
   const navItems: Array<{ id: ViewId; label: string; count?: number }> = [
     {
       id: 'factors',
-      label: 'Factor breakdown',
-      count: results?.length ?? output?.factor_analyses.length,
+      label: 'Section Feedback',
+      count: factorRows.length || undefined,
     },
     {
       id: 'advocacy',
-      label: 'Gaps & advocacy',
+      label: 'Gaps & Advocacy',
       count: output?.advocacy_points?.length,
     },
-    { id: 'memo', label: 'Memo & priorities' },
+    { id: 'memo', label: 'Illustrative Credit Memo' },
+    { id: 'checklist', label: 'Priorities Prep Checklist' },
     { id: 'next', label: 'Next steps' },
     ...(!results
       ? [{ id: 'debrief' as ViewId, label: 'After the meeting' }]
@@ -464,24 +488,67 @@ export function Scorecard({
         </nav>
 
         <div className="min-w-0">
-        {/* Per-factor breakdown */}
+        {/* Section feedback (per-factor) */}
         <section className={view === 'factors' ? 'block' : 'hidden print:block'}>
-          <h2 className="text-lg font-semibold">Factor-by-factor breakdown</h2>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="text-lg font-semibold">Section Feedback</h2>
+            <div className="flex rounded-md border border-border bg-white p-0.5 text-xs font-medium print:hidden">
+              {(['cards', 'table'] as const).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setFactorLayout(mode)}
+                  className={[
+                    'rounded px-3 py-1 capitalize',
+                    factorLayout === mode
+                      ? 'bg-brand text-white'
+                      : 'text-muted hover:text-foreground',
+                  ].join(' ')}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
+          </div>
+          {factorLayout === 'table' ? (
+            <div className="mt-4 overflow-x-auto rounded-lg border border-border bg-white">
+              <table className="w-full text-sm">
+                <thead className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
+                  <tr>
+                    <th className="px-4 py-3">Section</th>
+                    <th className="px-4 py-3 text-emerald-700">Handled well</th>
+                    <th className="px-4 py-3 text-amber-700">Flagged</th>
+                    <th className="px-4 py-3 text-brand">Recommended action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border align-top">
+                  {factorRows.map(({ factor, flags, analysis }) => (
+                    <tr key={factor} className="align-top">
+                      <td className="px-4 py-3">
+                        <p className="font-semibold">{factor}</p>
+                        {flags && (
+                          <div className="mt-1.5">
+                            <FactorFlagSummary flags={flags} />
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-foreground">
+                        {analysis?.handled_well ?? <Skeleton />}
+                      </td>
+                      <td className="px-4 py-3 text-foreground">
+                        {analysis?.flagged ?? <Skeleton />}
+                      </td>
+                      <td className="px-4 py-3 text-foreground">
+                        {analysis?.recommended_action ?? <Skeleton />}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
           <div className="mt-4 flex flex-col gap-4">
-            {(results
-              ? results.map((r) => ({
-                  factor: r.factor,
-                  flags: r.flags as Flag[] | null,
-                  analysis: output?.factor_analyses.find(
-                    (a) => a.factor === r.factor
-                  ),
-                }))
-              : (output?.factor_analyses ?? []).map((a) => ({
-                  factor: a.factor,
-                  flags: null,
-                  analysis: a as ScorecardOutput['factor_analyses'][number] | undefined,
-                }))
-            ).map(({ factor, flags, analysis }) => {
+            {factorRows.map(({ factor, flags, analysis }) => {
               return (
                 <article
                   key={factor}
@@ -520,7 +587,7 @@ export function Scorecard({
               )
             })}
           </div>
-
+          )}
         </section>
 
         {/* Narrative gaps & advocacy points */}
@@ -528,84 +595,131 @@ export function Scorecard({
           className={view === 'advocacy' ? 'block' : 'hidden print:mt-8 print:block'}
         >
           <h2 className="text-lg font-semibold">
-            Narrative gaps &amp; advocacy points
+            Gaps &amp; Advocacy
           </h2>
           <p className="mt-1 text-sm text-muted">
             Credit-positive themes missing from your narrative, and arguments
             for a better ratings outcome worth raising with {agency}.
           </p>
-          <div className="mt-4 rounded-lg border border-border bg-white p-5">
-            {output && (output.advocacy_points?.length ?? 0) === 0 ? (
+          {output && (output.advocacy_points?.length ?? 0) === 0 ? (
+            <div className="mt-4 rounded-lg border border-border bg-white p-5">
               <p className="text-sm text-muted">
-                Advocacy points aren&apos;t available for this run — re-run the
-                simulation to generate them.
+                Gaps and advocacy points aren&apos;t available for this run —
+                re-run the simulation to generate them.
               </p>
-            ) : (
-              <ul className="space-y-4 text-sm">
-                {output?.advocacy_points?.length
-                  ? output.advocacy_points.slice(0, 6).map((p, i) => (
-                      <li key={i} className="flex flex-col gap-1">
-                        <span
-                          className={[
-                            'self-start rounded-full border px-2 py-0.5 text-xs font-medium',
-                            p.basis === 'narrative_gap'
-                              ? 'border-amber-200 bg-amber-50 text-amber-700'
-                              : 'border-brand/30 bg-brand/5 text-brand',
-                          ].join(' ')}
-                        >
-                          {ADVOCACY_BASIS_LABELS[p.basis] ?? p.basis}
-                        </span>
-                        <span className="text-foreground">{p.point}</span>
+            </div>
+          ) : (
+            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              <div className="rounded-lg border border-border bg-white p-5">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-amber-700">
+                  Narrative gaps
+                </h3>
+                <p className="mt-1 text-xs text-muted">
+                  Themes clearly missing from your materials — address them
+                  proactively.
+                </p>
+                <ul className="mt-3 space-y-3 text-sm">
+                  {output ? (
+                    gapPoints.length > 0 ? (
+                      gapPoints.map((p, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-amber-400">—</span>
+                          <span className="text-foreground">{p.point}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-muted">
+                        No narrative gaps identified for this run.
                       </li>
-                    ))
-                  : [0, 1, 2, 3].map((i) => (
+                    )
+                  ) : (
+                    [0, 1].map((i) => (
                       <li key={i}>
                         <Skeleton />
                       </li>
-                    ))}
-              </ul>
-            )}
-          </div>
+                    ))
+                  )}
+                </ul>
+              </div>
+              <div className="rounded-lg border border-border bg-white p-5">
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-brand">
+                  Advocacy points
+                </h3>
+                <p className="mt-1 text-xs text-muted">
+                  Arguments for a better ratings outcome, ready to make to{' '}
+                  {agency}.
+                </p>
+                <ul className="mt-3 space-y-3 text-sm">
+                  {output ? (
+                    advocacyOnlyPoints.length > 0 ? (
+                      advocacyOnlyPoints.map((p, i) => (
+                        <li key={i} className="flex flex-col gap-1">
+                          <span className="self-start rounded-full border border-brand/30 bg-brand/5 px-2 py-0.5 text-xs font-medium text-brand">
+                            {ADVOCACY_BASIS_LABELS[p.basis] ?? p.basis}
+                          </span>
+                          <span className="text-foreground">{p.point}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-muted">
+                        No advocacy points identified for this run.
+                      </li>
+                    )
+                  ) : (
+                    [0, 1].map((i) => (
+                      <li key={i}>
+                        <Skeleton />
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </div>
+            </div>
+          )}
         </section>
 
-        {/* Committee memo + priority actions */}
+        {/* Illustrative credit memo */}
         <section
           className={view === 'memo' ? 'block' : 'hidden print:mt-8 print:block'}
         >
-          <h2 className="text-lg font-semibold">Memo &amp; priorities</h2>
-          <div className="mt-4 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-lg border border-border bg-white p-5">
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
-                Draft committee memo
-              </h3>
-              <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
-                {output?.committee_memo ?? <Skeleton lines={4} />}
-              </p>
-            </div>
-            <div className="rounded-lg border border-border bg-surface p-5">
-              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
-                Priority prep
-              </h3>
-              <ol className="mt-3 space-y-3 text-sm">
-                {output?.priority_actions?.length
-                  ? output.priority_actions.slice(0, 3).map((a, i) => (
-                      <li key={i} className="flex gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white">
-                          {i + 1}
-                        </span>
-                        <span>{a}</span>
-                      </li>
-                    ))
-                  : [0, 1, 2].map((i) => (
-                      <li key={i} className="flex gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/20 text-xs font-semibold text-brand">
-                          {i + 1}
-                        </span>
-                        <Skeleton />
-                      </li>
-                    ))}
-              </ol>
-            </div>
+          <h2 className="text-lg font-semibold">Illustrative Credit Memo</h2>
+          <p className="mt-1 text-sm text-muted">
+            How the analyst might summarize this credit for an internal rating
+            committee, based on the session.
+          </p>
+          <div className="mt-4 max-w-3xl rounded-lg border border-border bg-white p-6">
+            <p className="whitespace-pre-wrap text-sm leading-relaxed">
+              {output?.committee_memo ?? <Skeleton lines={5} />}
+            </p>
+          </div>
+        </section>
+
+        {/* Priorities prep checklist */}
+        <section
+          className={
+            view === 'checklist' ? 'block' : 'hidden print:mt-8 print:block'
+          }
+        >
+          <h2 className="text-lg font-semibold">Priorities Prep Checklist</h2>
+          <p className="mt-1 text-sm text-muted">
+            Your to-do list ahead of the meeting — check items off as you
+            complete them.
+          </p>
+          <div className="mt-4 max-w-3xl rounded-lg border border-border bg-white p-6">
+            {output?.priority_actions?.length ? (
+              <PrepChecklist
+                sessionId={session.id}
+                items={output.priority_actions.slice(0, 3)}
+              />
+            ) : (
+              <ul className="space-y-3 text-sm">
+                {[0, 1, 2].map((i) => (
+                  <li key={i}>
+                    <Skeleton />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
 
@@ -616,14 +730,17 @@ export function Scorecard({
           }
         >
           <h2 className="text-lg font-semibold">Next steps</h2>
-          <div className="mt-4 max-w-md rounded-lg border border-border bg-white p-5">
-            <div className="flex flex-col gap-2">
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <NextStepCard
+              title="Briefing book"
+              description="A meeting-ready prep document: suggested opening, anticipated Q&A with model answers, and your advocacy points."
+            >
               {briefing ? (
                 <Link
                   href={`/briefing?session_id=${session.id}`}
                   className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
                 >
-                  View briefing book
+                  View &amp; download
                 </Link>
               ) : results ? (
                 <button
@@ -637,53 +754,79 @@ export function Scorecard({
                   }
                   className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
                 >
-                  {briefingBusy
-                    ? 'Generating briefing book… this takes a minute or two'
-                    : 'Generate briefing book'}
+                  {briefingBusy ? 'Generating… a minute or two' : 'Generate'}
                 </button>
-              ) : null}
+              ) : (
+                <p className="text-xs text-muted">
+                  Generate this from the scorecard right after a live run.
+                </p>
+              )}
               {briefingError && (
                 <p className="text-sm text-red-600">{briefingError}</p>
               )}
-              {results && weakFactors.length > 0 && (
+            </NextStepCard>
+
+            {results && weakFactors.length > 0 && (
+              <NextStepCard
+                title={`Re-drill weak factors (${weakFactors.length})`}
+                description="A focused session covering only the factors flagged weak or critical in this run."
+              >
                 <Link
                   href={`/simulation?session_id=${session.id}&agency=${encodeURIComponent(agency)}&factors=${encodeURIComponent(weakFactors.join('|'))}`}
                   className="rounded-md border border-border bg-white px-4 py-2 text-center text-sm font-medium hover:border-brand hover:text-brand"
                 >
-                  Re-drill weak factors ({weakFactors.length})
+                  Start re-drill
                 </Link>
-              )}
+              </NextStepCard>
+            )}
+
+            <NextStepCard
+              title="Export to PDF"
+              description="Print or save the full scorecard — all sections included. Generated locally; nothing is uploaded."
+            >
               <button
                 type="button"
                 onClick={() => window.print()}
                 disabled={!output}
                 title={
-                  output ? undefined : 'Available once the scorecard finishes generating'
+                  output
+                    ? undefined
+                    : 'Available once the scorecard finishes generating'
                 }
                 className="rounded-md border border-border bg-white px-4 py-2 text-sm font-medium hover:border-brand hover:text-brand disabled:opacity-50 disabled:hover:border-border disabled:hover:text-foreground"
               >
-                Export to PDF
+                Export
               </button>
+            </NextStepCard>
+
+            <NextStepCard
+              title="Advisory session"
+              description="Work one-on-one with a senior credit ratings advisor for the meetings that matter most."
+            >
               <Link
                 href="/advisory"
                 className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
               >
-                Book advisory session
+                Book a session
               </Link>
-              {AGENCIES.filter((a) => a !== agency).map((a) => (
-                <Link
-                  key={a}
-                  href={`/simulation?session_id=${session.id}&agency=${encodeURIComponent(a)}`}
-                  className="rounded-md border border-border bg-white px-4 py-2 text-center text-sm font-medium hover:border-brand hover:text-brand"
-                >
-                  Run this session against {a}
-                </Link>
-              ))}
-            </div>
-            <p className="mt-2 text-xs text-muted">
-              Export opens your browser&apos;s print dialog — choose “Save as
-              PDF”. Generated locally; nothing is uploaded.
-            </p>
+            </NextStepCard>
+
+            <NextStepCard
+              title="Run another agency"
+              description="Same issuer and credit story, simulated against a different agency's posture and methodology."
+            >
+              <div className="flex flex-col gap-2">
+                {AGENCIES.filter((a) => a !== agency).map((a) => (
+                  <Link
+                    key={a}
+                    href={`/simulation?session_id=${session.id}&agency=${encodeURIComponent(a)}`}
+                    className="rounded-md border border-border bg-white px-4 py-2 text-center text-sm font-medium hover:border-brand hover:text-brand"
+                  >
+                    Simulate {a}
+                  </Link>
+                ))}
+              </div>
+            </NextStepCard>
           </div>
         </section>
 
@@ -799,6 +942,95 @@ function RealQuestionsCard({
         </button>
       </form>
     </section>
+  )
+}
+
+/** One action card in the Next steps grid: title, context, then the action. */
+function NextStepCard({
+  title,
+  description,
+  children,
+}: {
+  title: string
+  description: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex flex-col rounded-lg border border-border bg-white p-5">
+      <h3 className="text-sm font-semibold">{title}</h3>
+      <p className="mt-1 flex-1 text-xs leading-relaxed text-muted">
+        {description}
+      </p>
+      <div className="mt-3 flex flex-col gap-2">{children}</div>
+    </div>
+  )
+}
+
+/**
+ * Priority actions as a checkable to-do list. Checked state persists in
+ * localStorage per session, so it survives revisits in the same browser.
+ */
+function PrepChecklist({
+  sessionId,
+  items,
+}: {
+  sessionId: string
+  items: string[]
+}) {
+  const storageKey = `prep_checklist:${sessionId}`
+  const [done, setDone] = useState<boolean[]>(() => {
+    try {
+      const raw = localStorage.getItem(storageKey)
+      const parsed = raw ? (JSON.parse(raw) as boolean[]) : []
+      return items.map((_, i) => parsed[i] ?? false)
+    } catch {
+      return items.map(() => false)
+    }
+  })
+
+  function toggle(i: number) {
+    const next = done.map((d, j) => (j === i ? !d : d))
+    setDone(next)
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(next))
+    } catch {
+      // Storage unavailable — checklist still works for this view.
+    }
+  }
+
+  const remaining = done.filter((d) => !d).length
+
+  return (
+    <div>
+      <ul className="space-y-4">
+        {items.map((item, i) => (
+          <li key={i}>
+            <label className="flex cursor-pointer items-start gap-3 text-sm">
+              <input
+                type="checkbox"
+                checked={done[i] ?? false}
+                onChange={() => toggle(i)}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--color-brand,#1d4ed8)]"
+              />
+              <span
+                className={
+                  done[i]
+                    ? 'text-muted line-through'
+                    : 'text-foreground'
+                }
+              >
+                {item}
+              </span>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-4 text-xs text-muted">
+        {remaining === 0
+          ? 'All prep items complete — you are ready for the meeting.'
+          : `${remaining} of ${items.length} remaining.`}
+      </p>
+    </div>
   )
 }
 
