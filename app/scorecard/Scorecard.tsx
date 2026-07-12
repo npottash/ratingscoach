@@ -310,6 +310,8 @@ export function Scorecard({
     },
     { id: 'memo', label: 'Illustrative Credit Memo' },
     { id: 'checklist', label: 'Priorities Prep Checklist' },
+    { id: 'briefing', label: 'Briefing Book' },
+    { id: 'advisory', label: 'Advisory Session' },
     { id: 'next', label: 'Next steps' },
     ...(!results
       ? [{ id: 'debrief' as ViewId, label: 'After the meeting' }]
@@ -723,6 +725,166 @@ export function Scorecard({
           </div>
         </section>
 
+        {/* Briefing book */}
+        <section
+          className={
+            (view === 'briefing' ? 'block' : 'hidden') + ' print:hidden'
+          }
+        >
+          <h2 className="text-lg font-semibold">Briefing Book</h2>
+          <p className="mt-1 text-sm text-muted">
+            A meeting-ready prep document generated from this session — the
+            binder your team rehearses from and circulates ahead of the real
+            meeting.
+          </p>
+          <div className="mt-4 grid items-start gap-4 lg:grid-cols-[1fr_280px]">
+            <div className="rounded-lg border border-border bg-white p-6">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">
+                What&apos;s inside
+              </h3>
+              <ul className="mt-3 space-y-3 text-sm leading-relaxed">
+                <li>
+                  <span className="font-medium">
+                    Suggested opening statement
+                  </span>{' '}
+                  — a 60–90 second meeting opening in management voice,
+                  tailored to your meeting type.
+                </li>
+                <li>
+                  <span className="font-medium">
+                    Anticipated Q&amp;A with model answers
+                  </span>{' '}
+                  — the questions the analyst actually asked in this
+                  simulation plus the likely follow-ups, grouped by section,
+                  each with a drafted answer built only from your narrative
+                  and session answers — nothing invented.
+                </li>
+                <li>
+                  <span className="font-medium">Bracketed placeholders</span>{' '}
+                  — where a needed fact wasn&apos;t in your materials, the
+                  answer marks exactly what to gather (e.g. &quot;[insert LTM
+                  charge-off rate]&quot;) rather than guessing.
+                </li>
+                <li>
+                  <span className="font-medium">
+                    Advocacy points and priority prep
+                  </span>{' '}
+                  — your gaps-and-advocacy analysis and prep priorities ride
+                  along, so the whole story travels in one document.
+                </li>
+                <li>
+                  <span className="font-medium">PDF export</span> — print or
+                  save the book to circulate to the CFO, IR, and the rest of
+                  the meeting team.
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-5">
+              {briefing ? (
+                <>
+                  <p className="text-sm text-muted">
+                    Generated{' '}
+                    {new Date(briefing.generated_at).toLocaleDateString()}.
+                  </p>
+                  <Link
+                    href={`/briefing?session_id=${session.id}`}
+                    className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
+                  >
+                    View &amp; download
+                  </Link>
+                </>
+              ) : results ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={handleGenerateBriefing}
+                    disabled={!output || briefingBusy}
+                    title={
+                      output
+                        ? undefined
+                        : 'Available once the scorecard finishes generating'
+                    }
+                    className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
+                  >
+                    {briefingBusy ? 'Generating…' : 'Generate briefing book'}
+                  </button>
+                  <p className="text-xs text-muted">
+                    Generation takes a minute or two — it drafts a model
+                    answer for every anticipated question.
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-muted">
+                  No briefing book was generated for this run. Generate one
+                  from the scorecard right after a live simulation.
+                </p>
+              )}
+              {briefingError && (
+                <p className="text-sm text-red-600">{briefingError}</p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Advisory session */}
+        <section
+          className={
+            (view === 'advisory' ? 'block' : 'hidden') + ' print:hidden'
+          }
+        >
+          <h2 className="text-lg font-semibold">Advisory Session</h2>
+          <p className="mt-1 text-sm text-muted">
+            The simulator gets you reps. For the meetings that matter most,
+            work directly with a senior credit ratings advisor who has sat on
+            the other side of the table.
+          </p>
+          <div className="mt-4 max-w-3xl rounded-lg border border-border bg-white p-6">
+            <ul className="space-y-3 text-sm leading-relaxed">
+              <li className="flex gap-3">
+                <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                <span>
+                  <span className="font-medium">
+                    A senior advisor works through this session with you
+                  </span>{' '}
+                  — your credit story, your scorecard, the flagged answers,
+                  and the advocacy points, with the materials you choose to
+                  bring.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                <span>
+                  <span className="font-medium">
+                    Agency-specific coaching for {agency}
+                  </span>{' '}
+                  — methodology, the pushback you should expect, and the
+                  framing that lands with their committee.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                <span>
+                  <span className="font-medium">A tailored prep plan</span>{' '}
+                  — a concrete sequence for the weeks leading into the
+                  meeting, built around your weak factors and runway.
+                </span>
+              </li>
+            </ul>
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <Link
+                href="/advisory"
+                className="rounded-md bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover"
+              >
+                Book an advisory session
+              </Link>
+              <span className="text-xs text-muted">
+                A separate, paid engagement — pricing is confirmed with you
+                before anything is scheduled.
+              </span>
+            </div>
+          </div>
+        </section>
+
         {/* Next steps */}
         <section
           className={
@@ -731,41 +893,6 @@ export function Scorecard({
         >
           <h2 className="text-lg font-semibold">Next steps</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <NextStepCard
-              title="Briefing book"
-              description="A meeting-ready prep document: suggested opening, anticipated Q&A with model answers, and your advocacy points."
-            >
-              {briefing ? (
-                <Link
-                  href={`/briefing?session_id=${session.id}`}
-                  className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
-                >
-                  View &amp; download
-                </Link>
-              ) : results ? (
-                <button
-                  type="button"
-                  onClick={handleGenerateBriefing}
-                  disabled={!output || briefingBusy}
-                  title={
-                    output
-                      ? undefined
-                      : 'Available once the scorecard finishes generating'
-                  }
-                  className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
-                >
-                  {briefingBusy ? 'Generating… a minute or two' : 'Generate'}
-                </button>
-              ) : (
-                <p className="text-xs text-muted">
-                  Generate this from the scorecard right after a live run.
-                </p>
-              )}
-              {briefingError && (
-                <p className="text-sm text-red-600">{briefingError}</p>
-              )}
-            </NextStepCard>
-
             {results && weakFactors.length > 0 && (
               <NextStepCard
                 title={`Re-drill weak factors (${weakFactors.length})`}
@@ -797,18 +924,6 @@ export function Scorecard({
               >
                 Export
               </button>
-            </NextStepCard>
-
-            <NextStepCard
-              title="Advisory session"
-              description="Work one-on-one with a senior credit ratings advisor for the meetings that matter most."
-            >
-              <Link
-                href="/advisory"
-                className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
-              >
-                Book a session
-              </Link>
             </NextStepCard>
 
             <NextStepCard

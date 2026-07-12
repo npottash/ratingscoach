@@ -6,6 +6,8 @@ export type ViewId =
   | 'advocacy'
   | 'memo'
   | 'checklist'
+  | 'briefing'
+  | 'advisory'
   | 'next'
   | 'debrief'
 
@@ -14,6 +16,8 @@ const VIEW_IDS: ViewId[] = [
   'advocacy',
   'memo',
   'checklist',
+  'briefing',
+  'advisory',
   'next',
   'debrief',
 ]
