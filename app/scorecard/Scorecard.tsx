@@ -1081,9 +1081,12 @@ function NextStepCard({
   )
 }
 
+type CustomChecklistItem = { text: string; done: boolean }
+
 /**
- * Priority actions as a checkable to-do list. Checked state persists in
- * localStorage per session, so it survives revisits in the same browser.
+ * Priority actions as a checkable to-do list, plus the user's own items.
+ * State persists in localStorage per session, so it survives revisits in
+ * the same browser.
  */
 function PrepChecklist({
   sessionId,
@@ -1093,6 +1096,7 @@ function PrepChecklist({
   items: string[]
 }) {
   const storageKey = `prep_checklist:${sessionId}`
+  const customKey = `prep_checklist_custom:${sessionId}`
   const [done, setDone] = useState<boolean[]>(() => {
     try {
       const raw = localStorage.getItem(storageKey)
@@ -1102,18 +1106,58 @@ function PrepChecklist({
       return items.map(() => false)
     }
   })
-
-  function toggle(i: number) {
-    const next = done.map((d, j) => (j === i ? !d : d))
-    setDone(next)
+  const [custom, setCustom] = useState<CustomChecklistItem[]>(() => {
     try {
-      localStorage.setItem(storageKey, JSON.stringify(next))
+      const raw = localStorage.getItem(customKey)
+      const parsed = raw ? (JSON.parse(raw) as CustomChecklistItem[]) : []
+      return Array.isArray(parsed)
+        ? parsed.filter((c) => typeof c?.text === 'string')
+        : []
+    } catch {
+      return []
+    }
+  })
+  const [draft, setDraft] = useState('')
+
+  function persist(key: string, value: unknown) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value))
     } catch {
       // Storage unavailable — checklist still works for this view.
     }
   }
 
-  const remaining = done.filter((d) => !d).length
+  function toggle(i: number) {
+    const next = done.map((d, j) => (j === i ? !d : d))
+    setDone(next)
+    persist(storageKey, next)
+  }
+
+  function toggleCustom(i: number) {
+    const next = custom.map((c, j) => (j === i ? { ...c, done: !c.done } : c))
+    setCustom(next)
+    persist(customKey, next)
+  }
+
+  function addCustom(e: React.FormEvent) {
+    e.preventDefault()
+    const text = draft.trim()
+    if (!text) return
+    const next = [...custom, { text, done: false }]
+    setCustom(next)
+    persist(customKey, next)
+    setDraft('')
+  }
+
+  function removeCustom(i: number) {
+    const next = custom.filter((_, j) => j !== i)
+    setCustom(next)
+    persist(customKey, next)
+  }
+
+  const total = items.length + custom.length
+  const remaining =
+    done.filter((d) => !d).length + custom.filter((c) => !c.done).length
 
   return (
     <div>
@@ -1139,11 +1183,54 @@ function PrepChecklist({
             </label>
           </li>
         ))}
+        {custom.map((c, i) => (
+          <li key={`custom-${i}`} className="group flex items-start gap-3">
+            <label className="flex flex-1 cursor-pointer items-start gap-3 text-sm">
+              <input
+                type="checkbox"
+                checked={c.done}
+                onChange={() => toggleCustom(i)}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--color-brand,#1d4ed8)]"
+              />
+              <span
+                className={c.done ? 'text-muted line-through' : 'text-foreground'}
+              >
+                {c.text}
+              </span>
+            </label>
+            <button
+              type="button"
+              onClick={() => removeCustom(i)}
+              aria-label="Remove item"
+              title="Remove item"
+              className="shrink-0 rounded px-1.5 text-sm text-muted opacity-0 hover:text-red-600 focus:opacity-100 group-hover:opacity-100"
+            >
+              ×
+            </button>
+          </li>
+        ))}
       </ul>
+
+      <form onSubmit={addCustom} className="mt-4 flex gap-2">
+        <input
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          placeholder="Add your own prep item…"
+          className="flex-1 rounded-md border border-border bg-white px-3 py-2 text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
+        />
+        <button
+          type="submit"
+          disabled={!draft.trim()}
+          className="rounded-md border border-border bg-white px-4 py-2 text-sm font-medium hover:border-brand hover:text-brand disabled:opacity-50"
+        >
+          Add
+        </button>
+      </form>
+
       <p className="mt-4 text-xs text-muted">
         {remaining === 0
           ? 'All prep items complete — you are ready for the meeting.'
-          : `${remaining} of ${items.length} remaining.`}
+          : `${remaining} of ${total} remaining.`}
       </p>
     </div>
   )
