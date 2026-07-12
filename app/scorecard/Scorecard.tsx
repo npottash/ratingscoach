@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { PERSONAS } from '@/lib/personas'
 import { createClient } from '@/lib/supabase/client'
 import { CommitmentsCard } from './CommitmentsCard'
 import { saveRealQuestions } from './actions'
@@ -84,7 +83,6 @@ export function Scorecard({
   autoPrint?: boolean
   initialView?: ViewId
 }) {
-  const persona = PERSONAS[agency]
 
   const [results, setResults] = useState<FactorResult[] | null>(null)
   const [output, setOutput] = useState<ScorecardOutput | null>(null)
@@ -350,7 +348,7 @@ export function Scorecard({
         {hasSummary && (
           <div className="mt-8 rounded-lg border border-border bg-white p-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              {agency} readiness · {session.issuer_name}
+              {agency} simulation results · {session.issuer_name}
             </p>
             <div className="mt-4 grid grid-cols-3 gap-6">
               <Stat
@@ -398,7 +396,7 @@ export function Scorecard({
         <div className="flex flex-wrap items-start justify-between gap-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-              {agency} readiness scorecard
+              {agency} Simulation Results
             </p>
             <h1 className="mt-1 text-2xl font-semibold">
               {session.issuer_name}
@@ -410,9 +408,6 @@ export function Scorecard({
                   .join(' / ')}
               </p>
             )}
-            <p className="mt-1 text-sm text-muted">
-              Simulated by {persona.name} — {persona.role} ({agency})
-            </p>
             {!results && output && (
               <p className="mt-1 text-xs text-muted">
                 Saved scorecard — per-answer grades from the live run are not
