@@ -7,6 +7,7 @@ const DEFAULT_LIMITS: Record<string, number> = {
   coach: 100, // coach questions/day
   extract: 20, // document transcriptions/day — each is a full-PDF vision call
   scorecard: 40, // scorecard generations/day — full-transcript Claude call
+  briefing: 20, // briefing books/day — the largest single generation
 }
 
 function limitFor(endpoint: string): number {
@@ -28,7 +29,7 @@ function limitFor(endpoint: string): number {
 export async function checkRateLimit(
   supabase: SupabaseClient,
   userId: string,
-  endpoint: 'simulate' | 'coach' | 'extract' | 'scorecard'
+  endpoint: 'simulate' | 'coach' | 'extract' | 'scorecard' | 'briefing'
 ): Promise<boolean> {
   const { data, error } = await supabase.rpc('increment_api_usage', {
     p_user_id: userId,

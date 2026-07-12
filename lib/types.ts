@@ -20,6 +20,21 @@ export type Session = {
   created_at: string
 }
 
+/** One anticipated question + drafted model answer in a briefing book. */
+export type BriefingQA = {
+  factor: string
+  question: string
+  model_answer: string
+  basis: 'asked' | 'anticipated'
+}
+
+/** The generated briefing book, persisted inside scorecard_output.briefing. */
+export type BriefingOutput = {
+  opening_statement: string
+  qa: BriefingQA[]
+  generated_at: string
+}
+
 export type IntakeInput = Omit<
   Session,
   | 'id'

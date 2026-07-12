@@ -177,6 +177,7 @@ function buildSystemPrompt(args: {
   ctx: SessionContext
   factor: string
   pastRealQuestions: string[]
+  commitments: string[]
 }): string {
   const persona = PERSONAS[args.ctx.agency]
   const knowledge = getKnowledge(args.ctx.agency, args.ctx.sector, args.factor)
@@ -196,6 +197,14 @@ The issuer is on ${args.ctx.outlook}. The advisor recommends these issuer behavi
 
 ${playbook.recommended_actions.map((a) => `- ${a}`).join('\n')}`
     : ''
+
+  const commitmentsBlock =
+    args.commitments.length > 0
+      ? `PRIOR COMMITMENTS MANAGEMENT HAS MADE TO ${args.ctx.agency}
+In past meetings, management committed to the following. You remember these — analysts always do. When a commitment is relevant to the factor you are probing, make your FIRST question on that factor a check on it (e.g., "Last time we spoke, you told us X — where does that stand?"). Do not check the same commitment twice in one meeting.
+
+${args.commitments.map((c) => `- ${c}`).join('\n')}`
+      : ''
 
   const historyBlock =
     args.pastRealQuestions.length > 0
@@ -221,6 +230,8 @@ ${args.ctx.sub_type ? `- Sub-type: ${args.ctx.sub_type}` : ''}
 - Outlook: ${args.ctx.outlook}
 
 ${meetingFocusBlock(args.ctx.meeting_type)}
+
+${commitmentsBlock}
 
 ${historyBlock}
 
@@ -327,6 +338,19 @@ export async function POST(request: Request) {
     .limit(30)
   const pastRealQuestions = (pastQRows ?? []).map((r) => r.question_text)
 
+  // Open commitments management previously made to this agency for this
+  // issuer — the analyst remembers and checks. Graceful if the table is
+  // missing (pre-migration): data comes back null.
+  const { data: commitRows } = await supabase
+    .from('commitments')
+    .select('commitment_text')
+    .eq('agency', body.session_context.agency)
+    .eq('issuer_name', body.session_context.issuer_name)
+    .eq('status', 'open')
+    .order('created_at', { ascending: false })
+    .limit(15)
+  const commitments = (commitRows ?? []).map((r) => r.commitment_text)
+
   const client = new Anthropic()
 
   const systemPrompt = buildSystemPrompt({
@@ -334,6 +358,7 @@ export async function POST(request: Request) {
     ctx: body.session_context,
     factor: body.current_factor,
     pastRealQuestions,
+    commitments,
   })
 
   // For the very first turn there's no prior user message. We seed a user turn

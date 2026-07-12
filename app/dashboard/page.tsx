@@ -94,6 +94,8 @@ export default async function DashboardPage() {
         </div>
       </header>
 
+      <ProgressSection sessions={sessions} />
+
       <section className="mt-10">
         {sessions.length === 0 ? (
           <EmptyState />
@@ -103,6 +105,122 @@ export default async function DashboardPage() {
       </section>
       </main>
     </>
+  )
+}
+
+/* ------------------------------------------------------------------------- */
+/* Readiness trajectory                                                      */
+/* ------------------------------------------------------------------------- */
+
+type TrendGroup = {
+  issuer: string
+  agency: string
+  scores: number[]
+}
+
+function ProgressSection({ sessions }: { sessions: SessionRow[] }) {
+  // Group completed, scored runs by issuer × agency, oldest first.
+  const groups = new Map<string, TrendGroup>()
+  for (const s of [...sessions].reverse()) {
+    if (s.status !== 'completed' || s.overall_score == null) continue
+    const agency = s.agency?.[0] ?? '—'
+    const key = `${s.issuer_name}|${agency}`
+    const g = groups.get(key) ?? { issuer: s.issuer_name, agency, scores: [] }
+    g.scores.push(s.overall_score)
+    groups.set(key, g)
+  }
+  const trends = [...groups.values()].filter((g) => g.scores.length >= 2)
+  if (trends.length === 0) return null
+
+  return (
+    <section className="mt-10">
+      <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
+        Readiness trajectory
+      </h2>
+      <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {trends.map((g) => {
+          const first = g.scores[0]
+          const latest = g.scores[g.scores.length - 1]
+          const delta = latest - first
+          return (
+            <div
+              key={`${g.issuer}|${g.agency}`}
+              className="rounded-lg border border-border bg-white p-4"
+            >
+              <div className="flex items-baseline justify-between gap-3">
+                <p className="truncate text-sm font-medium">
+                  {g.issuer}{' '}
+                  <span className="font-normal text-muted">· {g.agency}</span>
+                </p>
+                <span
+                  className={[
+                    'shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold',
+                    delta >= 0
+                      ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                      : 'border-red-200 bg-red-50 text-red-700',
+                  ].join(' ')}
+                >
+                  {delta >= 0 ? '+' : ''}
+                  {delta.toFixed(1)}
+                </span>
+              </div>
+              <div className="mt-2 flex items-end justify-between gap-3">
+                <Sparkline scores={g.scores} />
+                <p className="text-sm text-muted">
+                  {first.toFixed(1)} →{' '}
+                  <span className="font-semibold text-foreground">
+                    {latest.toFixed(1)}
+                  </span>
+                  <span className="text-xs"> /10</span>
+                </p>
+              </div>
+              <p className="mt-1 text-xs text-muted">
+                {g.scores.length} runs
+              </p>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
+function Sparkline({ scores }: { scores: number[] }) {
+  const w = 140
+  const h = 36
+  const pad = 3
+  const step = (w - pad * 2) / Math.max(scores.length - 1, 1)
+  const y = (v: number) => h - pad - (Math.min(Math.max(v, 0), 10) / 10) * (h - pad * 2)
+  const points = scores
+    .map((v, i) => `${(pad + i * step).toFixed(1)},${y(v).toFixed(1)}`)
+    .join(' ')
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox={`0 0 ${w} ${h}`}
+      aria-hidden
+      className="shrink-0"
+    >
+      <polyline
+        points={points}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-brand"
+      />
+      {scores.map((v, i) => (
+        <circle
+          key={i}
+          cx={pad + i * step}
+          cy={y(v)}
+          r="2.5"
+          className="fill-brand"
+        />
+      ))}
+    </svg>
   )
 }
 

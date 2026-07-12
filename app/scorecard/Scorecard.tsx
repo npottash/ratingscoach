@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { PERSONAS } from '@/lib/personas'
 import { createClient } from '@/lib/supabase/client'
+import { CommitmentsCard } from './CommitmentsCard'
 import { saveRealQuestions } from './actions'
-import type { Agency } from '@/lib/types'
+import type { Agency, BriefingOutput } from '@/lib/types'
 
 export type ScorecardSession = {
   id: string
@@ -57,6 +58,8 @@ type ScorecardOutput = {
     basis: AdvocacyBasis
     point: string
   }>
+  // Present once a briefing book has been generated for this run.
+  briefing?: BriefingOutput
 }
 
 const AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
@@ -83,6 +86,69 @@ export function Scorecard({
   const [output, setOutput] = useState<ScorecardOutput | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [missing, setMissing] = useState(false)
+  const [briefing, setBriefing] = useState<BriefingOutput | null>(
+    session.scorecard_output?.briefing ?? null
+  )
+  const [briefingBusy, setBriefingBusy] = useState(false)
+  const [briefingError, setBriefingError] = useState<string | null>(null)
+
+  async function handleGenerateBriefing() {
+    if (!results || !output || briefingBusy) return
+    const narrative = sessionStorage.getItem(`narrative:${session.id}`)
+    if (!narrative) {
+      setBriefingError(
+        'The narrative is no longer in this tab — re-run the simulation to generate a briefing book.'
+      )
+      return
+    }
+    setBriefingBusy(true)
+    setBriefingError(null)
+    try {
+      const res = await fetch('/api/briefing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          results,
+          narrative,
+          session_context: {
+            issuer_name: session.issuer_name,
+            sector: session.sector,
+            industry: session.industry,
+            sub_type: session.sub_type,
+            current_rating: session.current_rating,
+            outlook: session.outlook,
+            agency,
+            ticker: session.ticker,
+            meeting_type: session.meeting_type,
+            meeting_date: session.meeting_date,
+          },
+          advocacy_points: output.advocacy_points,
+          priority_actions: output.priority_actions,
+        }),
+      })
+      if (!res.ok) {
+        const { error: msg } = await res.json().catch(() => ({ error: '' }))
+        throw new Error(msg || `Request failed (${res.status})`)
+      }
+      const b = (await res.json()) as BriefingOutput
+      setBriefing(b)
+      try {
+        const supabase = createClient()
+        await supabase
+          .from('sessions')
+          .update({ scorecard_output: { ...output, briefing: b } })
+          .eq('id', session.id)
+      } catch {
+        // Non-fatal — the briefing still renders this session.
+      }
+    } catch (e) {
+      setBriefingError(
+        e instanceof Error ? e.message : 'Briefing generation failed'
+      )
+    } finally {
+      setBriefingBusy(false)
+    }
+  }
 
   useEffect(() => {
     // Persist the generated scorecard (derived work product only — never the
@@ -198,6 +264,11 @@ export function Scorecard({
       )
     : session.critical_gaps
 
+  // Factors that drew weak or critical flags — the re-drill set.
+  const weakFactors = (results ?? [])
+    .filter((r) => r.flags.some((f) => f === 'weak' || f === 'critical_gap'))
+    .map((r) => r.factor)
+
   if (missing) {
     const hasSummary = session.overall_score != null
     return (
@@ -250,12 +321,13 @@ export function Scorecard({
           </div>
         )}
 
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col gap-6">
           <RealQuestionsCard
             sessionId={session.id}
             agency={agency}
             sector={session.sector}
           />
+          <CommitmentsCard issuerName={session.issuer_name} agency={agency} />
         </div>
 
         <div className="mt-8 text-center">
@@ -470,6 +542,41 @@ export function Scorecard({
               Next
             </h2>
             <div className="mt-3 flex flex-col gap-2">
+              {briefing ? (
+                <Link
+                  href={`/briefing?session_id=${session.id}`}
+                  className="rounded-md bg-brand px-4 py-2 text-center text-sm font-medium text-white hover:bg-brand-hover"
+                >
+                  View briefing book
+                </Link>
+              ) : results ? (
+                <button
+                  type="button"
+                  onClick={handleGenerateBriefing}
+                  disabled={!output || briefingBusy}
+                  title={
+                    output
+                      ? undefined
+                      : 'Available once the scorecard finishes generating'
+                  }
+                  className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
+                >
+                  {briefingBusy
+                    ? 'Generating briefing book… this takes a minute or two'
+                    : 'Generate briefing book'}
+                </button>
+              ) : null}
+              {briefingError && (
+                <p className="text-sm text-red-600">{briefingError}</p>
+              )}
+              {results && weakFactors.length > 0 && (
+                <Link
+                  href={`/simulation?session_id=${session.id}&agency=${encodeURIComponent(agency)}&factors=${encodeURIComponent(weakFactors.join('|'))}`}
+                  className="rounded-md border border-border bg-white px-4 py-2 text-center text-sm font-medium hover:border-brand hover:text-brand"
+                >
+                  Re-drill weak factors ({weakFactors.length})
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={() => window.print()}
@@ -507,11 +614,17 @@ export function Scorecard({
               scorecard), after the real meeting has actually happened — not
               minutes after the simulation. */}
           {!results && (
-            <RealQuestionsCard
-              sessionId={session.id}
-              agency={agency}
-              sector={session.sector}
-            />
+            <>
+              <RealQuestionsCard
+                sessionId={session.id}
+                agency={agency}
+                sector={session.sector}
+              />
+              <CommitmentsCard
+                issuerName={session.issuer_name}
+                agency={agency}
+              />
+            </>
           )}
         </aside>
       </div>

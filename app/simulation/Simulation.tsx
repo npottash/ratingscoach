@@ -53,9 +53,11 @@ function getInitials(name: string): string {
 export function Simulation({
   session,
   agencyOverride,
+  factorsOverride,
 }: {
   session: SimulationSession
   agencyOverride?: Agency
+  factorsOverride?: string[]
 }) {
   const [agency, setAgency] = useState<Agency | null>(
     agencyOverride ?? (session.agency.length === 1 ? session.agency[0] : null)
@@ -86,18 +88,30 @@ export function Simulation({
     )
   }
 
-  return <SimulationChat session={session} agency={agency} />
+  return (
+    <SimulationChat
+      session={session}
+      agency={agency}
+      factorsOverride={factorsOverride}
+    />
+  )
 }
 
 function SimulationChat({
   session,
   agency,
+  factorsOverride,
 }: {
   session: SimulationSession
   agency: Agency
+  factorsOverride?: string[]
 }) {
   const router = useRouter()
-  const factors = factorsFor(session.sector)
+  // A factor subset supports focused re-drills of weak factors.
+  const factors =
+    factorsOverride && factorsOverride.length > 0
+      ? factorsOverride
+      : factorsFor(session.sector)
   const persona = PERSONAS[agency]
   const analystDisplayName = persona.name
   const analystDisplayRole = persona.role
