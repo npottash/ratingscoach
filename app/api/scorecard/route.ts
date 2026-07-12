@@ -113,7 +113,7 @@ const tools: Anthropic.Tool[] = [
         committee_memo: {
           type: 'string',
           description:
-            'Four to six sentences of plain prose, written in the voice of the analyst summarizing the credit for an internal rating committee. Cite the strongest and weakest factors. Land on a clear directional take.',
+            'Four to six sentences of plain prose, written in the voice of the analyst summarizing the credit for an internal rating committee. Format as two to three SHORT paragraphs separated by a blank line (\\n\\n) — strengths first, then concerns, then the directional take. Cite the strongest and weakest factors. Land on a clear directional take.',
         },
         priority_actions: {
           type: 'array',
@@ -339,7 +339,7 @@ GUIDELINES
 - "Handled well" must point to a concrete moment of strength. If nothing was strong on a factor, say so honestly.
 - "Flagged" must call out the most material weakness — vague answer, missing detail, exposed risk.
 - "Recommended action" is one concrete prep action — not "study more", but e.g. "have a sourced CET1 trajectory chart through Q4 2027 ready, with a binding-constraint label at each quarter".
-- Committee memo: write as you would for an internal rating committee. Four to six sentences, plain prose, land on a directional take (e.g. "supports current rating", "outlook deterioration risk", "rating-action candidate if X").
+- Committee memo: write as you would for an internal rating committee. Four to six sentences, plain prose, broken into two to three short paragraphs separated by blank lines (strengths → concerns → directional take). Land on a directional take (e.g. "supports current rating", "outlook deterioration risk", "rating-action candidate if X").
 - Priority actions: exactly three, ordered. Concrete. The most important first.
 - Advocacy points: 4-6 short points combining two kinds of item. (a) Narrative gaps: credit-relevant themes clearly ABSENT from the issuer's narrative materials and answers — drawn from the reference notes, retrieved advisor notes, or well-established public context — that the issuer should be raising proactively with the agency. (b) Advocacy arguments for a better ratings outcome, each built on exactly one of three methods: high-level benchmarking where this issuer excels relative to what is typical of higher-rated issuers; outperformance versus the issuer's own history that the rating has not moved in line with; or methodology treatment that unfairly penalizes the issuer or, applied faithfully, should support a better outcome.
 - EVIDENCE BAR for advocacy points: rely ONLY on fully confirmed data — the narrative, the transcript, the notes provided below, or public facts about this issuer you are highly confident in. Never invent, estimate, or approximate a figure. If you cannot confirm an issuer-specific claim, ground the point in confirmed methodology or agency-posture knowledge instead — or drop it for a stronger one.

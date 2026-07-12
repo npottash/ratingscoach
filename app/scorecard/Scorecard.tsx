@@ -690,9 +690,19 @@ export function Scorecard({
             committee, based on the session.
           </p>
           <div className="mt-4 max-w-3xl rounded-lg border border-border bg-white p-6">
-            <p className="whitespace-pre-wrap text-sm leading-relaxed">
-              {output?.committee_memo ?? <Skeleton lines={5} />}
-            </p>
+            {output?.committee_memo ? (
+              <div className="space-y-4">
+                {memoParagraphs(output.committee_memo).map((para, i) => (
+                  <p key={i} className="text-sm leading-relaxed">
+                    {para}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm leading-relaxed">
+                <Skeleton lines={5} />
+              </p>
+            )}
           </div>
         </section>
 
@@ -1058,6 +1068,31 @@ function RealQuestionsCard({
       </form>
     </section>
   )
+}
+
+/**
+ * Break a committee memo into short paragraphs. Newer memos arrive with
+ * blank-line breaks; older ones are a single block, so group their
+ * sentences two at a time.
+ */
+function memoParagraphs(memo: string): string[] {
+  const explicit = memo
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+  if (explicit.length > 1) return explicit
+
+  const sentences = memo
+    .split(/(?<=[.!?])\s+(?=[A-Z"“])/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+  if (sentences.length <= 3) return [memo.trim()]
+
+  const paras: string[] = []
+  for (let i = 0; i < sentences.length; i += 2) {
+    paras.push(sentences.slice(i, i + 2).join(' '))
+  }
+  return paras
 }
 
 /** One action card in the Next steps grid: title, context, then the action. */
