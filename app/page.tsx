@@ -56,10 +56,11 @@ export default function Home() {
             Walk into your rating agency meeting prepared.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-            The Ratings Coach simulates an S&amp;P, Moody&apos;s, or Fitch credit
-            analyst meeting and pressure-tests your credit story before the
-            real one. Finish each session with a structured scorecard and a
-            focused prep list.
+            The Ratings Coach puts you across the table from a simulated
+            S&amp;P, Moody&apos;s, or Fitch analyst to pressure-test your credit
+            story before the real meeting &mdash; and sends you off with a
+            scorecard of your credit story&apos;s gaps, sharpened advocacy
+            arguments, and a briefing book for the real thing.
           </p>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link

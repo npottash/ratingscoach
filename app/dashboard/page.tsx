@@ -140,10 +140,12 @@ export default async function DashboardPage() {
 /* Readiness trajectory                                                      */
 /* ------------------------------------------------------------------------- */
 
+type TrendRun = { score: number; date: string }
+
 type TrendGroup = {
   issuer: string
   agency: string
-  scores: number[]
+  runs: TrendRun[]
 }
 
 function ProgressSection({ sessions }: { sessions: SessionRow[] }) {
@@ -153,11 +155,17 @@ function ProgressSection({ sessions }: { sessions: SessionRow[] }) {
     if (s.status !== 'completed' || s.overall_score == null) continue
     const agency = s.agency?.[0] ?? '—'
     const key = `${s.issuer_name}|${agency}`
-    const g = groups.get(key) ?? { issuer: s.issuer_name, agency, scores: [] }
-    g.scores.push(s.overall_score)
+    const g = groups.get(key) ?? { issuer: s.issuer_name, agency, runs: [] }
+    g.runs.push({
+      score: s.overall_score,
+      date: new Date(s.created_at).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      }),
+    })
     groups.set(key, g)
   }
-  const trends = [...groups.values()].filter((g) => g.scores.length >= 2)
+  const trends = [...groups.values()].filter((g) => g.runs.length >= 2)
   if (trends.length === 0) return null
 
   return (
@@ -165,15 +173,15 @@ function ProgressSection({ sessions }: { sessions: SessionRow[] }) {
       <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
         Readiness trajectory
       </h2>
-      <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-3 grid gap-4 lg:grid-cols-2">
         {trends.map((g) => {
-          const first = g.scores[0]
-          const latest = g.scores[g.scores.length - 1]
+          const first = g.runs[0].score
+          const latest = g.runs[g.runs.length - 1].score
           const delta = latest - first
           return (
             <div
               key={`${g.issuer}|${g.agency}`}
-              className="rounded-lg border border-border bg-white p-4"
+              className="rounded-lg border border-border bg-white p-5"
             >
               <div className="flex items-baseline justify-between gap-3">
                 <p className="truncate text-sm font-medium">
@@ -189,66 +197,55 @@ function ProgressSection({ sessions }: { sessions: SessionRow[] }) {
                   ].join(' ')}
                 >
                   {delta >= 0 ? '+' : ''}
-                  {delta.toFixed(1)}
+                  {delta.toFixed(1)} since first run
                 </span>
               </div>
-              <div className="mt-2 flex items-end justify-between gap-3">
-                <Sparkline scores={g.scores} />
-                <p className="text-sm text-muted">
-                  {first.toFixed(1)} →{' '}
-                  <span className="font-semibold text-foreground">
-                    {latest.toFixed(1)}
-                  </span>
-                  <span className="text-xs"> /10</span>
-                </p>
+              <div className="mt-4 flex items-end gap-3">
+                {g.runs.map((r, i) => {
+                  const isLatest = i === g.runs.length - 1
+                  return (
+                    <div
+                      key={i}
+                      className="flex min-w-0 flex-1 flex-col items-center gap-1.5"
+                    >
+                      <span
+                        className={
+                          isLatest
+                            ? 'text-xs font-semibold text-foreground'
+                            : 'text-xs text-muted'
+                        }
+                      >
+                        {r.score.toFixed(1)}
+                      </span>
+                      <div className="flex h-24 w-full items-end overflow-hidden rounded-md bg-slate-100">
+                        <div
+                          className={[
+                            'w-full rounded-t-sm',
+                            isLatest ? 'bg-brand' : 'bg-brand/25',
+                          ].join(' ')}
+                          style={{
+                            height: `${Math.max(
+                              (Math.min(Math.max(r.score, 0), 10) / 10) * 100,
+                              4
+                            )}%`,
+                          }}
+                        />
+                      </div>
+                      <span className="w-full truncate text-center text-[11px] text-muted">
+                        {r.date}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
-              <p className="mt-1 text-xs text-muted">
-                {g.scores.length} runs
+              <p className="mt-2 text-xs text-muted">
+                {g.runs.length} runs · scored out of 10
               </p>
             </div>
           )
         })}
       </div>
     </section>
-  )
-}
-
-function Sparkline({ scores }: { scores: number[] }) {
-  const w = 140
-  const h = 36
-  const pad = 3
-  const step = (w - pad * 2) / Math.max(scores.length - 1, 1)
-  const y = (v: number) => h - pad - (Math.min(Math.max(v, 0), 10) / 10) * (h - pad * 2)
-  const points = scores
-    .map((v, i) => `${(pad + i * step).toFixed(1)},${y(v).toFixed(1)}`)
-    .join(' ')
-  return (
-    <svg
-      width={w}
-      height={h}
-      viewBox={`0 0 ${w} ${h}`}
-      aria-hidden
-      className="shrink-0"
-    >
-      <polyline
-        points={points}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-brand"
-      />
-      {scores.map((v, i) => (
-        <circle
-          key={i}
-          cx={pad + i * step}
-          cy={y(v)}
-          r="2.5"
-          className="fill-brand"
-        />
-      ))}
-    </svg>
   )
 }
 

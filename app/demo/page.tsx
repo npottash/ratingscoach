@@ -50,6 +50,26 @@ export default function DemoPage() {
           <DemoPlayer />
         )}
 
+        {/* Animated "How it works" explainer */}
+        <section className="flex flex-col gap-4">
+          <header className="text-center">
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+              How it works
+            </h2>
+            <p className="mx-auto mt-1 max-w-2xl text-muted">
+              A one-minute animated walkthrough of a session &mdash; from
+              intake, through the simulated meeting, to your scorecard and
+              briefing book.
+            </p>
+          </header>
+          <video
+            src="/demo/how-it-works.mp4"
+            controls
+            playsInline
+            className="aspect-video w-full rounded-lg border border-border bg-black shadow-sm"
+          />
+        </section>
+
         <footer className="text-center">
           <Link
             href="/landing#request-access"
