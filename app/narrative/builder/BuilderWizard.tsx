@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { ProcessGuide } from '@/components/ProcessGuide'
 import type { Agency, BuilderPromptSet } from '@/lib/types'
 
 export type BuilderSession = {
@@ -14,6 +15,7 @@ export type BuilderSession = {
   current_rating: string
   outlook: string
   agency: Agency[]
+  meeting_date: string | null
   meeting_type: string
 }
 
@@ -226,14 +228,24 @@ export function BuilderWizard({ session }: { session: BuilderSession }) {
 
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-10">
-      <header className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Build your credit story
-        </h1>
-        <p className="mt-2 text-muted">
-          Answer what you can in bullet points or rough notes — the draft does
-          the prose. Skip anything you&apos;re not ready for.
-        </p>
+      <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight">
+            Build your credit story
+          </h1>
+          <p className="mt-2 text-muted">
+            Answer what you can in bullet points or rough notes — the draft
+            does the prose. Skip anything you&apos;re not ready for.
+          </p>
+        </div>
+        {session.meeting_type === 'New Rating Request' && (
+          <div className="w-full sm:w-64">
+            <ProcessGuide
+              sessionId={session.id}
+              meetingDate={session.meeting_date}
+            />
+          </div>
+        )}
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[240px_1fr]">

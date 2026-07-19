@@ -9,6 +9,7 @@ import {
   AgencyFitPanel,
   type AgencyFitRequest,
 } from '@/components/AgencyFitPanel'
+import { ProcessGuide } from '@/components/ProcessGuide'
 import { switchAgency } from './actions'
 
 export type SessionSummary = {
@@ -320,6 +321,13 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
               </div>
             </dl>
           </section>
+
+          {session.meeting_type === 'New Rating Request' && (
+            <ProcessGuide
+              sessionId={session.id}
+              meetingDate={session.meeting_date}
+            />
+          )}
 
           {session.meeting_type === 'New Rating Request' && (
             <section className="rounded-lg border border-border bg-white p-5">
