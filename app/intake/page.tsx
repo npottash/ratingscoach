@@ -3,6 +3,10 @@
 import { useActionState, useState } from 'react'
 import { StepIndicator } from '@/components/StepIndicator'
 import { PageHeader } from '@/components/PageHeader'
+import {
+  AgencyFitPanel,
+  type AgencyFitRequest,
+} from '@/components/AgencyFitPanel'
 import { submitIntake, type IntakeFormState } from './actions'
 import type { Agency } from '@/lib/types'
 
@@ -131,9 +135,36 @@ const labelClass = 'flex flex-col gap-1.5 text-sm font-medium text-foreground'
 export default function IntakePage() {
   const [agency, setAgency] = useState<Agency>('S&P')
   const [sector, setSector] = useState<string>('')
+  const [meetingType, setMeetingType] = useState<string>('')
+  const [fitRequest, setFitRequest] = useState<AgencyFitRequest | null>(null)
+  const [fitHint, setFitHint] = useState<string | null>(null)
   const [state, action, pending] = useActionState(submitIntake, initialState)
 
   const subTypeSuggestions = SUB_TYPES_BY_SECTOR[sector] ?? []
+
+  function openAgencyFit(e: React.MouseEvent<HTMLButtonElement>) {
+    const form = e.currentTarget.form
+    if (!sector || !form) {
+      setFitHint('Select a sector first — the comparison is sector-specific.')
+      return
+    }
+    setFitHint(null)
+    const fd = new FormData(form)
+    const str = (name: string) => String(fd.get(name) ?? '').trim() || null
+    setFitRequest({
+      context: {
+        issuer_name: str('issuer_name'),
+        sector,
+        industry: str('industry'),
+        sub_type: str('sub_type'),
+        current_rating: str('current_rating'),
+        outlook: str('outlook'),
+        ticker: str('ticker'),
+        meeting_type: meetingType || null,
+      },
+      current_agency: agency,
+    })
+  }
 
   return (
     <>
@@ -237,6 +268,7 @@ export default function IntakePage() {
                 name="meeting_type"
                 required
                 defaultValue=""
+                onChange={(e) => setMeetingType(e.target.value)}
                 className={inputClass}
               >
                 <option value="" disabled>
@@ -278,6 +310,22 @@ export default function IntakePage() {
             <span className="text-xs font-normal text-muted">
               Select the agency you&apos;re preparing for.
             </span>
+            {meetingType === 'New Rating Request' && (
+              <div className="mt-1">
+                <button
+                  type="button"
+                  onClick={openAgencyFit}
+                  className="rounded-md border border-brand/40 bg-brand/5 px-4 py-2 text-sm font-medium text-brand transition hover:border-brand"
+                >
+                  Not sure? Compare agencies for your profile
+                </button>
+                {fitHint && (
+                  <p className="mt-1.5 text-xs font-normal text-amber-700">
+                    {fitHint}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
@@ -323,6 +371,16 @@ export default function IntakePage() {
           </div>
         </form>
       </main>
+
+      {fitRequest && (
+        <AgencyFitPanel
+          request={fitRequest}
+          currentAgency={agency}
+          pickLabel={(a) => `Prepare for ${a}`}
+          onPick={(a) => setAgency(a)}
+          onClose={() => setFitRequest(null)}
+        />
+      )}
     </>
   )
 }

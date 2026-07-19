@@ -5,10 +5,21 @@ import { useRouter } from 'next/navigation'
 import { useRef, useState } from 'react'
 import type { Agency } from '@/lib/types'
 import { ACCEPTED_EXTENSIONS, extractTextFromFile } from '@/lib/extractText'
+import {
+  AgencyFitPanel,
+  type AgencyFitRequest,
+} from '@/components/AgencyFitPanel'
+import { switchAgency } from './actions'
 
 export type SessionSummary = {
   id: string
   issuer_name: string
+  ticker: string | null
+  sector: string
+  industry: string | null
+  sub_type: string | null
+  current_rating: string
+  outlook: string
   agency: Agency[]
   meeting_date: string | null
   meeting_type: string | null
@@ -30,7 +41,37 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
   const [extracting, setExtracting] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [uploadedName, setUploadedName] = useState<string | null>(null)
+  const [fitRequest, setFitRequest] = useState<AgencyFitRequest | null>(null)
+  const [fitError, setFitError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  function openAgencyFit() {
+    setFitError(null)
+    setFitRequest({
+      context: {
+        issuer_name: session.issuer_name,
+        sector: session.sector,
+        industry: session.industry,
+        sub_type: session.sub_type,
+        current_rating: session.current_rating,
+        outlook: session.outlook,
+        ticker: session.ticker,
+        meeting_type: session.meeting_type,
+      },
+      narrative: text,
+      current_agency: session.agency[0],
+    })
+  }
+
+  async function handleAgencySwitch(agency: Agency) {
+    const { error } = await switchAgency(session.id, agency)
+    if (error) {
+      setFitError(error)
+      throw new Error(error)
+    }
+    // Re-render the server component so the session panel shows the new agency.
+    router.refresh()
+  }
 
   async function extractPdfViaApi(file: File): Promise<string> {
     const buf = await file.arrayBuffer()
@@ -280,6 +321,34 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
             </dl>
           </section>
 
+          {session.meeting_type === 'New Rating Request' && (
+            <section className="rounded-lg border border-border bg-white p-5">
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
+                Agency fit
+              </h2>
+              <p className="mt-2 text-sm text-muted">
+                Once your story is in, check which agency&apos;s approach fits
+                it best — and switch before you simulate.
+              </p>
+              <button
+                type="button"
+                onClick={openAgencyFit}
+                disabled={!text.trim()}
+                className="mt-3 w-full rounded-md border border-brand/40 bg-brand/5 px-4 py-2 text-sm font-medium text-brand transition hover:border-brand disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Check agency fit against your story
+              </button>
+              {!text.trim() && (
+                <p className="mt-1.5 text-xs text-muted">
+                  Add your narrative first.
+                </p>
+              )}
+              {fitError && (
+                <p className="mt-1.5 text-xs text-red-600">{fitError}</p>
+              )}
+            </section>
+          )}
+
           <section className="rounded-lg border border-border bg-surface p-5">
             <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
               Strong narratives
@@ -295,6 +364,16 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
           </section>
         </aside>
       </div>
+
+      {fitRequest && (
+        <AgencyFitPanel
+          request={fitRequest}
+          currentAgency={session.agency[0]}
+          pickLabel={(a) => `Switch to ${a}`}
+          onPick={handleAgencySwitch}
+          onClose={() => setFitRequest(null)}
+        />
+      )}
     </main>
   )
 }

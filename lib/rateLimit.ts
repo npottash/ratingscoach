@@ -9,6 +9,7 @@ const DEFAULT_LIMITS: Record<string, number> = {
   scorecard: 40, // scorecard generations/day — full-transcript Claude call
   briefing: 20, // briefing books/day — the largest single generation
   builder: 20, // story-builder calls/day — prompt set + assembly each count once
+  agency_fit: 10, // agency comparisons/day — three-agency digest + optional narrative
 }
 
 function limitFor(endpoint: string): number {
@@ -30,7 +31,14 @@ function limitFor(endpoint: string): number {
 export async function checkRateLimit(
   supabase: SupabaseClient,
   userId: string,
-  endpoint: 'simulate' | 'coach' | 'extract' | 'scorecard' | 'briefing' | 'builder'
+  endpoint:
+    | 'simulate'
+    | 'coach'
+    | 'extract'
+    | 'scorecard'
+    | 'briefing'
+    | 'builder'
+    | 'agency_fit'
 ): Promise<boolean> {
   const { data, error } = await supabase.rpc('increment_api_usage', {
     p_user_id: userId,

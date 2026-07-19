@@ -48,6 +48,24 @@ export type BuilderPromptSet = {
   factors: BuilderFactorPrompts[]
 }
 
+/** One agency's entry in the agency-fit comparison. */
+export type AgencyFitEntry = {
+  agency: Agency
+  methodology_take: string
+  constructive_signals: string[]
+  watchouts: string[]
+  basis: 'tracked_intel' | 'published_criteria'
+}
+
+/** The agency-fit analysis returned by /api/agency-fit. */
+export type AgencyFitOutput = {
+  ranking: Agency[]
+  recommendation_rationale: string
+  comparison: AgencyFitEntry[]
+  /** True when generated without a credit story (sector-level only). */
+  preliminary: boolean
+}
+
 export type IntakeInput = Omit<
   Session,
   | 'id'
