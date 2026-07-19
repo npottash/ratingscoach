@@ -35,6 +35,19 @@ export type BriefingOutput = {
   generated_at: string
 }
 
+/** One factor's guided prompts in the credit story builder. */
+export type BuilderFactorPrompts = {
+  factor: string
+  explainer: string
+  prompts: string[]
+}
+
+/** The generated prompt set the builder wizard walks through. */
+export type BuilderPromptSet = {
+  debut_prompts?: string[]
+  factors: BuilderFactorPrompts[]
+}
+
 export type IntakeInput = Omit<
   Session,
   | 'id'

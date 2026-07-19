@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useRef, useState } from 'react'
 import type { Agency } from '@/lib/types'
@@ -10,6 +11,7 @@ export type SessionSummary = {
   issuer_name: string
   agency: Agency[]
   meeting_date: string | null
+  meeting_type: string | null
 }
 
 const TIPS = [
@@ -128,9 +130,29 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
         </p>
       </header>
 
+      {session.meeting_type === 'New Rating Request' && (
+        <Link
+          href={`/narrative/builder?session_id=${session.id}`}
+          className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-brand/40 bg-brand/5 px-5 py-4 transition hover:border-brand"
+        >
+          <span>
+            <span className="block text-sm font-semibold text-foreground">
+              First agency meeting? Most debut issuers start here.
+            </span>
+            <span className="mt-0.5 block text-sm text-muted">
+              No prepared story yet — build one factor by factor with guided
+              prompts tailored to your sector and agency.
+            </span>
+          </span>
+          <span className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white">
+            Build it with me →
+          </span>
+        </Link>
+      )}
+
       <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="flex gap-2 border-b border-border">
+          <div className="flex items-center gap-2 border-b border-border">
             <TabButton active={tab === 'paste'} onClick={() => setTab('paste')}>
               Paste text
             </TabButton>
@@ -140,6 +162,14 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
             >
               Upload file
             </TabButton>
+            {session.meeting_type !== 'New Rating Request' && (
+              <Link
+                href={`/narrative/builder?session_id=${session.id}`}
+                className="ml-auto pb-2 text-sm font-medium text-brand hover:text-brand-hover"
+              >
+                No story yet? Build it with me →
+              </Link>
+            )}
           </div>
 
           {tab === 'paste' ? (

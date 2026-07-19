@@ -2,9 +2,9 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { StepIndicator } from '@/components/StepIndicator'
 import { PageHeader } from '@/components/PageHeader'
-import { NarrativeForm, type SessionSummary } from './NarrativeForm'
+import { BuilderWizard, type BuilderSession } from './BuilderWizard'
 
-export default async function NarrativePage({
+export default async function BuilderPage({
   searchParams,
 }: {
   searchParams: Promise<{ session_id?: string }>
@@ -15,9 +15,11 @@ export default async function NarrativePage({
   const supabase = await createClient()
   const { data: session } = await supabase
     .from('sessions')
-    .select('id, issuer_name, agency, meeting_date, meeting_type')
+    .select(
+      'id, issuer_name, ticker, sector, industry, sub_type, current_rating, outlook, agency, meeting_type'
+    )
     .eq('id', session_id)
-    .single<SessionSummary>()
+    .single<BuilderSession>()
 
   if (!session) redirect('/intake')
 
@@ -25,7 +27,7 @@ export default async function NarrativePage({
     <>
       <PageHeader />
       <StepIndicator current={2} sessionId={session.id} />
-      <NarrativeForm session={session} />
+      <BuilderWizard session={session} />
     </>
   )
 }
