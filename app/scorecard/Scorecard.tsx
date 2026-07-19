@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { CommitmentsCard } from './CommitmentsCard'
 import { saveRealQuestions } from './actions'
 import type { ViewId } from './views'
-import type { Agency, BriefingOutput } from '@/lib/types'
+import type { Agency, AgencyFitOutput, BriefingOutput } from '@/lib/types'
 
 export type ScorecardSession = {
   id: string
@@ -60,6 +60,8 @@ type ScorecardOutput = {
   }>
   // Present once a briefing book has been generated for this run.
   briefing?: BriefingOutput
+  // Present once a second-rating receptiveness assessment has been generated.
+  second_rating?: AgencyFitOutput & { generated_at: string }
 }
 
 const AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
@@ -95,6 +97,86 @@ export function Scorecard({
   )
   const [briefingBusy, setBriefingBusy] = useState(false)
   const [briefingError, setBriefingError] = useState<string | null>(null)
+  const [secondRating, setSecondRating] = useState<
+    (AgencyFitOutput & { generated_at: string }) | null
+  >(session.scorecard_output?.second_rating ?? null)
+  const [secondRatingBusy, setSecondRatingBusy] = useState(false)
+  const [secondRatingError, setSecondRatingError] = useState<string | null>(
+    null
+  )
+
+  async function handleSecondRating() {
+    if (!output || secondRatingBusy) return
+    setSecondRatingBusy(true)
+    setSecondRatingError(null)
+    try {
+      // Derived results only — flags, gaps, actions. The transcript and
+      // narrative stay client-side; the narrative rides along only while the
+      // fresh post-simulation tab still holds it.
+      const scorecardSummary = [
+        session.overall_score != null
+          ? `Overall readiness score: ${session.overall_score}/10.`
+          : '',
+        ...output.factor_analyses.map(
+          (f) => `${f.factor} — flagged: ${f.flagged}`
+        ),
+        output.priority_actions.length
+          ? `Priority actions: ${output.priority_actions.join('; ')}`
+          : '',
+      ]
+        .filter(Boolean)
+        .join('\n')
+      const res = await fetch('/api/agency-fit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          purpose: 'second_rating',
+          context: {
+            issuer_name: session.issuer_name,
+            sector: session.sector,
+            industry: session.industry,
+            sub_type: session.sub_type,
+            current_rating: session.current_rating,
+            outlook: session.outlook,
+            ticker: session.ticker,
+            meeting_type: session.meeting_type,
+          },
+          current_agency: agency,
+          narrative:
+            sessionStorage.getItem(`narrative:${session.id}`) ?? undefined,
+          scorecard_summary: scorecardSummary,
+        }),
+      })
+      if (!res.ok) {
+        const { error: msg } = await res.json().catch(() => ({ error: '' }))
+        throw new Error(msg || `Request failed (${res.status})`)
+      }
+      const fit = (await res.json()) as AgencyFitOutput
+      const stamped = { ...fit, generated_at: new Date().toISOString() }
+      setSecondRating(stamped)
+      try {
+        const supabase = createClient()
+        await supabase
+          .from('sessions')
+          .update({
+            scorecard_output: {
+              ...output,
+              ...(briefing ? { briefing } : {}),
+              second_rating: stamped,
+            },
+          })
+          .eq('id', session.id)
+      } catch {
+        // Non-fatal — the assessment still renders this session.
+      }
+    } catch (e) {
+      setSecondRatingError(
+        e instanceof Error ? e.message : 'Assessment failed'
+      )
+    } finally {
+      setSecondRatingBusy(false)
+    }
+  }
 
   async function handleGenerateBriefing() {
     if (!results || !output || briefingBusy) return
@@ -140,7 +222,13 @@ export function Scorecard({
         const supabase = createClient()
         await supabase
           .from('sessions')
-          .update({ scorecard_output: { ...output, briefing: b } })
+          .update({
+            scorecard_output: {
+              ...output,
+              briefing: b,
+              ...(secondRating ? { second_rating: secondRating } : {}),
+            },
+          })
           .eq('id', session.id)
       } catch {
         // Non-fatal — the briefing still renders this session.
@@ -947,7 +1035,112 @@ export function Scorecard({
                 ))}
               </div>
             </NextStepCard>
+
+            <NextStepCard
+              title="Considering a second rating?"
+              description={`How receptive the other agencies would be to rating ${session.issuer_name} — and whether adding one makes sense.`}
+            >
+              <button
+                type="button"
+                onClick={handleSecondRating}
+                disabled={!output || secondRatingBusy}
+                title={
+                  output
+                    ? undefined
+                    : 'Available once the scorecard finishes generating'
+                }
+                className="rounded-md border border-border bg-white px-4 py-2 text-sm font-medium hover:border-brand hover:text-brand disabled:opacity-50 disabled:hover:border-border disabled:hover:text-foreground"
+              >
+                {secondRatingBusy
+                  ? 'Assessing…'
+                  : secondRating
+                    ? 'Refresh assessment'
+                    : 'Assess receptiveness'}
+              </button>
+              {secondRatingError && (
+                <p className="text-xs text-red-600">{secondRatingError}</p>
+              )}
+            </NextStepCard>
           </div>
+
+          {secondRating && (
+            <div className="mt-6 rounded-lg border border-border bg-white p-5">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="font-semibold">
+                  Second-rating receptiveness
+                  <span className="ml-2 text-sm font-normal text-muted">
+                    beyond {agency}
+                  </span>
+                </h3>
+                <span className="text-xs text-muted">
+                  Generated{' '}
+                  {new Date(secondRating.generated_at).toLocaleDateString()}
+                </span>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-foreground">
+                {secondRating.recommendation_rationale}
+              </p>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                {secondRating.ranking.map((a, i) => {
+                  const entry = secondRating.comparison.find(
+                    (c) => c.agency === a
+                  )
+                  if (!entry) return null
+                  return (
+                    <div
+                      key={a}
+                      className={[
+                        'rounded-lg border p-4',
+                        i === 0 ? 'border-brand/50' : 'border-border',
+                      ].join(' ')}
+                    >
+                      <div className="flex items-baseline justify-between gap-2">
+                        <p className="font-semibold">{a}</p>
+                        <span className="text-xs text-muted">
+                          {i === 0 ? 'More receptive' : `#${i + 1}`}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm leading-6">
+                        {entry.methodology_take}
+                      </p>
+                      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                        Constructive
+                      </p>
+                      <ul className="mt-1 space-y-1 text-sm">
+                        {entry.constructive_signals.map((s) => (
+                          <li key={s} className="flex gap-2">
+                            <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-emerald-500" />
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-amber-700">
+                        Watch-outs
+                      </p>
+                      <ul className="mt-1 space-y-1 text-sm">
+                        {entry.watchouts.map((s) => (
+                          <li key={s} className="flex gap-2">
+                            <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-amber-500" />
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-3 text-xs text-muted">
+                        {entry.basis === 'tracked_intel'
+                          ? 'Based on our tracked agency intel'
+                          : 'Based on published criteria'}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+              <p className="mt-4 text-xs leading-5 text-muted">
+                Directional receptiveness assessment only — not a prediction of
+                the rating any agency would assign. Whether to add a second
+                rating is a strategic call; our advisory sessions cover it.
+              </p>
+            </div>
+          )}
         </section>
 
         {/* Feedback capture lives on the return visit (dashboard → saved
