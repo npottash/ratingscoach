@@ -35,6 +35,12 @@ type SessionContext = {
   issuer_name: string
   ticker?: string | null
   meeting_type?: string | null
+  transaction_context?: {
+    transaction_type: string | null
+    size: string | null
+    financing_mix: string | null
+    expected_close: string | null
+  } | null
 }
 
 type SimulateBody = {
@@ -156,7 +162,10 @@ ${sections.join('\n\n')}`
  * scratch. Old sessions without a meeting_type get no block (update-style
  * default behavior).
  */
-function meetingFocusBlock(meetingType: string | null | undefined): string {
+function meetingFocusBlock(
+  meetingType: string | null | undefined,
+  txn?: SessionContext['transaction_context']
+): string {
   switch (meetingType) {
     case 'Annual Review':
       return `MEETING TYPE: ANNUAL REVIEW (update meeting)
@@ -164,9 +173,23 @@ You have covered this issuer before. Focus on what has CHANGED: year-over-year m
     case 'New Rating Request':
       return `MEETING TYPE: NEW RATING REQUEST (first-time issuer meeting)
 This issuer has no rating history with you. Focus on UNDERSTANDING: how the business model works and makes money, the credit risks inherent to this type of company, and your agency's focus areas for the sector. You are establishing the baseline — there is no prior year to compare against, so avoid update-style "what changed" questions and dig into fundamentals, structure, competitive position, and management quality instead.`
-    case 'Transaction Update':
+    case 'Transaction Update': {
+      const details = txn
+        ? [
+            txn.transaction_type ? `type: ${txn.transaction_type}` : '',
+            txn.size ? `approximate size: ${txn.size}` : '',
+            txn.financing_mix ? `financing: ${txn.financing_mix}` : '',
+            txn.expected_close ? `expected close: ${txn.expected_close}` : '',
+          ]
+            .filter(Boolean)
+            .join('; ')
+        : ''
       return `MEETING TYPE: TRANSACTION UPDATE
-This meeting exists because of a specific transaction or event. Prioritize the transaction: its rationale, financing and structure, and its credit impact — then material changes in the broader credit story since the last review, including relevant current events.`
+This meeting exists because of a specific transaction or event${
+        details ? ` (${details})` : ''
+      }. Prioritize the transaction: its rationale, financing and structure, and its credit impact — then material changes in the broader credit story since the last review, including relevant current events.
+PRO FORMA DISCIPLINE: in a transaction meeting you need the pro forma bridge — standalone versus pro forma leverage, capital, and liquidity, the path back to target metrics with a timeframe, and the assumptions behind it. Ask for it where the factor is affected. Qualitative-only impact answers ("accretive over time", "manageable leverage impact") without numbers are weak answers — say what quantification you need. Where financing structure choices matter to the credit (equity content, prepayable debt, bridge takeout plans), probe them.`
+    }
     default:
       return ''
   }
@@ -229,7 +252,7 @@ ${args.ctx.sub_type ? `- Sub-type: ${args.ctx.sub_type}` : ''}
 - Current rating: ${args.ctx.current_rating}
 - Outlook: ${args.ctx.outlook}
 
-${meetingFocusBlock(args.ctx.meeting_type)}
+${meetingFocusBlock(args.ctx.meeting_type, args.ctx.transaction_context)}
 
 ${commitmentsBlock}
 

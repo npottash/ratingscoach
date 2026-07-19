@@ -6,7 +6,12 @@ import { createClient } from '@/lib/supabase/client'
 import { CommitmentsCard } from './CommitmentsCard'
 import { saveRealQuestions } from './actions'
 import type { ViewId } from './views'
-import type { Agency, AgencyFitOutput, BriefingOutput } from '@/lib/types'
+import type {
+  Agency,
+  AgencyFitOutput,
+  BriefingOutput,
+  TransactionContext,
+} from '@/lib/types'
 
 export type ScorecardSession = {
   id: string
@@ -26,6 +31,7 @@ export type ScorecardSession = {
   // Persisted scorecard for completed runs. Optional: rows created before
   // the migration (or before this feature) won't have it.
   scorecard_output?: ScorecardOutput | null
+  transaction_context?: TransactionContext | null
 }
 
 type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
@@ -207,6 +213,7 @@ export function Scorecard({
             ticker: session.ticker,
             meeting_type: session.meeting_type,
             meeting_date: session.meeting_date,
+            transaction_context: session.transaction_context,
           },
           advocacy_points: output.advocacy_points,
           priority_actions: output.priority_actions,
@@ -304,6 +311,7 @@ export function Scorecard({
               ticker: session.ticker,
               meeting_type: session.meeting_type,
               meeting_date: session.meeting_date,
+              transaction_context: session.transaction_context,
             },
           }),
         })
@@ -1153,6 +1161,14 @@ export function Scorecard({
             }
           >
             <h2 className="text-lg font-semibold">After the meeting</h2>
+            {session.meeting_type === 'Transaction Update' && (
+              <p className="mt-2 max-w-2xl text-sm text-muted">
+                Transaction meetings are where commitments get made — the
+                deleveraging path, the buyback pause, the target metrics. Log
+                them below: the agency will hold you to them at every review
+                from here, and so will your next simulation.
+              </p>
+            )}
             <div className="mt-4 flex max-w-2xl flex-col gap-6">
               <RealQuestionsCard
                 sessionId={session.id}

@@ -54,6 +54,18 @@ const MEETING_TYPES = [
   'Transaction Update',
 ] as const
 
+const TRANSACTION_TYPES = [
+  'Acquisition',
+  'Merger',
+  'Divestiture / Asset Sale',
+  'Debt Issuance / Refinancing',
+  'Dividend Recapitalization',
+  'Share Buyback',
+  'Equity / Capital Raise',
+  'LBO / Take-Private',
+  'Other',
+] as const
+
 const CORPORATE_INDUSTRIES = [
   'Aerospace, Defense & Industrials',
   'Auto',
@@ -282,6 +294,58 @@ export default function IntakePage() {
               </select>
             </label>
           </div>
+
+          {meetingType === 'Transaction Update' && (
+            <fieldset className="rounded-lg border border-brand/40 bg-brand/5 p-4">
+              <legend className="px-1 text-sm font-medium text-foreground">
+                About the transaction{' '}
+                <span className="font-normal text-muted">
+                  (optional — sharpens the simulation)
+                </span>
+              </legend>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <label className={labelClass}>
+                  <span>Transaction type</span>
+                  <select
+                    name="transaction_type"
+                    defaultValue=""
+                    className={inputClass}
+                  >
+                    <option value="">Select type</option>
+                    {TRANSACTION_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className={labelClass}>
+                  <span>Approximate size</span>
+                  <input
+                    name="transaction_size"
+                    placeholder="e.g. $750m"
+                    className={inputClass}
+                  />
+                </label>
+                <label className={labelClass}>
+                  <span>Financing mix</span>
+                  <input
+                    name="transaction_financing_mix"
+                    placeholder="e.g. 60% new debt / 40% cash on hand"
+                    className={inputClass}
+                  />
+                </label>
+                <label className={labelClass}>
+                  <span>Expected close</span>
+                  <input
+                    name="transaction_expected_close"
+                    placeholder="e.g. Q4 2026"
+                    className={inputClass}
+                  />
+                </label>
+              </div>
+            </fieldset>
+          )}
 
           <div className="flex flex-col gap-1.5 text-sm font-medium text-foreground">
             <span>Agency</span>

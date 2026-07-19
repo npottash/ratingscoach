@@ -40,6 +40,12 @@ type ScorecardBody = {
     ticker?: string | null
     meeting_type?: string | null
     meeting_date?: string | null
+    transaction_context?: {
+      transaction_type: string | null
+      size: string | null
+      financing_mix: string | null
+      expected_close: string | null
+    } | null
   }
 }
 
@@ -330,6 +336,25 @@ export async function POST(request: Request) {
 You will now produce a structured scorecard that the issuer's CFO / IR team will read to prepare for the real meeting.${
     ctx.meeting_type
       ? `\n\nThe simulated meeting type was: ${ctx.meeting_type}. Weigh readiness accordingly — for a New Rating Request, how well the issuer explained the business and its inherent credit risks matters most; for an Annual Review or Transaction Update, year-over-year movement, current events, and progress on known concerns matter most.`
+      : ''
+  }${
+    ctx.meeting_type === 'Transaction Update'
+      ? `${
+          ctx.transaction_context
+            ? `\nTransaction on the table: ${[
+                ctx.transaction_context.transaction_type,
+                ctx.transaction_context.size,
+                ctx.transaction_context.financing_mix
+                  ? `financed ${ctx.transaction_context.financing_mix}`
+                  : '',
+                ctx.transaction_context.expected_close
+                  ? `closing ${ctx.transaction_context.expected_close}`
+                  : '',
+              ]
+                .filter(Boolean)
+                .join(', ')}.`
+            : ''
+        }\nPRO FORMA BAR: in a transaction meeting, the pro forma bridge is table stakes — standalone vs. pro forma leverage/capital/liquidity, the path back to target metrics with a timeframe, and the assumptions behind it. If the issuer never quantified the pro forma impact on an affected factor, flag that as the material weakness on that factor, and make completing the bridge a priority action. Qualitative-only impact language ("accretive", "manageable") does not meet the bar.`
       : ''
   }${runwayLine}
 

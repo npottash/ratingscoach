@@ -36,6 +36,22 @@ export async function submitIntake(
     String(formData.get('meeting_date') ?? '').trim() || null
   const meeting_type = String(formData.get('meeting_type') ?? '').trim()
 
+  // Deal details, Transaction Update only. Null when absent so non-transaction
+  // sessions (and empty forms) store nothing.
+  let transaction_context: Record<string, string | null> | null = null
+  if (meeting_type === 'Transaction Update') {
+    const t = {
+      transaction_type:
+        String(formData.get('transaction_type') ?? '').trim() || null,
+      size: String(formData.get('transaction_size') ?? '').trim() || null,
+      financing_mix:
+        String(formData.get('transaction_financing_mix') ?? '').trim() || null,
+      expected_close:
+        String(formData.get('transaction_expected_close') ?? '').trim() || null,
+    }
+    if (Object.values(t).some(Boolean)) transaction_context = t
+  }
+
   if (
     !issuer_name ||
     !sector ||
@@ -61,6 +77,7 @@ export async function submitIntake(
       agency,
       meeting_date,
       meeting_type,
+      transaction_context,
       status: 'intake',
     })
     .select('id')

@@ -3,7 +3,11 @@
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ProcessGuide } from '@/components/ProcessGuide'
-import type { Agency, BuilderPromptSet } from '@/lib/types'
+import type {
+  Agency,
+  BuilderPromptSet,
+  TransactionContext,
+} from '@/lib/types'
 
 export type BuilderSession = {
   id: string
@@ -17,9 +21,11 @@ export type BuilderSession = {
   agency: Agency[]
   meeting_date: string | null
   meeting_type: string
+  transaction_context?: TransactionContext | null
 }
 
 const DEBUT_TITLE = 'Debut context'
+const TXN_TITLE = 'The transaction'
 
 // Answers keyed by `${stepTitle}|${promptIndex}`. Draft state lives only in
 // this browser (localStorage) — same privacy promise as the paste flow.
@@ -71,6 +77,7 @@ export function BuilderWizard({ session }: { session: BuilderSession }) {
       agency,
       ticker: session.ticker,
       meeting_type: session.meeting_type,
+      transaction_context: session.transaction_context,
     }),
     [session, agency]
   )
@@ -112,6 +119,16 @@ export function BuilderWizard({ session }: { session: BuilderSession }) {
                 explainer:
                   'Before the factors: the questions every first-time issuer gets about the decision to seek a rating.',
                 prompts: draft.promptSet.debut_prompts,
+              },
+            ]
+          : []),
+        ...(draft.promptSet.transaction_prompts?.length
+          ? [
+              {
+                title: TXN_TITLE,
+                explainer:
+                  'The meeting opens here: rationale, financing, and the pro forma bridge. Numbers beat adjectives.',
+                prompts: draft.promptSet.transaction_prompts,
               },
             ]
           : []),
@@ -243,6 +260,15 @@ export function BuilderWizard({ session }: { session: BuilderSession }) {
             <ProcessGuide
               sessionId={session.id}
               meetingDate={session.meeting_date}
+            />
+          </div>
+        )}
+        {session.meeting_type === 'Transaction Update' && (
+          <div className="w-full sm:w-64">
+            <ProcessGuide
+              sessionId={session.id}
+              meetingDate={session.meeting_date}
+              variant="transaction"
             />
           </div>
         )}

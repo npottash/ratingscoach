@@ -329,6 +329,14 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
             />
           )}
 
+          {session.meeting_type === 'Transaction Update' && (
+            <ProcessGuide
+              sessionId={session.id}
+              meetingDate={session.meeting_date}
+              variant="transaction"
+            />
+          )}
+
           {session.meeting_type === 'New Rating Request' && (
             <section className="rounded-lg border border-border bg-white p-5">
               <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">

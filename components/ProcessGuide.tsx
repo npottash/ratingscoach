@@ -11,7 +11,62 @@ type Stage = {
   links?: Array<{ label: string; href: string }>
 }
 
-function stagesFor(sessionId: string): Stage[] {
+function transactionStages(sessionId: string): Stage[] {
+  return [
+    {
+      title: 'Confidential pre-briefing',
+      timing: 'Before any public announcement',
+      body: 'Brief your lead analyst under confidentiality ahead of the announcement — agencies have established MNPI processes for exactly this. The cardinal sin is the agency reading your deal in the press first.',
+      points: [
+        'Agree timing and logistics with the analyst early; a surprised agency is a defensive agency.',
+      ],
+    },
+    {
+      title: 'Prepare the transaction story',
+      timing: 'The days before the meeting',
+      body: 'Rationale, financing structure and why it was chosen, and the pro forma bridge — standalone versus pro forma metrics with the path back to targets. Pressure-test it before the real conversation.',
+      links: [
+        {
+          label: 'Build the transaction story',
+          href: `/narrative/builder?session_id=${sessionId}`,
+        },
+        {
+          label: 'Run a simulated meeting',
+          href: `/narrative?session_id=${sessionId}`,
+        },
+      ],
+    },
+    {
+      title: 'The transaction meeting',
+      timing: 'Usually right around announcement',
+      body: 'Lead with the pro forma bridge — it is the first thing the analyst needs. Quantify; adjectives ("accretive", "manageable") read as unprepared.',
+      points: [
+        'Commit to a deleveraging path only if you can deliver it — it will be tracked and replayed at every future review.',
+        'Never guess a figure in the room; commit to follow up and log the commitment.',
+      ],
+    },
+    {
+      title: 'Announcement day & rating action',
+      timing: 'On or shortly after announcement',
+      body: 'The agency publishes its take — affirmation, outlook change, or a watch placement. Coordinate your press-release timing with the analyst so the market hears both stories coherently.',
+    },
+    {
+      title: 'Diligence sprint & committee',
+      timing: 'The weeks after announcement',
+      body: 'Follow-ups arrive on financing documents and projections. Any watch placement resolves as facts firm up — final financing, closing conditions. Answer precisely and fast; open items prolong the watch.',
+    },
+    {
+      title: 'Post-close: deliver the path',
+      timing: 'The quarters after close',
+      body: 'Execute the deleveraging path you stated, update the agency at milestones, and get ahead of any deviation before it surfaces in the numbers. The next annual review starts from what you promised here.',
+      links: [
+        { label: 'Track your commitments', href: '/dashboard' },
+      ],
+    },
+  ]
+}
+
+function firstRatingStages(sessionId: string): Stage[] {
   return [
     {
       title: 'Engagement & agency selection',
@@ -97,21 +152,44 @@ function stagesFor(sessionId: string): Stage[] {
   ]
 }
 
+const VARIANTS = {
+  first_rating: {
+    stages: firstRatingStages,
+    trigger: 'First rating? See the full process →',
+    heading: 'Your first rating, start to finish',
+    fallbackSubtitle:
+      'The stages every debut issuer goes through — and where this tool helps.',
+    // Key kept as `process:` for back-compat with saved first-rating progress.
+    keyPrefix: 'process',
+  },
+  transaction: {
+    stages: transactionStages,
+    trigger: 'Transaction meeting? See the playbook →',
+    heading: 'Your transaction, start to finish',
+    fallbackSubtitle:
+      'The choreography of a transaction review — and where this tool helps.',
+    keyPrefix: 'process-txn',
+  },
+} as const
+
 /**
- * Slide-over guide to the first-rating process, for New Rating Request
- * sessions. Progress is device-local (localStorage) — nothing stored.
+ * Slide-over process guide (first-rating or transaction playbook). Progress
+ * is device-local (localStorage) — nothing stored.
  */
 export function ProcessGuide({
   sessionId,
   meetingDate,
+  variant = 'first_rating',
 }: {
   sessionId: string
   meetingDate: string | null
+  variant?: keyof typeof VARIANTS
 }) {
+  const config = VARIANTS[variant]
   const [open, setOpen] = useState(false)
   const [done, setDone] = useState<number[]>([])
   const [expanded, setExpanded] = useState<number | null>(null)
-  const storageKey = `process:${sessionId}`
+  const storageKey = `${config.keyPrefix}:${sessionId}`
 
   const [daysToMeeting, setDaysToMeeting] = useState<number | null>(null)
 
@@ -154,7 +232,7 @@ export function ProcessGuide({
     })
   }
 
-  const stages = stagesFor(sessionId)
+  const stages = config.stages(sessionId)
   const firstOpen = stages.findIndex((_, i) => !done.includes(i))
 
   return (
@@ -164,7 +242,7 @@ export function ProcessGuide({
         onClick={openGuide}
         className="w-full rounded-md border border-border bg-white px-4 py-2 text-sm font-medium text-foreground transition hover:border-brand hover:text-brand"
       >
-        First rating? See the full process →
+        {config.trigger}
       </button>
 
       {open && (
@@ -183,16 +261,16 @@ export function ProcessGuide({
             <div className="flex items-start justify-between gap-4 border-b border-border p-5">
               <div>
                 <h2 className="text-lg font-semibold tracking-tight">
-                  Your first rating, start to finish
+                  {config.heading}
                 </h2>
                 <p className="mt-1 text-sm text-muted">
                   {daysToMeeting !== null && daysToMeeting >= 0
-                    ? `Your management meeting is ${
+                    ? `Your agency meeting is ${
                         daysToMeeting === 0
                           ? 'today'
                           : `in ${daysToMeeting} day${daysToMeeting === 1 ? '' : 's'}`
                       }.`
-                    : 'The stages every debut issuer goes through — and where this tool helps.'}
+                    : config.fallbackSubtitle}
                 </p>
               </div>
               <button

@@ -31,6 +31,12 @@ type BriefingBody = {
     ticker?: string | null
     meeting_type?: string | null
     meeting_date?: string | null
+    transaction_context?: {
+      transaction_type: string | null
+      size: string | null
+      financing_mix: string | null
+      expected_close: string | null
+    } | null
   }
   // Carried through from the generated scorecard so the briefing can build
   // on the advocacy analysis without regenerating it.
@@ -163,9 +169,26 @@ export async function POST(request: Request) {
     ? `${ctx.issuer_name} (${ctx.sector} — ${industryLine}${tickerBit}, currently ${ctx.current_rating} ${ctx.outlook})`
     : `${ctx.issuer_name} (${ctx.sector}${tickerBit}, currently ${ctx.current_rating} ${ctx.outlook})`
 
+  const txn = ctx.transaction_context
+  const txnLine =
+    ctx.meeting_type === 'Transaction Update'
+      ? ` The meeting concerns a transaction${
+          txn
+            ? ` (${[
+                txn.transaction_type,
+                txn.size,
+                txn.financing_mix ? `financed ${txn.financing_mix}` : '',
+                txn.expected_close ? `closing ${txn.expected_close}` : '',
+              ]
+                .filter(Boolean)
+                .join(', ')})`
+            : ''
+        }: include the transaction questions the analyst will open with — rationale, financing structure and why it was chosen, the pro forma bridge and path back to target metrics — and make the model answers quantify pro forma impact wherever the transcript or narrative provides the numbers (bracketed placeholders where they do not).`
+      : ''
+
   const systemPrompt = `You are a senior credit ratings advisor preparing a client for a real ${ctx.agency} meeting. The client is ${issuerLine}.${
     ctx.meeting_type ? ` The meeting is a ${ctx.meeting_type}.` : ''
-  }
+  }${txnLine}
 
 You will produce the client's BRIEFING BOOK: a suggested opening statement and an anticipated Q&A with drafted model answers they can rehearse and adapt.
 

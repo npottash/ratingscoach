@@ -18,6 +18,25 @@ type SessionContext = {
   agency: Agency
   ticker?: string | null
   meeting_type?: string | null
+  transaction_context?: {
+    transaction_type: string | null
+    size: string | null
+    financing_mix: string | null
+    expected_close: string | null
+  } | null
+}
+
+function txnDetails(ctx: SessionContext): string {
+  const t = ctx.transaction_context
+  if (!t) return ''
+  return [
+    t.transaction_type,
+    t.size,
+    t.financing_mix ? `financed ${t.financing_mix}` : '',
+    t.expected_close ? `closing ${t.expected_close}` : '',
+  ]
+    .filter(Boolean)
+    .join(', ')
 }
 
 type BuilderBody =
@@ -46,6 +65,14 @@ const promptsTool: Anthropic.Tool[] = [
           items: { type: 'string' },
           description:
             'Only for a New Rating Request: prompts covering the debut context — why seek a rating now, planned issuance and use of proceeds, and what the issuer wants the agency to take away. Omit entirely for other meeting types.',
+        },
+        transaction_prompts: {
+          type: 'array',
+          minItems: 3,
+          maxItems: 5,
+          items: { type: 'string' },
+          description:
+            'Only for a Transaction Update: prompts covering the transaction — strategic rationale, financing structure and why it was chosen, the pro forma bridge (standalone vs. pro forma key metrics), the path back to target metrics with a timeframe, and execution/integration risk. Omit entirely for other meeting types.',
         },
         factors: {
           type: 'array',
@@ -172,6 +199,8 @@ export async function POST(request: Request) {
 
   if (body.mode === 'prompts') {
     const isDebut = ctx.meeting_type === 'New Rating Request'
+    const isTxn = ctx.meeting_type === 'Transaction Update'
+    const txnBit = txnDetails(ctx)
     const systemPrompt = `You are a senior credit ratings advisor helping a client draft their credit story for a ${ctx.agency} meeting. The client is ${issuerLine(ctx)}.${
       ctx.meeting_type ? ` The meeting is a ${ctx.meeting_type}.` : ''
     }
@@ -186,6 +215,12 @@ RULES
 - Cover every factor, in the exact order listed.${
       isDebut
         ? `\n- This is a first-time rating. Also produce debut_prompts covering the debut context: why seek a rating now, planned issuance and use of proceeds, and what management wants the agency to conclude. Factor prompts should assume no rating history — fundamentals, not year-over-year change.`
+        : ''
+    }${
+      isTxn
+        ? `\n- This meeting concerns a transaction${
+            txnBit ? ` (${txnBit})` : ''
+          }. Also produce transaction_prompts covering: strategic rationale, financing structure and why it was chosen, the pro forma bridge (standalone vs. pro forma leverage/capital/liquidity), the path back to target metrics with a timeframe, and execution risk. Factor prompts for affected factors should ask for pro forma numbers, not just current-state ones.`
         : ''
     }
 - LENGTH DISCIPLINE: explainers one sentence; prompts one sentence each.
@@ -279,8 +314,13 @@ RULES
     .filter((s) => s.responses.every((r) => !r.answer?.trim()))
     .map((s) => s.title)
 
+  const assembleTxnBit = txnDetails(ctx)
   const assembleSystem = `You are a senior credit ratings advisor drafting a client's credit narrative for a ${ctx.agency} meeting from their answers to your guided prompts. The client is ${issuerLine(ctx)}.${
     ctx.meeting_type ? ` The meeting is a ${ctx.meeting_type}.` : ''
+  }${
+    ctx.meeting_type === 'Transaction Update' && assembleTxnBit
+      ? ` The transaction: ${assembleTxnBit}.`
+      : ''
   }
 
 Write the narrative they will walk into the meeting with.

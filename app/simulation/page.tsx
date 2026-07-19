@@ -24,9 +24,7 @@ export default async function SimulationPage({
   const supabase = await createClient()
   const { data: session } = await supabase
     .from('sessions')
-    .select(
-      'id, issuer_name, ticker, sector, industry, sub_type, current_rating, outlook, agency, meeting_type'
-    )
+    .select('*')
     .eq('id', session_id)
     .single<SimulationSession>()
 

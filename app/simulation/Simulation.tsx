@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { PERSONAS, type Persona } from '@/lib/personas'
 import { factorsFor } from '@/lib/factors'
 import { createClient } from '@/lib/supabase/client'
-import type { Agency } from '@/lib/types'
+import type { Agency, TransactionContext } from '@/lib/types'
 
 export type SimulationSession = {
   id: string
@@ -18,6 +18,7 @@ export type SimulationSession = {
   outlook: string
   agency: Agency[]
   meeting_type: string | null
+  transaction_context?: TransactionContext | null
 }
 
 type Flag = 'strong' | 'adequate' | 'weak' | 'critical_gap' | 'none'
@@ -283,6 +284,7 @@ function SimulationChat({
             issuer_name: session.issuer_name,
             ticker: session.ticker,
             meeting_type: session.meeting_type,
+            transaction_context: session.transaction_context,
           },
           current_factor: factor,
           is_first_turn: isFirstTurn,

@@ -1,5 +1,13 @@
 export type Agency = 'S&P' | "Moody's" | 'Fitch'
 
+/** Deal details for Transaction Update sessions. All fields optional text. */
+export type TransactionContext = {
+  transaction_type: string | null
+  size: string | null
+  financing_mix: string | null
+  expected_close: string | null
+}
+
 export type Session = {
   id: string
   user_id: string
@@ -13,6 +21,7 @@ export type Session = {
   agency: Agency[]
   meeting_date: string | null
   meeting_type: string
+  transaction_context?: TransactionContext | null
   overall_score: number | null
   factors_flagged: number
   critical_gaps: number
@@ -45,6 +54,7 @@ export type BuilderFactorPrompts = {
 /** The generated prompt set the builder wizard walks through. */
 export type BuilderPromptSet = {
   debut_prompts?: string[]
+  transaction_prompts?: string[]
   factors: BuilderFactorPrompts[]
 }
 
