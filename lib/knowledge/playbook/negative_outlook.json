@@ -1,6 +1,10 @@
 {
   "name": "Negative outlook / Watch Negative / Review for downgrade",
-  "applies_to": ["Negative", "Watch Negative"],
+  "applies_to": [
+    "Negative",
+    "Watch Negative",
+    "Review for Downgrade"
+  ],
   "recommended_actions": [
     "CFO-level engagement on a quarterly basis.",
     "CEO-level appearance at annual meetings and ahead of important announcements.",

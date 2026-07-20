@@ -16,7 +16,9 @@ const SECTORS = [
   'Corporate HY',
 ] as const
 
-const RATINGS = [
+// S&P / Fitch scale and the Moody's scale, index-aligned so a selection
+// carries over when the user switches agency (AA+ ↔ Aa1, etc.).
+const SP_FITCH_RATINGS = [
   'AAA',
   'AA+',
   'AA',
@@ -36,13 +38,50 @@ const RATINGS = [
   'Not yet rated',
 ] as const
 
-const OUTLOOKS = [
+const MOODYS_RATINGS = [
+  'Aaa',
+  'Aa1',
+  'Aa2',
+  'Aa3',
+  'A1',
+  'A2',
+  'A3',
+  'Baa1',
+  'Baa2',
+  'Baa3',
+  'Ba1',
+  'Ba2',
+  'Ba3',
+  'B1',
+  'B2',
+  'B3',
+  'Not yet rated',
+] as const
+
+// Index-aligned: Moody's puts ratings "on review", not "on watch".
+const SP_FITCH_OUTLOOKS = [
   'Stable',
   'Positive',
   'Negative',
   'Watch Positive',
   'Watch Negative',
 ] as const
+
+const MOODYS_OUTLOOKS = [
+  'Stable',
+  'Positive',
+  'Negative',
+  'Review for Upgrade',
+  'Review for Downgrade',
+] as const
+
+function ratingsFor(agency: Agency): readonly string[] {
+  return agency === "Moody's" ? MOODYS_RATINGS : SP_FITCH_RATINGS
+}
+
+function outlooksFor(agency: Agency): readonly string[] {
+  return agency === "Moody's" ? MOODYS_OUTLOOKS : SP_FITCH_OUTLOOKS
+}
 
 const MEETING_TYPES = [
   'Annual Review',
@@ -144,9 +183,27 @@ export default function IntakePage() {
   const [agency, setAgency] = useState<Agency>('S&P')
   const [sector, setSector] = useState<string>('')
   const [meetingType, setMeetingType] = useState<string>('')
+  const [rating, setRating] = useState<string>('')
+  const [outlook, setOutlook] = useState<string>('')
   const [state, action, pending] = useActionState(submitIntake, initialState)
 
   const subTypeSuggestions = SUB_TYPES_BY_SECTOR[sector] ?? []
+
+  // Carry the selection across scales when the agency changes (AA+ → Aa1,
+  // Watch Negative → Review for Downgrade); clear it if there's no equivalent.
+  function handleAgencyChange(next: Agency) {
+    const mapAcross = (value: string, from: readonly string[], to: readonly string[]) => {
+      const i = from.indexOf(value)
+      return i === -1 ? '' : to[i]
+    }
+    setRating((r) => mapAcross(r, ratingsFor(agency), ratingsFor(next)))
+    setOutlook((o) =>
+      o === 'Not yet rated'
+        ? o
+        : mapAcross(o, outlooksFor(agency), outlooksFor(next))
+    )
+    setAgency(next)
+  }
 
   return (
     <>
@@ -315,7 +372,7 @@ export default function IntakePage() {
                   <button
                     type="button"
                     key={a}
-                    onClick={() => setAgency(a)}
+                    onClick={() => handleAgencyChange(a)}
                     className={[
                       'rounded-md border px-4 py-2 text-sm font-medium transition',
                       selected
@@ -348,13 +405,14 @@ export default function IntakePage() {
               <select
                 name="current_rating"
                 required
-                defaultValue=""
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
                 className={inputClass}
               >
                 <option value="" disabled>
                   Select rating
                 </option>
-                {RATINGS.map((r) => (
+                {ratingsFor(agency).map((r) => (
                   <option key={r} value={r}>
                     {r}
                   </option>
@@ -366,10 +424,15 @@ export default function IntakePage() {
                 Outlook{' '}
                 <span className="font-normal text-muted">(optional)</span>
               </span>
-              <select name="outlook" defaultValue="" className={inputClass}>
+              <select
+                name="outlook"
+                value={outlook}
+                onChange={(e) => setOutlook(e.target.value)}
+                className={inputClass}
+              >
                 <option value="">Select outlook</option>
                 <option value="Not yet rated">Not yet rated</option>
-                {OUTLOOKS.map((o) => (
+                {outlooksFor(agency).map((o) => (
                   <option key={o} value={o}>
                     {o}
                   </option>
