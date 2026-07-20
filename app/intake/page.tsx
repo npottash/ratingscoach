@@ -93,6 +93,7 @@ const TRANSACTION_TYPES = [
   'Acquisition',
   'Merger',
   'Divestiture / Asset Sale',
+  'Spin-off',
   'Debt Issuance / Refinancing',
   'Dividend Recapitalization',
   'Share Buyback',
@@ -336,15 +337,21 @@ export default function IntakePage() {
                   </select>
                 </label>
                 <label className={labelClass}>
-                  <span>Approximate size</span>
+                  <span>
+                    Approximate size (in 000s){' '}
+                    <span className="font-normal text-muted">(optional)</span>
+                  </span>
                   <input
                     name="transaction_size"
-                    placeholder="e.g. $750m"
+                    placeholder="e.g. 750,000"
                     className={inputClass}
                   />
                 </label>
                 <label className={labelClass}>
-                  <span>Financing mix</span>
+                  <span>
+                    Financing mix{' '}
+                    <span className="font-normal text-muted">(optional)</span>
+                  </span>
                   <input
                     name="transaction_financing_mix"
                     placeholder="e.g. 60% new debt / 40% cash on hand"
@@ -352,7 +359,10 @@ export default function IntakePage() {
                   />
                 </label>
                 <label className={labelClass}>
-                  <span>Expected close</span>
+                  <span>
+                    Expected close{' '}
+                    <span className="font-normal text-muted">(optional)</span>
+                  </span>
                   <input
                     name="transaction_expected_close"
                     placeholder="e.g. Q4 2026"
@@ -451,7 +461,7 @@ export default function IntakePage() {
               disabled={pending}
               className="rounded-md bg-brand px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-60"
             >
-              {pending ? 'Saving…' : 'Continue to narrative'}
+              {pending ? 'Loading…' : 'Continue to narrative'}
             </button>
           </div>
         </form>

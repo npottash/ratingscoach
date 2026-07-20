@@ -18,6 +18,8 @@ function transactionStages(sessionId: string): Stage[] {
       timing: 'Before any public announcement',
       body: 'Brief your lead analyst under confidentiality ahead of the announcement — agencies have established MNPI processes for exactly this. The cardinal sin is the agency reading your deal in the press first.',
       points: [
+        'Best practice is giving the analyst ample time to review the transaction and provide feedback. Where sensitivity is enhanced — as it typically is for M&A — the briefing can happen right before the announcement; where the deal is complex, give the analyst the time to do the work.',
+        'For ratings certainty ahead of announcement, consider a formal pre-assessment: a Rating Evaluation Service (RES) at S&P or a Rating Assessment Service (RAS) at Moody’s. Evaluate case by case — it lets you preview 3–6 scenarios with the agency to test different execution paths before you commit.',
         'Agree timing and logistics with the analyst early; a surprised agency is a defensive agency.',
       ],
     },
