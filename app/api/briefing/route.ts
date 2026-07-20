@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@/lib/supabase/server'
 import { checkRateLimit } from '@/lib/rateLimit'
 import { getKnowledge, filterItemsForSubType } from '@/lib/knowledge'
+import { isTransactionMeeting } from '@/lib/meetings'
 import type { Agency, BriefingOutput } from '@/lib/types'
 
 const MODEL = 'claude-sonnet-4-6'
@@ -171,7 +172,7 @@ export async function POST(request: Request) {
 
   const txn = ctx.transaction_context
   const txnLine =
-    ctx.meeting_type === 'Transaction Update'
+    isTransactionMeeting(ctx.meeting_type)
       ? ` The meeting concerns a transaction${
           txn
             ? ` (${[

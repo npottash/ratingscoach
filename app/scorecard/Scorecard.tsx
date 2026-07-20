@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { CommitmentsCard } from './CommitmentsCard'
 import { saveRealQuestions } from './actions'
+import { isTransactionMeeting } from '@/lib/meetings'
 import type { ViewId } from './views'
 import type {
   Agency,
@@ -1161,7 +1162,7 @@ export function Scorecard({
             }
           >
             <h2 className="text-lg font-semibold">After the meeting</h2>
-            {session.meeting_type === 'Transaction Update' && (
+            {isTransactionMeeting(session.meeting_type) && (
               <p className="mt-2 max-w-2xl text-sm text-muted">
                 Transaction meetings are where commitments get made — the
                 deleveraging path, the buyback pause, the target metrics. Log

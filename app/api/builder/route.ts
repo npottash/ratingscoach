@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { checkRateLimit } from '@/lib/rateLimit'
 import { getKnowledge, filterItemsForSubType } from '@/lib/knowledge'
 import { factorsFor } from '@/lib/factors'
+import { isTransactionMeeting } from '@/lib/meetings'
 import type { Agency, BuilderPromptSet } from '@/lib/types'
 
 const MODEL = 'claude-sonnet-4-6'
@@ -199,7 +200,7 @@ export async function POST(request: Request) {
 
   if (body.mode === 'prompts') {
     const isDebut = ctx.meeting_type === 'New Rating Request'
-    const isTxn = ctx.meeting_type === 'Transaction Update'
+    const isTxn = isTransactionMeeting(ctx.meeting_type)
     const txnBit = txnDetails(ctx)
     const systemPrompt = `You are a senior credit ratings advisor helping a client draft their credit story for a ${ctx.agency} meeting. The client is ${issuerLine(ctx)}.${
       ctx.meeting_type ? ` The meeting is a ${ctx.meeting_type}.` : ''
@@ -318,7 +319,7 @@ RULES
   const assembleSystem = `You are a senior credit ratings advisor drafting a client's credit narrative for a ${ctx.agency} meeting from their answers to your guided prompts. The client is ${issuerLine(ctx)}.${
     ctx.meeting_type ? ` The meeting is a ${ctx.meeting_type}.` : ''
   }${
-    ctx.meeting_type === 'Transaction Update' && assembleTxnBit
+    isTransactionMeeting(ctx.meeting_type) && assembleTxnBit
       ? ` The transaction: ${assembleTxnBit}.`
       : ''
   }

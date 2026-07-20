@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ProcessGuide } from '@/components/ProcessGuide'
+import { isTransactionMeeting } from '@/lib/meetings'
 import type {
   Agency,
   BuilderPromptSet,
@@ -263,7 +264,7 @@ export function BuilderWizard({ session }: { session: BuilderSession }) {
             />
           </div>
         )}
-        {session.meeting_type === 'Transaction Update' && (
+        {isTransactionMeeting(session.meeting_type) && (
           <div className="w-full sm:w-64">
             <ProcessGuide
               sessionId={session.id}

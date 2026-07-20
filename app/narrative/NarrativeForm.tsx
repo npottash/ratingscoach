@@ -11,6 +11,7 @@ import {
 } from '@/components/AgencyFitPanel'
 import { ProcessGuide } from '@/components/ProcessGuide'
 import { switchAgency } from './actions'
+import { isTransactionMeeting } from '@/lib/meetings'
 
 export type SessionSummary = {
   id: string
@@ -329,7 +330,7 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
             />
           )}
 
-          {session.meeting_type === 'Transaction Update' && (
+          {isTransactionMeeting(session.meeting_type) && (
             <ProcessGuide
               sessionId={session.id}
               meetingDate={session.meeting_date}

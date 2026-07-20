@@ -27,7 +27,9 @@ export async function submitIntake(
   const industry = String(formData.get('industry') ?? '').trim() || null
   const sub_type = String(formData.get('sub_type') ?? '').trim() || null
   const current_rating = String(formData.get('current_rating') ?? '').trim()
-  const outlook = String(formData.get('outlook') ?? '').trim()
+  // Outlook is optional; unrated issuers have none.
+  const outlook =
+    String(formData.get('outlook') ?? '').trim() || 'Not yet rated'
   const agencyRaw = formData.getAll('agency').map(String)
   const agency = agencyRaw.filter((a): a is Agency =>
     (VALID_AGENCIES as string[]).includes(a)
@@ -36,10 +38,10 @@ export async function submitIntake(
     String(formData.get('meeting_date') ?? '').trim() || null
   const meeting_type = String(formData.get('meeting_type') ?? '').trim()
 
-  // Deal details, Transaction Update only. Null when absent so non-transaction
+  // Deal details, Transaction Review only. Null when absent so non-transaction
   // sessions (and empty forms) store nothing.
   let transaction_context: Record<string, string | null> | null = null
-  if (meeting_type === 'Transaction Update') {
+  if (meeting_type === 'Transaction Review') {
     const t = {
       transaction_type:
         String(formData.get('transaction_type') ?? '').trim() || null,
@@ -56,7 +58,6 @@ export async function submitIntake(
     !issuer_name ||
     !sector ||
     !current_rating ||
-    !outlook ||
     agency.length === 0 ||
     !meeting_type
   ) {

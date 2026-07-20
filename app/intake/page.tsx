@@ -3,10 +3,6 @@
 import { useActionState, useState } from 'react'
 import { StepIndicator } from '@/components/StepIndicator'
 import { PageHeader } from '@/components/PageHeader'
-import {
-  AgencyFitPanel,
-  type AgencyFitRequest,
-} from '@/components/AgencyFitPanel'
 import { submitIntake, type IntakeFormState } from './actions'
 import type { Agency } from '@/lib/types'
 
@@ -51,7 +47,7 @@ const OUTLOOKS = [
 const MEETING_TYPES = [
   'Annual Review',
   'New Rating Request',
-  'Transaction Update',
+  'Transaction Review',
 ] as const
 
 const TRANSACTION_TYPES = [
@@ -148,35 +144,9 @@ export default function IntakePage() {
   const [agency, setAgency] = useState<Agency>('S&P')
   const [sector, setSector] = useState<string>('')
   const [meetingType, setMeetingType] = useState<string>('')
-  const [fitRequest, setFitRequest] = useState<AgencyFitRequest | null>(null)
-  const [fitHint, setFitHint] = useState<string | null>(null)
   const [state, action, pending] = useActionState(submitIntake, initialState)
 
   const subTypeSuggestions = SUB_TYPES_BY_SECTOR[sector] ?? []
-
-  function openAgencyFit(e: React.MouseEvent<HTMLButtonElement>) {
-    const form = e.currentTarget.form
-    if (!sector || !form) {
-      setFitHint('Select a sector first — the comparison is sector-specific.')
-      return
-    }
-    setFitHint(null)
-    const fd = new FormData(form)
-    const str = (name: string) => String(fd.get(name) ?? '').trim() || null
-    setFitRequest({
-      context: {
-        issuer_name: str('issuer_name'),
-        sector,
-        industry: str('industry'),
-        sub_type: str('sub_type'),
-        current_rating: str('current_rating'),
-        outlook: str('outlook'),
-        ticker: str('ticker'),
-        meeting_type: meetingType || null,
-      },
-      current_agency: agency,
-    })
-  }
 
   return (
     <>
@@ -257,22 +227,11 @@ export default function IntakePage() {
 
           <div className="grid gap-6 sm:grid-cols-2">
             <label className={labelClass}>
-              <span>Outlook</span>
-              <select
-                name="outlook"
-                required
-                defaultValue=""
-                className={inputClass}
-              >
-                <option value="" disabled>
-                  Select outlook
-                </option>
-                {OUTLOOKS.map((o) => (
-                  <option key={o} value={o}>
-                    {o}
-                  </option>
-                ))}
-              </select>
+              <span>
+                Meeting date{' '}
+                <span className="font-normal text-muted">(optional)</span>
+              </span>
+              <input name="meeting_date" type="date" className={inputClass} />
             </label>
             <label className={labelClass}>
               <span>Meeting type</span>
@@ -295,7 +254,7 @@ export default function IntakePage() {
             </label>
           </div>
 
-          {meetingType === 'Transaction Update' && (
+          {meetingType === 'Transaction Review' && (
             <fieldset className="rounded-lg border border-brand/40 bg-brand/5 p-4">
               <legend className="px-1 text-sm font-medium text-foreground">
                 About the transaction{' '}
@@ -375,20 +334,11 @@ export default function IntakePage() {
               Select the agency you&apos;re preparing for.
             </span>
             {meetingType === 'New Rating Request' && (
-              <div className="mt-1">
-                <button
-                  type="button"
-                  onClick={openAgencyFit}
-                  className="rounded-md border border-brand/40 bg-brand/5 px-4 py-2 text-sm font-medium text-brand transition hover:border-brand"
-                >
-                  Not sure? Compare agencies for your profile
-                </button>
-                {fitHint && (
-                  <p className="mt-1.5 text-xs font-normal text-amber-700">
-                    {fitHint}
-                  </p>
-                )}
-              </div>
+              <p className="mt-1 rounded-md border border-brand/40 bg-brand/5 px-4 py-3 text-sm font-normal text-foreground">
+                Not sure which agency? Select any for now — once we collect
+                your credit story on the next step, we&apos;ll recommend the
+                best agency fit and you can switch before the simulation.
+              </p>
             )}
           </div>
 
@@ -413,10 +363,18 @@ export default function IntakePage() {
             </label>
             <label className={labelClass}>
               <span>
-                Meeting date{' '}
+                Outlook{' '}
                 <span className="font-normal text-muted">(optional)</span>
               </span>
-              <input name="meeting_date" type="date" className={inputClass} />
+              <select name="outlook" defaultValue="" className={inputClass}>
+                <option value="">Select outlook</option>
+                <option value="Not yet rated">Not yet rated</option>
+                {OUTLOOKS.map((o) => (
+                  <option key={o} value={o}>
+                    {o}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
 
@@ -435,16 +393,6 @@ export default function IntakePage() {
           </div>
         </form>
       </main>
-
-      {fitRequest && (
-        <AgencyFitPanel
-          request={fitRequest}
-          currentAgency={agency}
-          pickLabel={(a) => `Prepare for ${a}`}
-          onPick={(a) => setAgency(a)}
-          onClose={() => setFitRequest(null)}
-        />
-      )}
     </>
   )
 }

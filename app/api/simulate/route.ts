@@ -173,6 +173,7 @@ You have covered this issuer before. Focus on what has CHANGED: year-over-year m
     case 'New Rating Request':
       return `MEETING TYPE: NEW RATING REQUEST (first-time issuer meeting)
 This issuer has no rating history with you. Focus on UNDERSTANDING: how the business model works and makes money, the credit risks inherent to this type of company, and your agency's focus areas for the sector. You are establishing the baseline — there is no prior year to compare against, so avoid update-style "what changed" questions and dig into fundamentals, structure, competitive position, and management quality instead.`
+    case 'Transaction Review':
     case 'Transaction Update': {
       const details = txn
         ? [
@@ -184,7 +185,7 @@ This issuer has no rating history with you. Focus on UNDERSTANDING: how the busi
             .filter(Boolean)
             .join('; ')
         : ''
-      return `MEETING TYPE: TRANSACTION UPDATE
+      return `MEETING TYPE: TRANSACTION REVIEW
 This meeting exists because of a specific transaction or event${
         details ? ` (${details})` : ''
       }. Prioritize the transaction: its rationale, financing and structure, and its credit impact — then material changes in the broader credit story since the last review, including relevant current events.
