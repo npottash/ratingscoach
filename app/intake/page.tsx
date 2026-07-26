@@ -4,6 +4,7 @@ import { useActionState, useState } from 'react'
 import { StepIndicator } from '@/components/StepIndicator'
 import { PageHeader } from '@/components/PageHeader'
 import { submitIntake, type IntakeFormState } from './actions'
+import { isTransactionMeeting } from '@/lib/meetings'
 import type { Agency } from '@/lib/types'
 
 const SECTORS = [
@@ -83,10 +84,22 @@ function outlooksFor(agency: Agency): readonly string[] {
   return agency === "Moody's" ? MOODYS_OUTLOOKS : SP_FITCH_OUTLOOKS
 }
 
-const MEETING_TYPES = [
-  'Annual Review',
-  'New Rating Request',
-  'Transaction Review',
+const MEETING_TYPE_OPTIONS = [
+  {
+    value: 'Annual Review',
+    label: 'Annual Review Meeting',
+    blurb: 'The yearly update meeting with your agency',
+  },
+  {
+    value: 'New Rating Request',
+    label: 'New Rating Request',
+    blurb: 'A first-time rating for this issuer',
+  },
+  {
+    value: 'Transaction Update',
+    label: 'Transaction Update',
+    blurb: 'A deal or event is on the table',
+  },
 ] as const
 
 const TRANSACTION_TYPES = [
@@ -222,6 +235,37 @@ export default function IntakePage() {
         </header>
 
         <form action={action} className="flex flex-col gap-6">
+          <div className="flex flex-col gap-1.5 text-sm font-medium text-foreground">
+            <span>What kind of meeting are you preparing for?</span>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {MEETING_TYPE_OPTIONS.map((t) => {
+                const selected = meetingType === t.value
+                return (
+                  <button
+                    type="button"
+                    key={t.value}
+                    onClick={() => setMeetingType(t.value)}
+                    aria-pressed={selected}
+                    className={[
+                      'rounded-lg border p-4 text-left transition',
+                      selected
+                        ? 'border-brand bg-brand/5 ring-2 ring-brand/30'
+                        : 'border-border bg-white hover:border-brand',
+                    ].join(' ')}
+                  >
+                    <span className="block font-medium">{t.label}</span>
+                    <span className="mt-0.5 block text-xs font-normal text-muted">
+                      {t.blurb}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+            <input type="hidden" name="meeting_type" value={meetingType} />
+          </div>
+
+          {meetingType && (
+            <>
           <div className="grid gap-6 sm:grid-cols-2">
             <label className={labelClass}>
               <span>Issuer name</span>
@@ -291,28 +335,9 @@ export default function IntakePage() {
               </span>
               <input name="meeting_date" type="date" className={inputClass} />
             </label>
-            <label className={labelClass}>
-              <span>Meeting type</span>
-              <select
-                name="meeting_type"
-                required
-                defaultValue=""
-                onChange={(e) => setMeetingType(e.target.value)}
-                className={inputClass}
-              >
-                <option value="" disabled>
-                  Select meeting type
-                </option>
-                {MEETING_TYPES.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            </label>
           </div>
 
-          {meetingType === 'Transaction Review' && (
+          {isTransactionMeeting(meetingType) && (
             <fieldset className="rounded-lg border border-brand/40 bg-brand/5 p-4">
               <legend className="px-1 text-sm font-medium text-foreground">
                 About the transaction{' '}
@@ -464,6 +489,8 @@ export default function IntakePage() {
               {pending ? 'Loading…' : 'Continue to narrative'}
             </button>
           </div>
+            </>
+          )}
         </form>
       </main>
     </>

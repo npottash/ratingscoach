@@ -185,7 +185,7 @@ This issuer has no rating history with you. Focus on UNDERSTANDING: how the busi
             .filter(Boolean)
             .join('; ')
         : ''
-      return `MEETING TYPE: TRANSACTION REVIEW
+      return `MEETING TYPE: TRANSACTION UPDATE
 This meeting exists because of a specific transaction or event${
         details ? ` (${details})` : ''
       }. Prioritize the transaction: its rationale, financing and structure, and its credit impact — then material changes in the broader credit story since the last review, including relevant current events.

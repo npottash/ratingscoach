@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { isTransactionMeeting } from '@/lib/meetings'
 import type { Agency } from '@/lib/types'
 
 const VALID_AGENCIES: Agency[] = ['S&P', "Moody's", 'Fitch']
@@ -38,10 +39,10 @@ export async function submitIntake(
     String(formData.get('meeting_date') ?? '').trim() || null
   const meeting_type = String(formData.get('meeting_type') ?? '').trim()
 
-  // Deal details, Transaction Review only. Null when absent so non-transaction
-  // sessions (and empty forms) store nothing.
+  // Deal details, transaction meetings only. Null when absent so
+  // non-transaction sessions (and empty forms) store nothing.
   let transaction_context: Record<string, string | null> | null = null
-  if (meeting_type === 'Transaction Review') {
+  if (isTransactionMeeting(meeting_type)) {
     const t = {
       transaction_type:
         String(formData.get('transaction_type') ?? '').trim() || null,
