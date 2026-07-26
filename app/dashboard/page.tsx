@@ -122,8 +122,6 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-      <ProgressSection sessions={sessions} />
-
       <section className="mt-10">
         {sessions.length === 0 ? (
           <EmptyState />
@@ -137,123 +135,50 @@ export default async function DashboardPage() {
 }
 
 /* ------------------------------------------------------------------------- */
-/* Readiness trajectory                                                      */
-/* ------------------------------------------------------------------------- */
-
-type TrendRun = { score: number; date: string }
-
-type TrendGroup = {
-  issuer: string
-  agency: string
-  runs: TrendRun[]
-}
-
-function ProgressSection({ sessions }: { sessions: SessionRow[] }) {
-  // Group completed, scored runs by issuer × agency, oldest first.
-  const groups = new Map<string, TrendGroup>()
-  for (const s of [...sessions].reverse()) {
-    if (s.status !== 'completed' || s.overall_score == null) continue
-    const agency = s.agency?.[0] ?? '—'
-    const key = `${s.issuer_name}|${agency}`
-    const g = groups.get(key) ?? { issuer: s.issuer_name, agency, runs: [] }
-    g.runs.push({
-      score: s.overall_score,
-      date: new Date(s.created_at).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-      }),
-    })
-    groups.set(key, g)
-  }
-  const trends = [...groups.values()].filter((g) => g.runs.length >= 2)
-  if (trends.length === 0) return null
-
-  return (
-    <section className="mt-10">
-      <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
-        Readiness trajectory
-      </h2>
-      <div className="mt-3 grid gap-4 lg:grid-cols-2">
-        {trends.map((g) => {
-          const first = g.runs[0].score
-          const latest = g.runs[g.runs.length - 1].score
-          const delta = latest - first
-          return (
-            <div
-              key={`${g.issuer}|${g.agency}`}
-              className="rounded-lg border border-border bg-white p-5"
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <p className="truncate text-sm font-medium">
-                  {g.issuer}{' '}
-                  <span className="font-normal text-muted">· {g.agency}</span>
-                </p>
-                <span
-                  className={[
-                    'shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold',
-                    delta >= 0
-                      ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                      : 'border-red-200 bg-red-50 text-red-700',
-                  ].join(' ')}
-                >
-                  {delta >= 0 ? '+' : ''}
-                  {delta.toFixed(1)} since first run
-                </span>
-              </div>
-              <div className="mt-4 flex items-end gap-3">
-                {g.runs.map((r, i) => {
-                  const isLatest = i === g.runs.length - 1
-                  return (
-                    <div
-                      key={i}
-                      className="flex min-w-0 flex-1 flex-col items-center gap-1.5"
-                    >
-                      <span
-                        className={
-                          isLatest
-                            ? 'text-xs font-semibold text-foreground'
-                            : 'text-xs text-muted'
-                        }
-                      >
-                        {r.score.toFixed(1)}
-                      </span>
-                      <div className="flex h-24 w-full items-end overflow-hidden rounded-md bg-slate-100">
-                        <div
-                          className={[
-                            'w-full rounded-t-sm',
-                            isLatest ? 'bg-brand' : 'bg-brand/25',
-                          ].join(' ')}
-                          style={{
-                            height: `${Math.max(
-                              (Math.min(Math.max(r.score, 0), 10) / 10) * 100,
-                              4
-                            )}%`,
-                          }}
-                        />
-                      </div>
-                      <span className="w-full truncate text-center text-[11px] text-muted">
-                        {r.date}
-                      </span>
-                    </div>
-                  )
-                })}
-              </div>
-              <p className="mt-2 text-xs text-muted">
-                {g.runs.length} runs · scored out of 10
-              </p>
-            </div>
-          )
-        })}
-      </div>
-    </section>
-  )
-}
-
-/* ------------------------------------------------------------------------- */
 /* Sub-components                                                            */
 /* ------------------------------------------------------------------------- */
 
+/**
+ * Trend per issuer × agency: for the LATEST completed scored run of each
+ * group with 2+ runs, the delta versus the group's first run. Keyed by
+ * session id so the table can badge just that row.
+ */
+function trendDeltas(sessions: SessionRow[]): Map<string, number> {
+  const groups = new Map<string, SessionRow[]>()
+  for (const s of [...sessions].reverse()) {
+    if (s.status !== 'completed' || s.overall_score == null) continue
+    const key = `${s.issuer_name}|${s.agency?.[0] ?? '—'}`
+    const g = groups.get(key) ?? []
+    g.push(s)
+    groups.set(key, g)
+  }
+  const deltas = new Map<string, number>()
+  for (const runs of groups.values()) {
+    if (runs.length < 2) continue
+    const latest = runs[runs.length - 1]
+    deltas.set(latest.id, latest.overall_score! - runs[0].overall_score!)
+  }
+  return deltas
+}
+
+function TrendBadge({ delta, runsHint }: { delta: number; runsHint?: string }) {
+  const up = delta >= 0
+  return (
+    <span
+      title={runsHint ?? 'Change since the first run for this issuer and agency'}
+      className={[
+        'inline-flex items-center gap-0.5 text-xs font-semibold',
+        up ? 'text-emerald-700' : 'text-red-700',
+      ].join(' ')}
+    >
+      {up ? '▲' : '▼'} {up ? '+' : ''}
+      {delta.toFixed(1)}
+    </span>
+  )
+}
+
 function SessionsTable({ sessions }: { sessions: SessionRow[] }) {
+  const deltas = trendDeltas(sessions)
   return (
     <div className="overflow-hidden rounded-lg border border-border bg-white">
       <div className="border-b border-border bg-surface px-5 py-3">
@@ -292,7 +217,12 @@ function SessionsTable({ sessions }: { sessions: SessionRow[] }) {
                   {formatMeetingDate(s.meeting_date)}
                 </td>
                 <td className="px-5 py-3">
-                  <ScorePill score={s.overall_score} />
+                  <span className="inline-flex items-center gap-2">
+                    <ScorePill score={s.overall_score} />
+                    {deltas.has(s.id) && (
+                      <TrendBadge delta={deltas.get(s.id)!} />
+                    )}
+                  </span>
                 </td>
                 <td className="px-5 py-3">
                   <StatusBadge status={s.status} />
@@ -338,6 +268,7 @@ function SessionsTable({ sessions }: { sessions: SessionRow[] }) {
               <div className="flex items-center gap-2">
                 <StatusBadge status={s.status} />
                 <ScorePill score={s.overall_score} />
+                {deltas.has(s.id) && <TrendBadge delta={deltas.get(s.id)!} />}
               </div>
               <SessionAction session={s} />
             </div>
