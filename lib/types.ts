@@ -76,6 +76,32 @@ export type AgencyFitOutput = {
   preliminary: boolean
 }
 
+/** One factor's entry in a narrative desk review. */
+export type DeskReviewFactor = {
+  factor: string
+  what_they_probe: string
+  gaps: string[]
+}
+
+/**
+ * Desk review of the written story — generated pre-simulation, persisted
+ * inside scorecard_output.desk_review. Deliberately score-free: readiness
+ * scores are earned in the simulation only.
+ */
+export type DeskReviewOutput = {
+  summary: string
+  factor_reviews: DeskReviewFactor[]
+  advocacy_points: Array<{
+    basis:
+      | 'narrative_gap'
+      | 'peer_benchmarking'
+      | 'performance_trajectory'
+      | 'methodology'
+    point: string
+  }>
+  generated_at: string
+}
+
 export type IntakeInput = Omit<
   Session,
   | 'id'

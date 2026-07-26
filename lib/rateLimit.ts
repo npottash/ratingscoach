@@ -10,6 +10,7 @@ const DEFAULT_LIMITS: Record<string, number> = {
   briefing: 20, // briefing books/day — the largest single generation
   builder: 20, // story-builder calls/day — prompt set + assembly each count once
   agency_fit: 10, // agency comparisons/day — three-agency digest + optional narrative
+  desk_review: 10, // narrative desk reviews/day — scorecard-sized call
 }
 
 function limitFor(endpoint: string): number {
@@ -39,6 +40,7 @@ export async function checkRateLimit(
     | 'briefing'
     | 'builder'
     | 'agency_fit'
+    | 'desk_review'
 ): Promise<boolean> {
   const { data, error } = await supabase.rpc('increment_api_usage', {
     p_user_id: userId,

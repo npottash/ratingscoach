@@ -374,13 +374,28 @@ function SessionAction({ session }: { session: SessionRow }) {
     )
   }
   if (session.status === 'intake') {
+    const hasDeskReview =
+      session.scorecard_output != null &&
+      typeof session.scorecard_output === 'object' &&
+      'desk_review' in (session.scorecard_output as Record<string, unknown>)
     return (
-      <Link
-        href={`/narrative?session_id=${session.id}`}
-        className="font-medium text-brand hover:text-brand-hover"
-      >
-        Continue
-      </Link>
+      <span className="inline-flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
+        {hasDeskReview && (
+          <Link
+            href={`/review?session_id=${session.id}`}
+            className="font-medium text-brand hover:text-brand-hover"
+            title="Reopen the desk review of your written story"
+          >
+            Desk review
+          </Link>
+        )}
+        <Link
+          href={`/narrative?session_id=${session.id}`}
+          className="font-medium text-brand hover:text-brand-hover"
+        >
+          Continue
+        </Link>
+      </span>
     )
   }
   return <span className="text-muted">—</span>

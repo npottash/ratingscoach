@@ -150,6 +150,14 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
       })
     : '—'
 
+  function goToDeskReview() {
+    if (!text.trim()) return
+    setSubmitting(true)
+    // Same privacy path as the simulation: sessionStorage only.
+    sessionStorage.setItem(`narrative:${session.id}`, text)
+    router.push(`/review?session_id=${session.id}`)
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!text.trim()) return
@@ -291,7 +299,16 @@ export function NarrativeForm({ session }: { session: SessionSummary }) {
             or logged.
           </p>
 
-          <div className="flex justify-end">
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={goToDeskReview}
+              disabled={submitting || extracting || !text.trim()}
+              title="A fast read of the written story — gaps and advocacy angles, before any simulation"
+              className="rounded-md border border-border bg-white px-5 py-2.5 text-sm font-medium text-foreground hover:border-brand hover:text-brand disabled:opacity-60"
+            >
+              Desk review first
+            </button>
             <button
               type="submit"
               disabled={submitting || extracting || !text.trim()}
