@@ -247,13 +247,13 @@ export default function IntakePage() {
                     onClick={() => setMeetingType(t.value)}
                     aria-pressed={selected}
                     className={[
-                      'rounded-lg border p-4 text-left transition',
+                      'rounded-lg border p-4 text-center transition',
                       selected
                         ? 'border-brand bg-brand/5 ring-2 ring-brand/30'
                         : 'border-border bg-white hover:border-brand',
                     ].join(' ')}
                   >
-                    <span className="block font-medium">{t.label}</span>
+                    <span className="block text-lg font-medium">{t.label}</span>
                     <span className="mt-0.5 block text-xs font-normal text-muted">
                       {t.blurb}
                     </span>
